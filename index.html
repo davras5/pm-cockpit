@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PM Cockpit - Bundesamt für Bauten und Logistik</title>
+  <title>Bauprojekte - Bundesamt für Bauten und Logistik</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet" />
@@ -220,9 +220,22 @@
     .logo {
       width: 32px; height: 32px; color: var(--neutral-50);
       border-radius: 4px; display: flex; align-items: center; justify-content: center;
+      background-color: #E53935;
+      position: relative;
     }
-    .logo .material-icons-outlined {
-      font-size: 30px;
+    .logo::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 5px;
+      background-color: white;
+    }
+    .logo::after {
+      content: '';
+      position: absolute;
+      width: 5px;
+      height: 16px;
+      background-color: white;
     }
     .header-title { display: flex; flex-direction: column; }
     .header-title-main { font-size: 14px; font-weight: 600; }
@@ -425,7 +438,8 @@
     .card-location { font-size: 13px; color: var(--neutral-700); margin-bottom: var(--space-3); padding-bottom: var(--space-3); border-bottom: 1px solid var(--neutral-200); }
     .card-price { font-size: 15px; font-weight: 600; color: var(--neutral-900); margin-bottom: var(--space-1); }
     .card-price-sqm { font-size: 12px; color: var(--neutral-500); margin-bottom: var(--space-3); padding-bottom: var(--space-3); border-bottom: 1px solid var(--neutral-200); }
-    .card-details { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); font-size: 13px; margin-bottom: var(--space-4); }
+    .card-details { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); font-size: 13px; margin-bottom: var(--space-3); }
+    .card-details:last-child { margin-bottom: 0; }
     .card-detail-label { color: var(--neutral-700); font-weight: 500; }
     .card-detail-value { color: var(--neutral-900); font-weight: 500; }
     .card-milestone { padding-top: 0px; }
@@ -1329,9 +1343,9 @@
   <a href="#main" class="skip-link">Zum Hauptinhalt springen</a>
   <header class="header">
     <div class="header-left">
-      <div class="logo"><span class="material-icons-outlined">replay</span></div>
+      <div class="logo"></div>
       <div class="header-title">
-        <span class="header-title-main">PM Cockpit</span>
+        <span class="header-title-main">Bauprojekte</span>
         <span class="header-title-sub">Bundesamt für Bauten und Logistik</span>
       </div>
     </div>
@@ -1345,7 +1359,7 @@
       <div class="search-row">
         <div class="search-input-wrapper">
           <span class="material-icons-outlined">search</span>
-          <input type="text" class="search-input" id="searchInput" placeholder="Suche nach Titel, Adresse, Stadt oder Region">
+          <input type="text" class="search-input" id="searchInput" placeholder="Suche mit Projektnummer, oder Bezeichnung">
         </div>
         <div class="view-toggle">
           <button class="view-btn" data-view="map" title="Karte"><span class="material-icons-outlined">map</span></button>
@@ -1356,7 +1370,7 @@
       <div class="filter-row">
         <div class="filter-pills" id="filterPills"></div>
         <div class="filter-right">
-          <div class="stats-count"><span id="objectCount">0</span> Objekte</div>
+          <div class="stats-count"><span id="objectCount">0</span> Bauprojekte</div>
           <button class="filter-btn" id="filterBtn">
             <span>Filter</span>
             <span class="filter-count" id="filterCount" style="display: none;">0</span>
@@ -1379,7 +1393,7 @@
       </div>
       <div class="list-table-container">
         <table class="list-table">
-          <thead><tr><th></th><th>Titel</th><th>Adresse</th><th>Region</th><th>Land</th><th>Status</th></tr></thead>
+          <thead><tr><th></th><th>Projektnummer</th><th>Projektbezeichnung</th><th>PLBH</th><th>Investition</th><th>Status</th></tr></thead>
           <tbody id="listTableBody"></tbody>
         </table>
       </div>
@@ -1484,6 +1498,7 @@
 
     let properties = [];
     let filteredProperties = [];
+    let dataReferences = {};
     let searchQuery = '';
     let currentView = 'gallery';
     let map = null;
@@ -1546,12 +1561,38 @@
     // Status helper functions
     function getStatusClass(status) {
       if (!status) return 'status-unknown';
-      return `status-${status.toLowerCase()}`;
+      const classMap = {
+        'planned': 'status-pending',
+        'active': 'status-active',
+        'on_hold': 'status-inactive',
+        'completed': 'status-sold',
+        'cancelled': 'status-unknown'
+      };
+      return classMap[status.toLowerCase()] || 'status-unknown';
     }
     function getStatusLabel(status) {
       if (!status) return 'Unbekannt';
-      const labels = { 'active': 'Aktiv', 'inactive': 'Inaktiv', 'pending': 'Ausstehend', 'sold': 'Verkauft' };
+      const labels = {
+        'planned': 'Geplant',
+        'active': 'Aktiv',
+        'on_hold': 'Sistiert',
+        'completed': 'Abgeschlossen',
+        'cancelled': 'Abgebrochen'
+      };
       return labels[status.toLowerCase()] || status;
+    }
+
+    // Currency formatting helper
+    function formatCurrency(value) {
+      if (value === null || value === undefined) return '-';
+      return 'CHF ' + new Intl.NumberFormat('de-CH').format(value);
+    }
+
+    // SubPortfolio label helper
+    function getSubPortfolioLabel(subPortfolio, references) {
+      if (!subPortfolio || !references?.subPortfolio) return '-';
+      const ref = references.subPortfolio.find(r => r.id === subPortfolio);
+      return ref ? ref.label : subPortfolio;
     }
 
     // Format full address from new fields
@@ -1682,10 +1723,10 @@
     // Apply all filters
     function applyFilters() {
       filteredProperties = properties.filter(prop => {
-        // Search query filter - search across title, city, street, zip, region, country
+        // Search query filter - search across project number, project name, city, region
         if (searchQuery) {
           const query = searchQuery.toLowerCase();
-          const searchFields = [prop.title, prop.city, prop.street, prop.zip, prop.region, prop.country].map(f => (f || '').toString().toLowerCase());
+          const searchFields = [prop.projectNumber, prop.projectName, prop.city, prop.region, prop.projectManager].map(f => (f || '').toString().toLowerCase());
           if (!searchFields.some(field => field.includes(query))) return false;
         }
 
@@ -1817,17 +1858,21 @@
       document.getElementById('objectCount').textContent = data.length;
       grid.innerHTML = data.map(prop => `
         <div class="card" data-id="${prop.id}">
-          <div class="card-image" style="background-image: url('${getPlaceholderImage(prop.title, prop.id)}')">
-            <div class="image-tags">
-              <span class="status-tag ${getStatusClass(prop.status)}" data-filter="status" data-value="${prop.status}">${getStatusLabel(prop.status)}</span>
-            </div>
+          <div class="card-image" style="background-image: url('${getPlaceholderImage(prop.projectName, prop.id)}')">
           </div>
           <div class="card-content">
-            <div class="card-label">${prop.title}</div>
-            <div class="card-location">${formatAddress(prop)}</div>
+            <div class="card-label">${prop.projectNumber || '-'}</div>
+            <div class="card-location">${prop.projectName || '-'}</div>
             <div class="card-details">
-              <span class="card-detail-label">Land:</span><span class="card-detail-value">${prop.country || '-'}</span>
-              <span class="card-detail-label">Region:</span><span class="card-detail-value">${prop.region || '-'}</span>
+              <span class="card-detail-label">Projektziele:</span><span class="card-detail-value">-</span>
+              <span class="card-detail-label">Risiken:</span><span class="card-detail-value">-</span>
+            </div>
+            <div class="card-details" style="border-top: 1px solid var(--neutral-200); padding-top: var(--space-3);">
+              <span class="card-detail-label">Status:</span><span class="card-detail-value">${getStatusLabel(prop.status)}</span>
+              <span class="card-detail-label">Teilportfolio:</span><span class="card-detail-value">${getSubPortfolioLabel(prop.subPortfolio, dataReferences)}</span>
+              <span class="card-detail-label">PLBH:</span><span class="card-detail-value">${prop.projectManager || '-'}</span>
+              <span class="card-detail-label">Investition:</span><span class="card-detail-value">${formatCurrency(prop.plannedTotalCost)}</span>
+              <span class="card-detail-label">Letzte Änderung:</span><span class="card-detail-value">${prop.lastModified || '-'}</span>
             </div>
           </div>
         </div>`).join('');
@@ -1843,11 +1888,11 @@
       const tbody = document.getElementById('listTableBody');
       tbody.innerHTML = data.map(prop => `
         <tr data-id="${prop.id}">
-          <td><span class="material-icons-outlined object-icon">home</span></td>
-          <td>${prop.title}</td>
-          <td>${formatAddress(prop)}</td>
-          <td>${prop.region || '-'}</td>
-          <td>${prop.country || '-'}</td>
+          <td><span class="material-icons-outlined object-icon">domain</span></td>
+          <td>${prop.projectNumber || '-'}</td>
+          <td>${prop.projectName || '-'}</td>
+          <td>${prop.projectManager || '-'}</td>
+          <td>${formatCurrency(prop.plannedTotalCost)}</td>
           <td><span class="status-tag ${getStatusClass(prop.status)}" data-filter="status" data-value="${prop.status}">${getStatusLabel(prop.status)}</span></td>
         </tr>`).join('');
     }
@@ -1861,14 +1906,14 @@
       // Simplified structure with status tag
       sidebar.innerHTML = data.map(prop => `
         <div class="map-sidebar-item" data-id="${prop.id}">
-          <div class="map-sidebar-image" style="background-image: url('${getPlaceholderImage(prop.title, prop.id)}')">
+          <div class="map-sidebar-image" style="background-image: url('${getPlaceholderImage(prop.projectName, prop.id)}')">
             <div class="image-tags">
               <span class="status-tag ${getStatusClass(prop.status)}" data-filter="status" data-value="${prop.status}">${getStatusLabel(prop.status)}</span>
             </div>
           </div>
           <div class="map-sidebar-content">
-            <div class="map-sidebar-title">${prop.title}</div>
-            <div class="map-sidebar-price">${formatAddress(prop)}</div>
+            <div class="map-sidebar-title">${prop.projectNumber || '-'}</div>
+            <div class="map-sidebar-price">${prop.projectName || '-'}</div>
           </div>
         </div>`).join('');
 
@@ -1931,10 +1976,10 @@
           });
 
           const popup = new mapboxgl.Popup({ offset: 25, maxWidth: '280px' }).setHTML(`
-            <div class="popup-image" style="background-image: url('${getPlaceholderImage(prop.title, prop.id)}')"></div>
+            <div class="popup-image" style="background-image: url('${getPlaceholderImage(prop.projectName, prop.id)}')"></div>
             <div class="popup-content">
-              <div class="popup-title">${prop.title}</div>
-              <div class="popup-location">${formatAddress(prop)}</div>
+              <div class="popup-title">${prop.projectNumber || '-'}</div>
+              <div class="popup-location">${prop.projectName || '-'}</div>
               <div class="popup-status">${getStatusLabel(prop.status)}</div>
             </div>`);
 
@@ -2130,8 +2175,35 @@
     fetch('data.json')
       .then(res => res.json())
       .then(data => {
-        properties = data;
-        filteredProperties = [...data];
+        // Store references for label lookups
+        dataReferences = data.meta?.references || {};
+
+        // Create a map of buildings by ID for quick lookup
+        const buildingsMap = new Map();
+        (data.buildings || []).forEach(b => buildingsMap.set(b.id, b));
+
+        // Join projects with their buildings to get location data
+        properties = (data.projects || []).map(project => {
+          const building = buildingsMap.get(project.buildingId) || {};
+          return {
+            ...project,
+            // Map projectStatus to status for filter compatibility
+            status: project.projectStatus,
+            // Inherit location data from building
+            lat: building.lat,
+            lng: building.lng,
+            street: building.street,
+            streetNumber: building.streetNumber,
+            zip: building.zip,
+            city: building.city,
+            region: building.region,
+            country: building.country,
+            // Keep reference to building
+            buildingDesignation: building.designation
+          };
+        });
+
+        filteredProperties = [...properties];
         extractFilterOptions();
         applyFilters();
       })
