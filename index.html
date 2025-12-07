@@ -1338,10 +1338,69 @@
       background: var(--neutral-100);
       z-index: 100;
       overflow-y: auto;
+      flex-direction: column;
     }
     .detail-view.active {
       display: flex;
+    }
+
+    /* Detail Sub-Header (full-width) */
+    .detail-subheader {
+      background: var(--neutral-50);
+      border-bottom: 1px solid var(--neutral-200);
+      flex-shrink: 0;
+    }
+    .detail-subheader-inner {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-6);
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .detail-header-icon {
+      color: var(--neutral-500);
+      font-size: 24px;
+    }
+    .detail-header-title {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--neutral-900);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .detail-back-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--neutral-300);
+      background: var(--neutral-50);
+      color: var(--neutral-700);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .detail-back-btn:hover {
+      background: var(--neutral-100);
+      border-color: var(--neutral-400);
+    }
+    .detail-back-btn .material-icons-outlined {
+      font-size: 18px;
+    }
+
+    /* Detail Body (contains sidebar + main) */
+    .detail-body {
+      flex: 1;
+      display: flex;
       justify-content: center;
+      padding-top: var(--space-6);
+      min-height: 0;
     }
     .detail-view-inner {
       display: grid;
@@ -1350,6 +1409,8 @@
       max-width: 1440px;
       background: var(--neutral-50);
       box-shadow: var(--shadow-lg);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      overflow: hidden;
     }
 
     /* Detail Sidebar */
@@ -1415,51 +1476,6 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-    }
-
-    /* Detail Header */
-    .detail-header {
-      display: flex;
-      align-items: center;
-      gap: var(--space-4);
-      padding: var(--space-4) var(--space-6);
-      background: var(--neutral-50);
-      border-bottom: 1px solid var(--neutral-200);
-    }
-    .detail-header-icon {
-      color: var(--neutral-500);
-      font-size: 24px;
-    }
-    .detail-header-title {
-      flex: 1;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--neutral-900);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .detail-back-btn {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      padding: var(--space-2) var(--space-4);
-      border: 1px solid var(--neutral-300);
-      background: var(--neutral-50);
-      color: var(--neutral-700);
-      font-size: 14px;
-      font-weight: 500;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-    .detail-back-btn:hover {
-      background: var(--neutral-100);
-      border-color: var(--neutral-400);
-    }
-    .detail-back-btn .material-icons-outlined {
-      font-size: 18px;
     }
 
     /* Detail Tabs */
@@ -1581,8 +1597,18 @@
       }
     }
     @media (max-width: 768px) {
+      .detail-subheader-inner {
+        padding: var(--space-3) var(--space-4);
+      }
+      .detail-header-title {
+        font-size: 14px;
+      }
+      .detail-body {
+        padding-top: var(--space-4);
+      }
       .detail-view-inner {
         grid-template-columns: 1fr;
+        border-radius: var(--radius-md) var(--radius-md) 0 0;
       }
       .detail-sidebar {
         display: none;
@@ -1756,33 +1782,40 @@
 
   <!-- Detail View -->
   <div class="detail-view" id="detailView">
-    <div class="detail-view-inner">
-      <div class="detail-sidebar">
-        <div class="detail-sidebar-header">
-          Bauprojekte (<span id="detailProjectCount">0</span>)
-        </div>
-        <div class="detail-sidebar-list" id="detailSidebarList">
-          <!-- Project list items will be rendered here -->
-        </div>
+    <!-- Sub-Header (full-width) -->
+    <div class="detail-subheader">
+      <div class="detail-subheader-inner">
+        <span class="material-icons-outlined detail-header-icon">apartment</span>
+        <h1 class="detail-header-title" id="detailHeaderTitle">-</h1>
+        <button class="detail-back-btn" onclick="closeDetailView()">
+          <span class="material-icons-outlined">arrow_back</span>
+          Zurück zur Übersicht
+        </button>
       </div>
-      <div class="detail-main">
-        <div class="detail-header">
-          <span class="material-icons-outlined detail-header-icon">apartment</span>
-          <h1 class="detail-header-title" id="detailHeaderTitle">-</h1>
-          <button class="detail-back-btn" onclick="closeDetailView()">
-            <span class="material-icons-outlined">arrow_back</span>
-            Zurück zur Übersicht
-          </button>
+    </div>
+
+    <!-- Body with whitespace above -->
+    <div class="detail-body">
+      <div class="detail-view-inner">
+        <div class="detail-sidebar">
+          <div class="detail-sidebar-header">
+            Bauprojekte (<span id="detailProjectCount">0</span>)
+          </div>
+          <div class="detail-sidebar-list" id="detailSidebarList">
+            <!-- Project list items will be rendered here -->
+          </div>
         </div>
-        <div class="detail-tabs">
-          <button class="detail-tab active" data-tab="uebersicht">Übersicht</button>
-          <button class="detail-tab" data-tab="projektziele" disabled>Projektziele</button>
-          <button class="detail-tab" data-tab="risiken" disabled>Risiken</button>
-          <button class="detail-tab" data-tab="kennzahlen" disabled>Grundgrössen und Kennzahlen</button>
-          <button class="detail-tab" data-tab="checkliste" disabled>Checkliste Lieferobjekte</button>
-        </div>
-        <div class="detail-content" id="detailContent">
-          <!-- Tab content will be rendered here -->
+        <div class="detail-main">
+          <div class="detail-tabs">
+            <button class="detail-tab active" data-tab="uebersicht">Übersicht</button>
+            <button class="detail-tab" data-tab="projektziele" disabled>Projektziele</button>
+            <button class="detail-tab" data-tab="risiken" disabled>Risiken</button>
+            <button class="detail-tab" data-tab="kennzahlen" disabled>Grundgrössen und Kennzahlen</button>
+            <button class="detail-tab" data-tab="checkliste" disabled>Checkliste Lieferobjekte</button>
+          </div>
+          <div class="detail-content" id="detailContent">
+            <!-- Tab content will be rendered here -->
+          </div>
         </div>
       </div>
     </div>
