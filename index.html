@@ -425,7 +425,7 @@
     /* --- List View --- */
     .view-container { display: none; }
     .view-container.active { display: block; }
-    .stats-boxes { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    .stats-boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
     .stats-box { background: var(--neutral-50); border-radius: var(--radius-lg); padding: var(--space-4); text-align: center; box-shadow: var(--shadow-md); }
     .stats-box-value { font-size: 28px; font-weight: 600; color: var(--neutral-900); margin-bottom: var(--space-1); }
     .stats-box-label { font-size: 12px; color: var(--neutral-500); }
@@ -1936,7 +1936,6 @@
     <div class="view-container" id="listView">
       <div class="stats-boxes" id="statsBoxes">
         <div class="stats-box"><div class="stats-box-value" id="statsTotalProjects">0</div><div class="stats-box-label">Anzahl Projekte</div></div>
-        <div class="stats-box"><div class="stats-box-value" id="statsCompleted">0</div><div class="stats-box-label">Abgeschlossen</div></div>
         <div class="stats-box"><div class="stats-box-value" id="statsOnHold">0</div><div class="stats-box-label">Sistiert</div></div>
         <div class="stats-box"><div class="stats-box-value" id="statsPlanned">0</div><div class="stats-box-label">Geplant</div></div>
         <div class="stats-box"><div class="stats-box-value" id="statsTotalInvestment">0</div><div class="stats-box-label">Investition (CHF)</div></div>
@@ -2632,7 +2631,6 @@
 
       // Update stats
       document.getElementById('statsTotalProjects').textContent = data.length;
-      document.getElementById('statsCompleted').textContent = data.filter(p => p.status && p.status.toLowerCase() === 'completed').length;
       document.getElementById('statsOnHold').textContent = data.filter(p => p.status && p.status.toLowerCase() === 'on_hold').length;
       document.getElementById('statsPlanned').textContent = data.filter(p => p.status && p.status.toLowerCase() === 'planned').length;
 
