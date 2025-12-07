@@ -1599,6 +1599,28 @@
       color: var(--accent-600);
     }
 
+    /* Detail Section (for Übersicht tab sections) */
+    .detail-section {
+      margin-bottom: var(--space-6);
+    }
+    .detail-section .section-header {
+      margin-bottom: var(--space-4);
+    }
+    .detail-info-message {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      background: var(--neutral-100);
+      border-radius: var(--radius-md);
+      color: var(--neutral-600);
+      font-size: 14px;
+    }
+    .detail-info-message .material-icons-outlined {
+      font-size: 18px;
+      color: var(--neutral-500);
+    }
+
     /* Kennzahlen Tab Layout */
     .kennzahlen-container {
       display: grid;
@@ -2838,6 +2860,20 @@
       return ref ? ref.label : '-';
     }
 
+    // Get building status label
+    function getBuildingStatusLabel(statusId) {
+      if (!statusId || !dataReferences?.buildingStatus) return '-';
+      const ref = dataReferences.buildingStatus.find(r => r.id === statusId);
+      return ref ? ref.label : '-';
+    }
+
+    // Get country label
+    function getCountryLabel(countryId) {
+      if (!countryId || !dataReferences?.countries) return '-';
+      const ref = dataReferences.countries.find(r => r.id === countryId);
+      return ref ? ref.label : '-';
+    }
+
     // Open detail view
     function openDetailView(projectId, skipHistory = false) {
       const project = properties.find(p => p.id === projectId);
@@ -2942,6 +2978,80 @@
       const title = `${project.projectNumber || '-'} - ${project.city || ''} ${project.region || ''}, ${project.projectName || '-'}`;
       document.getElementById('detailHeaderTitle').textContent = title;
 
+      // Get building data
+      const building = project.building;
+
+      // Render building section
+      const renderBuildingSection = () => {
+        if (!building) {
+          return `
+            <div class="detail-section">
+              <div class="section-header">Gebäude</div>
+              <div class="detail-info-message">
+                <span class="material-icons-outlined">info</span>
+                <span>Kein Gebäude gefunden</span>
+              </div>
+            </div>
+          `;
+        }
+
+        // Format full address
+        const addressLine = [building.street, building.streetNumber].filter(Boolean).join(' ') || '-';
+        const cityLine = [building.zip, building.city].filter(Boolean).join(' ') || '-';
+
+        return `
+          <div class="detail-section">
+            <div class="section-header">Gebäude</div>
+            <div class="detail-fields">
+              <div class="detail-field">
+                <span class="detail-field-label">Bezeichnung</span>
+                <span class="detail-field-value">${building.designation || '-'}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-field-label">Gebäudenummer</span>
+                <span class="detail-field-value">${building.buildingNumber || '-'}</span>
+              </div>
+
+              <div class="detail-field">
+                <span class="detail-field-label">EGID</span>
+                <span class="detail-field-value">${building.egid || '-'}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-field-label">Grundstücknummer</span>
+                <span class="detail-field-value">${building.plotNumber || '-'}</span>
+              </div>
+
+              <div class="detail-field">
+                <span class="detail-field-label">Gebäudestatus</span>
+                <span class="detail-field-value">${getBuildingStatusLabel(building.buildingStatus)}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-field-label">Subportfolio</span>
+                <span class="detail-field-value">${getSubPortfolioLabel(building.subPortfolio, dataReferences)}</span>
+              </div>
+
+              <div class="detail-field">
+                <span class="detail-field-label">Adresse</span>
+                <span class="detail-field-value">${addressLine}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-field-label">PLZ / Ort</span>
+                <span class="detail-field-value">${cityLine}</span>
+              </div>
+
+              <div class="detail-field">
+                <span class="detail-field-label">Region/Kanton</span>
+                <span class="detail-field-value">${building.region || '-'}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-field-label">Land</span>
+                <span class="detail-field-value">${getCountryLabel(building.country)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      };
+
       // Render content
       const content = document.getElementById('detailContent');
       content.innerHTML = `
@@ -2954,52 +3064,57 @@
 
         <div class="detail-type-label">${getSiaPhaseLabel(project.siaPhase).split(' - ')[1] || 'Bauprojekt'}</div>
 
-        <div class="detail-fields">
-          <div class="detail-field">
-            <span class="detail-field-label">Projektbezeichnung</span>
-            <span class="detail-field-value">${project.projectName || '-'}</span>
-          </div>
-          <div class="detail-field">
-            <span class="detail-field-label">SIA Phase</span>
-            <span class="detail-field-value">${getSiaPhaseNumber(project.siaPhase)}</span>
-          </div>
+        <div class="detail-section">
+          <div class="section-header">Bauprojekt</div>
+          <div class="detail-fields">
+            <div class="detail-field">
+              <span class="detail-field-label">Projektbezeichnung</span>
+              <span class="detail-field-value">${project.projectName || '-'}</span>
+            </div>
+            <div class="detail-field">
+              <span class="detail-field-label">SIA Phase</span>
+              <span class="detail-field-value">${getSiaPhaseNumber(project.siaPhase)}</span>
+            </div>
 
-          <div class="detail-field">
-            <span class="detail-field-label">Projektnummer</span>
-            <span class="detail-field-value highlight">${project.projectNumber || '-'}</span>
-          </div>
-          <div class="detail-field">
-            <span class="detail-field-label">Projektstart</span>
-            <span class="detail-field-value">${project.projectStart || '-'}</span>
-          </div>
+            <div class="detail-field">
+              <span class="detail-field-label">Projektnummer</span>
+              <span class="detail-field-value highlight">${project.projectNumber || '-'}</span>
+            </div>
+            <div class="detail-field">
+              <span class="detail-field-label">Projektstart</span>
+              <span class="detail-field-value">${project.projectStart || '-'}</span>
+            </div>
 
-          <div class="detail-field">
-            <span class="detail-field-label">Bewirtschaftungsgebiet</span>
-            <span class="detail-field-value">${getManagementAreaLabel(project.managementArea)}</span>
-          </div>
-          <div class="detail-field">
-            <span class="detail-field-label">Bauart</span>
-            <span class="detail-field-value">${getConstructionTypeLabel(project.constructionType)}</span>
-          </div>
+            <div class="detail-field">
+              <span class="detail-field-label">Bewirtschaftungsgebiet</span>
+              <span class="detail-field-value">${getManagementAreaLabel(project.managementArea)}</span>
+            </div>
+            <div class="detail-field">
+              <span class="detail-field-label">Bauart</span>
+              <span class="detail-field-value">${getConstructionTypeLabel(project.constructionType)}</span>
+            </div>
 
-          <div class="detail-field">
-            <span class="detail-field-label">Projektstatus</span>
-            <span class="detail-field-value">${getStatusLabel(project.status)}</span>
-          </div>
-          <div class="detail-field">
-            <span class="detail-field-label">Geplante Gesamtkosten</span>
-            <span class="detail-field-value">${formatCurrency(project.plannedTotalCost)}</span>
-          </div>
+            <div class="detail-field">
+              <span class="detail-field-label">Projektstatus</span>
+              <span class="detail-field-value">${getStatusLabel(project.status)}</span>
+            </div>
+            <div class="detail-field">
+              <span class="detail-field-label">Geplante Gesamtkosten</span>
+              <span class="detail-field-value">${formatCurrency(project.plannedTotalCost)}</span>
+            </div>
 
-          <div class="detail-field">
-            <span class="detail-field-label">Projektleiter BBL</span>
-            <span class="detail-field-value">${project.projectManager || '-'}</span>
-          </div>
-          <div class="detail-field">
-            <span class="detail-field-label">Letzte Änderung</span>
-            <span class="detail-field-value">${project.lastModified || '-'}</span>
+            <div class="detail-field">
+              <span class="detail-field-label">Projektleiter BBL</span>
+              <span class="detail-field-value">${project.projectManager || '-'}</span>
+            </div>
+            <div class="detail-field">
+              <span class="detail-field-label">Letzte Änderung</span>
+              <span class="detail-field-value">${project.lastModified || '-'}</span>
+            </div>
           </div>
         </div>
+
+        ${renderBuildingSection()}
       `;
     }
 
@@ -3491,22 +3606,24 @@
 
         // Join projects with their buildings to get location data
         properties = (data.projects || []).map(project => {
-          const building = buildingsMap.get(project.buildingId) || {};
+          const building = buildingsMap.get(project.buildingId) || null;
           return {
             ...project,
             // Map projectStatus to status for filter compatibility
             status: project.projectStatus,
             // Inherit location data from building
-            lat: building.lat,
-            lng: building.lng,
-            street: building.street,
-            streetNumber: building.streetNumber,
-            zip: building.zip,
-            city: building.city,
-            region: building.region,
-            country: building.country,
-            // Keep reference to building
-            buildingDesignation: building.designation
+            lat: building?.lat,
+            lng: building?.lng,
+            street: building?.street,
+            streetNumber: building?.streetNumber,
+            zip: building?.zip,
+            city: building?.city,
+            region: building?.region,
+            country: building?.country,
+            // Keep reference to building designation for backwards compatibility
+            buildingDesignation: building?.designation,
+            // Store full building object for Gebäude section
+            building: building
           };
         });
 
