@@ -218,27 +218,16 @@
     }
     .header-left { display: flex; align-items: center; gap: var(--space-4); }
     .logo {
-      width: 32px; height: 32px; color: var(--neutral-50);
-      border-radius: 4px; display: flex; align-items: center; justify-content: center;
-      background-color: #E53935;
-      position: relative;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
     }
-    .logo::before {
-      content: '';
-      position: absolute;
-      width: 16px;
-      height: 5px;
-      background-color: white;
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
-    .logo::after {
-      content: '';
-      position: absolute;
-      width: 5px;
-      height: 16px;
-      background-color: white;
-    }
-    .header-title { display: flex; flex-direction: column; }
-    .header-title-main { font-size: 14px; font-weight: 600; }
+    .header-title { display: flex; flex-direction: column; line-height: 1.3; }
+    .header-title-main { font-size: 12px; font-weight: 600; }
     .header-title-sub { font-size: 12px; opacity: 0.9; }
     .header-right { display: flex; gap: var(--space-4); }
     .btn {
@@ -1343,10 +1332,11 @@
   <a href="#main" class="skip-link">Zum Hauptinhalt springen</a>
   <header class="header">
     <div class="header-left">
-      <div class="logo"></div>
+      <div class="logo"><img src="images/ch.png" alt="Schweizer Wappen"></div>
       <div class="header-title">
         <span class="header-title-main">Bauprojekte</span>
         <span class="header-title-sub">Bundesamt für Bauten und Logistik</span>
+        <span class="header-title-sub">Projektmanagement</span>
       </div>
     </div>
     <div class="header-right">
