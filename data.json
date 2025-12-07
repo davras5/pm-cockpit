@@ -1,15 +1,315 @@
-[
-  {
-    "id": "a1b2c3d4-1001-4000-8000-000000000001",
-    "title": "Bürogebäude Freilagerstrasse",
-    "lat": 47.3769,
-    "lng": 8.5417,
-    "country": "Switzerland",
-    "region": "Zürich",
-    "city": "Zürich",
-    "zip": "8004",
-    "street": "Freilagerstrasse",
-    "streetnumber": "12",
-    "status": "active"
-  }
-]
+{
+  "meta": {
+    "attributes": [
+      {
+        "id": "id",
+        "alias": "ID",
+        "format": "uuid",
+        "entity": "building"
+      },
+      {
+        "id": "buildingNumber",
+        "alias": "Gebäudenummer",
+        "format": "text",
+        "entity": "building"
+      },
+      {
+        "id": "plotNumber",
+        "alias": "Grundstücknummer",
+        "format": "text",
+        "entity": "building"
+      },
+      {
+        "id": "designation",
+        "alias": "Bezeichnung",
+        "format": "text",
+        "entity": "building"
+      },
+      {
+        "id": "egid",
+        "alias": "EGID",
+        "format": "text",
+        "entity": "building"
+      },
+      {
+        "id": "buildingStatus",
+        "alias": "Gebäudestatus",
+        "format": "reference",
+        "reference": "buildingStatus",
+        "entity": "building"
+      },
+      {
+        "id": "subPortfolio",
+        "alias": "Subportfolio",
+        "format": "reference",
+        "reference": "subPortfolio",
+        "entity": "building"
+      },
+      {
+        "id": "lat",
+        "alias": "Breitengrad",
+        "format": "number",
+        "entity": "building"
+      },
+      {
+        "id": "lng",
+        "alias": "Längengrad",
+        "format": "number",
+        "entity": "building"
+      },
+      {
+        "id": "street",
+        "alias": "Strasse",
+        "format": "text",
+        "entity": "building"
+      },
+      {
+        "id": "streetNumber",
+        "alias": "Hausnummer",
+        "format": "text",
+        "entity": "building"
+      },
+      {
+        "id": "zip",
+        "alias": "PLZ",
+        "format": "text",
+        "entity": "building"
+      },
+      {
+        "id": "city",
+        "alias": "Ort",
+        "format": "text",
+        "entity": "building"
+      },
+      {
+        "id": "region",
+        "alias": "Region/Kanton",
+        "format": "text",
+        "entity": "building"
+      },
+      {
+        "id": "country",
+        "alias": "Land",
+        "format": "reference",
+        "reference": "countries",
+        "entity": "building"
+      },
+      {
+        "id": "id",
+        "alias": "ID",
+        "format": "uuid",
+        "entity": "project"
+      },
+      {
+        "id": "buildingId",
+        "alias": "Gebäude-ID",
+        "format": "uuid",
+        "entity": "project"
+      },
+      {
+        "id": "projectName",
+        "alias": "Projektbezeichnung",
+        "format": "text",
+        "entity": "project"
+      },
+      {
+        "id": "projectNumber",
+        "alias": "Projektnummer",
+        "format": "text",
+        "entity": "project"
+      },
+      {
+        "id": "siaPhase",
+        "alias": "SIA Phase",
+        "format": "reference",
+        "reference": "siaPhases",
+        "entity": "project"
+      },
+      {
+        "id": "projectManager",
+        "alias": "Projektleiter BBL",
+        "format": "text",
+        "entity": "project"
+      },
+      {
+        "id": "managementArea",
+        "alias": "Bewirtschaftungsgebiet",
+        "format": "reference",
+        "reference": "managementAreas",
+        "entity": "project"
+      },
+      {
+        "id": "projectStatus",
+        "alias": "Projektstatus",
+        "format": "reference",
+        "reference": "projectStatus",
+        "entity": "project"
+      },
+      {
+        "id": "projectStart",
+        "alias": "Projektstart",
+        "format": "date",
+        "entity": "project"
+      },
+      {
+        "id": "bimProjectStart",
+        "alias": "BIM Projektstart",
+        "format": "date",
+        "entity": "project"
+      },
+      {
+        "id": "bimProjectEnd",
+        "alias": "BIM Projektende",
+        "format": "date",
+        "entity": "project"
+      },
+      {
+        "id": "bimLevel",
+        "alias": "BIM Level",
+        "format": "reference",
+        "reference": "bimLevels",
+        "entity": "project"
+      },
+      {
+        "id": "constructionType",
+        "alias": "Bauart",
+        "format": "reference",
+        "reference": "constructionTypes",
+        "entity": "project"
+      },
+      {
+        "id": "plannedTotalCost",
+        "alias": "Geplante Gesamtkosten",
+        "format": "currency",
+        "entity": "project"
+      },
+      {
+        "id": "relatedProjects",
+        "alias": "Verwandte Projekte",
+        "format": "array",
+        "entity": "project"
+      }
+    ],
+    "references": {
+      "siaPhases": [
+        { "id": "sia_11", "label": "SIA 11 - Strategische Planung", "order": 1 },
+        { "id": "sia_21", "label": "SIA 21 - Bedürfnisformulierung, Lösungsstrategien", "order": 2 },
+        { "id": "sia_22", "label": "SIA 22 - Machbarkeitsstudien", "order": 3 },
+        { "id": "sia_31", "label": "SIA 31 - Vorprojekt", "order": 4 },
+        { "id": "sia_32", "label": "SIA 32 - Bauprojekt", "order": 5 },
+        { "id": "sia_33", "label": "SIA 33 - Bewilligungsverfahren", "order": 6 },
+        { "id": "sia_41", "label": "SIA 41 - Ausschreibung, Offertvergleich, Vergabeantrag", "order": 7 },
+        { "id": "sia_51", "label": "SIA 51 - Ausführungsprojekt", "order": 8 },
+        { "id": "sia_52", "label": "SIA 52 - Ausführung", "order": 9 },
+        { "id": "sia_53", "label": "SIA 53 - Inbetriebnahme, Abschluss", "order": 10 },
+        { "id": "sia_61", "label": "SIA 61 - Betrieb", "order": 11 }
+      ],
+      "buildingStatus": [
+        { "id": "active", "label": "Aktiv" },
+        { "id": "inactive", "label": "Inaktiv" },
+        { "id": "planned", "label": "Geplant" },
+        { "id": "under_construction", "label": "Im Bau" },
+        { "id": "demolished", "label": "Abgerissen" }
+      ],
+      "projectStatus": [
+        { "id": "planned", "label": "Geplant" },
+        { "id": "active", "label": "Aktiv" },
+        { "id": "on_hold", "label": "Sistiert" },
+        { "id": "completed", "label": "Abgeschlossen" },
+        { "id": "cancelled", "label": "Abgebrochen" }
+      ],
+      "bimLevels": [
+        { "id": "level_0", "label": "Level 0 - Keine BIM-Anwendung" },
+        { "id": "level_1", "label": "Level 1 - Objektorientierte Modellierung" },
+        { "id": "level_2", "label": "Level 2 - Modellbasierte Zusammenarbeit" },
+        { "id": "level_3", "label": "Level 3 - Netzwerkbasierte Integration" }
+      ],
+      "constructionTypes": [
+        { "id": "new_construction", "label": "Neubau" },
+        { "id": "renovation", "label": "Sanierung" },
+        { "id": "extension", "label": "Erweiterung" },
+        { "id": "conversion", "label": "Umbau" },
+        { "id": "demolition", "label": "Rückbau" },
+        { "id": "maintenance", "label": "Instandhaltung" }
+      ],
+      "managementAreas": [
+        { "id": "area_north", "label": "Bewirtschaftungsgebiet Nord" },
+        { "id": "area_south", "label": "Bewirtschaftungsgebiet Süd" },
+        { "id": "area_east", "label": "Bewirtschaftungsgebiet Ost" },
+        { "id": "area_west", "label": "Bewirtschaftungsgebiet West" },
+        { "id": "area_central", "label": "Bewirtschaftungsgebiet Zentral" }
+      ],
+      "subPortfolio": [
+        { "id": "office", "label": "Bürogebäude" },
+        { "id": "residential", "label": "Wohngebäude" },
+        { "id": "industrial", "label": "Industriegebäude" },
+        { "id": "cultural", "label": "Kulturgebäude" },
+        { "id": "educational", "label": "Bildungsgebäude" },
+        { "id": "healthcare", "label": "Gesundheitsgebäude" },
+        { "id": "infrastructure", "label": "Infrastruktur" }
+      ],
+      "countries": [
+        { "id": "CH", "label": "Schweiz" },
+        { "id": "DE", "label": "Deutschland" },
+        { "id": "AT", "label": "Österreich" },
+        { "id": "FR", "label": "Frankreich" },
+        { "id": "IT", "label": "Italien" }
+      ]
+    }
+  },
+  "buildings": [
+    {
+      "id": "b1a2c3d4-1001-4000-8000-000000000001",
+      "buildingNumber": "GB-2024-001",
+      "plotNumber": "1234-56",
+      "designation": "Bürogebäude Freilagerstrasse",
+      "egid": "123456789",
+      "buildingStatus": "active",
+      "subPortfolio": "office",
+      "lat": 47.3769,
+      "lng": 8.5417,
+      "street": "Freilagerstrasse",
+      "streetNumber": "12",
+      "zip": "8004",
+      "city": "Zürich",
+      "region": "Zürich",
+      "country": "CH"
+    }
+  ],
+  "projects": [
+    {
+      "id": "p1a2c3d4-2001-4000-8000-000000000001",
+      "buildingId": "b1a2c3d4-1001-4000-8000-000000000001",
+      "projectName": "Fassadensanierung Freilagerstrasse",
+      "projectNumber": "PRJ-2024-0001",
+      "siaPhase": "sia_32",
+      "projectManager": "Hans Müller",
+      "managementArea": "area_central",
+      "projectStatus": "active",
+      "projectStart": "15.01.2024",
+      "bimProjectStart": "01.02.2024",
+      "bimProjectEnd": "30.06.2025",
+      "bimLevel": "level_2",
+      "constructionType": "renovation",
+      "plannedTotalCost": 2500000,
+      "relatedProjects": []
+    },
+    {
+      "id": "p1a2c3d4-2001-4000-8000-000000000002",
+      "buildingId": "b1a2c3d4-1001-4000-8000-000000000001",
+      "projectName": "Haustechnik Erneuerung",
+      "projectNumber": "PRJ-2024-0002",
+      "siaPhase": "sia_41",
+      "projectManager": "Anna Schmidt",
+      "managementArea": "area_central",
+      "projectStatus": "planned",
+      "projectStart": "01.03.2024",
+      "bimProjectStart": "15.03.2024",
+      "bimProjectEnd": "31.12.2025",
+      "bimLevel": "level_2",
+      "constructionType": "renovation",
+      "plannedTotalCost": 1800000,
+      "relatedProjects": ["p1a2c3d4-2001-4000-8000-000000000001"]
+    }
+  ]
+}
