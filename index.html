@@ -1609,11 +1609,13 @@
     }
     .data-table--risks th:nth-child(2),
     .data-table--risks td:nth-child(2) {
-      width: 30%;
+      width: 280px;
     }
     .data-table--risks th:nth-child(3),
     .data-table--risks td:nth-child(3) {
-      width: 64px;
+      width: 72px;
+      padding-left: var(--space-2);
+      padding-right: var(--space-2);
     }
     .data-table--risks .status-dots {
       justify-content: flex-start;
@@ -1770,10 +1772,14 @@
       border-radius: var(--radius-lg);
       position: relative;
       cursor: pointer;
-      transition: filter 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .detail-image:hover {
-      filter: brightness(0.95);
+      transform: scale(1.01);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+    .detail-image:hover .detail-image__badge {
+      background: rgba(0, 0, 0, 0.8);
     }
     .detail-image__badge {
       position: absolute;
@@ -1789,6 +1795,7 @@
       font-size: var(--font-size-xs);
       font-weight: var(--font-weight-medium);
       pointer-events: none;
+      transition: background 0.2s ease;
     }
     .detail-image__badge .material-icons-outlined {
       font-size: 16px;
@@ -2985,10 +2992,10 @@
         <h2 class="tab-header">Übersicht</h2>
         <div class="tab-container">
           <div class="detail-media">
-            <div class="detail-image" style="background-image: url('${getPlaceholderImage(project.projectName, project.id)}')" onclick="openCarousel(getProjectGalleryImages(${project.id}))" title="Galerie öffnen">
+            <div class="detail-image" style="background-image: url('${getPlaceholderImage(project.projectName, project.id)}')" onclick="openCarousel(getProjectGalleryImages('${project.id}'))" title="Galerie öffnen">
               <div class="detail-image__badge">
                 <span class="material-icons-outlined">photo_library</span>
-                <span>5</span>
+                <span>1 / 5</span>
               </div>
             </div>
             <div class="detail-map-container">
