@@ -1804,108 +1804,93 @@
     .projektziele-container {
       display: flex;
       flex-direction: column;
-      gap: var(--space-8);
-      max-width: 800px;
-    }
-    .projektziele-section {
-      margin-bottom: var(--space-2);
-    }
-    .projektziele-beschrieb {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: var(--space-6);
     }
-    .projektziele-field {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
+
+    /* Meilensteine Table */
+    .meilensteine-table {
+      width: 100%;
+      border-collapse: collapse;
     }
-    .projektziele-field-label {
+    .meilensteine-table th {
       font-size: 12px;
       font-weight: 500;
       color: var(--neutral-500);
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      text-align: left;
+      padding: var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--neutral-200);
     }
-    .projektziele-field-value {
+    .meilensteine-table th:last-child {
+      text-align: center;
+      width: 100px;
+    }
+    .meilensteine-table td {
       font-size: 14px;
       color: var(--neutral-700);
-      line-height: 1.6;
+      padding: var(--space-3);
+      border-bottom: 1px solid var(--neutral-100);
+      vertical-align: middle;
     }
-    .projektziele-kosten {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-4);
+    .meilensteine-table tr:last-child td {
+      border-bottom: none;
     }
-    .projektziele-kosten-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-6);
+    .meilensteine-table tr:hover td {
+      background-color: var(--neutral-50);
     }
-    .projektziele-kosten-field {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-1);
+    .meilensteine-table td:last-child {
+      text-align: center;
     }
-    .projektziele-kosten-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--neutral-500);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .projektziele-kosten-value {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--accent-700);
-    }
-    .projektziele-kosten-value.placeholder {
-      color: var(--neutral-400);
-    }
-    .projektziele-meilensteine {
-      display: flex;
-      flex-direction: column;
-    }
-    .projektziele-milestone-row {
-      display: grid;
-      grid-template-columns: 1fr 120px;
-      gap: var(--space-4);
-      padding: var(--space-2) var(--space-1);
+    .meilensteine-status {
+      display: inline-flex;
       align-items: center;
+      gap: var(--space-1);
+      font-size: 12px;
+      font-weight: 500;
+      padding: var(--space-1) var(--space-2);
       border-radius: var(--radius-sm);
-      transition: background-color var(--transition-fast);
     }
-    .projektziele-milestone-row:hover {
+    .meilensteine-status.completed {
+      background-color: var(--success-50);
+      color: var(--success-700);
+    }
+    .meilensteine-status.pending {
       background-color: var(--neutral-100);
+      color: var(--neutral-600);
     }
-    .projektziele-milestone-name {
-      font-size: 14px;
+    .meilensteine-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--neutral-300);
+      border-radius: var(--radius-sm);
+      background: white;
+      color: var(--neutral-600);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .meilensteine-btn:hover {
+      background: var(--neutral-100);
+      border-color: var(--neutral-400);
       color: var(--neutral-700);
     }
-    .projektziele-milestone-date {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--accent-700);
-      text-align: right;
+    .meilensteine-btn.completed {
+      background: var(--success-50);
+      border-color: var(--success-200);
+      color: var(--success-600);
     }
-    .projektziele-empty {
+    .meilensteine-btn .material-icons-outlined {
+      font-size: 18px;
+    }
+    .meilensteine-empty {
       font-size: 14px;
       color: var(--neutral-500);
       font-style: italic;
-      padding: var(--space-2);
-    }
-
-    /* Responsive Projektziele */
-    @media (max-width: 768px) {
-      .projektziele-beschrieb {
-        grid-template-columns: 1fr;
-      }
-      .projektziele-kosten-row {
-        grid-template-columns: 1fr;
-      }
-      .projektziele-milestone-row {
-        grid-template-columns: 1fr 100px;
-      }
+      padding: var(--space-4);
+      text-align: center;
     }
 
     /* Responsive Detail View */
@@ -3382,69 +3367,116 @@
       const pz = project.projektziele || {};
       const meilensteine = pz.meilensteine || [];
 
-      // Helper to create a milestone row
-      const milestoneRow = (milestone) => `
-        <div class="projektziele-milestone-row">
-          <span class="projektziele-milestone-name">${milestone.name || '-'}</span>
-          <span class="projektziele-milestone-date">${milestone.plannedDate || '-'}</span>
-        </div>
-      `;
+      // Helper to create a milestone table row
+      const milestoneRow = (milestone, index) => {
+        const isCompleted = milestone.status === 'completed';
+        const statusClass = isCompleted ? 'completed' : 'pending';
+        const statusLabel = isCompleted ? 'Erledigt' : 'Offen';
+        const buttonIcon = isCompleted ? 'check_circle' : 'radio_button_unchecked';
+
+        return `
+          <tr>
+            <td>${milestone.name || '-'}</td>
+            <td>${milestone.plannedDate || '-'}</td>
+            <td>${milestone.actualDate || '-'}</td>
+            <td>
+              <span class="meilensteine-status ${statusClass}">${statusLabel}</span>
+            </td>
+            <td>
+              <button class="meilensteine-btn ${statusClass}" onclick="toggleMilestoneStatus('${project.id}', ${index})" title="${isCompleted ? 'Als offen markieren' : 'Als erledigt markieren'}">
+                <span class="material-icons-outlined">${buttonIcon}</span>
+              </button>
+            </td>
+          </tr>
+        `;
+      };
+
+      const milestoneTable = meilensteine.length > 0
+        ? `
+          <table class="meilensteine-table">
+            <thead>
+              <tr>
+                <th>Meilenstein</th>
+                <th>Geplant</th>
+                <th>Effektiv</th>
+                <th>Status</th>
+                <th>Aktion</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${meilensteine.map((m, i) => milestoneRow(m, i)).join('')}
+            </tbody>
+          </table>
+        `
+        : '<div class="meilensteine-empty">Keine Meilensteine definiert</div>';
 
       content.innerHTML = `
         <div class="tab-main-header">Projektziele</div>
         <div class="projektziele-container">
           <!-- Projektbeschrieb Section -->
-          <div class="projektziele-section">
+          <div class="detail-section">
             <div class="section-header">Projektbeschrieb</div>
-            <div class="projektziele-beschrieb">
-              <div class="projektziele-field">
-                <span class="projektziele-field-label">Ausgangslage</span>
-                <span class="projektziele-field-value">${pz.ausgangslage || '-'}</span>
+            <div class="detail-fields">
+              <div class="detail-field">
+                <span class="detail-field-label">Ausgangslage</span>
+                <span class="detail-field-value">${pz.ausgangslage || '-'}</span>
               </div>
-              <div class="projektziele-field">
-                <span class="projektziele-field-label">Projektziele</span>
-                <span class="projektziele-field-value">${pz.ziele || '-'}</span>
+              <div class="detail-field">
+                <span class="detail-field-label">Projektziele</span>
+                <span class="detail-field-value">${pz.ziele || '-'}</span>
               </div>
             </div>
           </div>
 
           <!-- Kosten (Geplant) Section -->
-          <div class="projektziele-section">
+          <div class="detail-section">
             <div class="section-header">Kosten (Geplant)</div>
-            <div class="projektziele-kosten">
-              <div class="projektziele-kosten-row">
-                <div class="projektziele-kosten-field">
-                  <span class="projektziele-kosten-label">Geplante Gesamtkosten</span>
-                  <span class="projektziele-kosten-value">${formatCurrency(project.plannedTotalCost)}</span>
-                </div>
-                <div class="projektziele-kosten-field">
-                  <span class="projektziele-kosten-label">BKP 2 / m³ GV</span>
-                  <span class="projektziele-kosten-value placeholder">-</span>
-                </div>
+            <div class="detail-fields">
+              <div class="detail-field">
+                <span class="detail-field-label">Geplante Gesamtkosten</span>
+                <span class="detail-field-value">${formatCurrency(project.plannedTotalCost)}</span>
               </div>
-              <div class="projektziele-kosten-row">
-                <div class="projektziele-kosten-field">
-                  <span class="projektziele-kosten-label">BKP 2 / m² GF</span>
-                  <span class="projektziele-kosten-value placeholder">-</span>
-                </div>
-                <div class="projektziele-kosten-field">
-                  <!-- Empty for layout balance -->
-                </div>
+              <div class="detail-field">
+                <span class="detail-field-label">BKP 2 / m³ GV</span>
+                <span class="detail-field-value">-</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-field-label">BKP 2 / m² GF</span>
+                <span class="detail-field-value">-</span>
               </div>
             </div>
           </div>
 
-          <!-- Meilensteine (Geplant) Section -->
-          <div class="projektziele-section">
-            <div class="section-header">Meilensteine (Geplant)</div>
-            <div class="projektziele-meilensteine">
-              ${meilensteine.length > 0
-                ? meilensteine.map(milestoneRow).join('')
-                : '<div class="projektziele-empty">Keine Meilensteine definiert</div>'}
-            </div>
+          <!-- Meilensteine Section -->
+          <div class="detail-section">
+            <div class="section-header">Meilensteine</div>
+            ${milestoneTable}
           </div>
         </div>
       `;
+    }
+
+    // Toggle milestone status (for demo purposes - updates UI only)
+    function toggleMilestoneStatus(projectId, milestoneIndex) {
+      const project = properties.find(p => p.id === projectId);
+      if (!project || !project.projektziele?.meilensteine) return;
+
+      const milestone = project.projektziele.meilensteine[milestoneIndex];
+      if (!milestone) return;
+
+      // Toggle status
+      if (milestone.status === 'completed') {
+        milestone.status = 'pending';
+        milestone.actualDate = null;
+      } else {
+        milestone.status = 'completed';
+        // Set actual date to today
+        const today = new Date();
+        milestone.actualDate = today.toLocaleDateString('de-CH', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
+      }
+
+      // Re-render the tab
+      renderProjektzieleContent(project);
     }
 
     // Handle tab switching in detail view
