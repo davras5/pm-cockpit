@@ -1896,10 +1896,6 @@
       font-weight: var(--font-weight-medium);
       color: var(--neutral-900);
     }
-    .detail-field-value.highlight {
-      color: var(--accent-600);
-    }
-
     /* Detail Info Message */
     .detail-info-message {
       display: flex;
@@ -3590,11 +3586,11 @@
             <div class="detail-fields">
               <div class="detail-field">
                 <span class="detail-field-label">Ausgangslage</span>
-                <span class="detail-field-value">${pz.ausgangslage || '-'}</span>
+                <span class="detail-field-value" style="font-weight: var(--font-weight-normal)">${pz.ausgangslage || '-'}</span>
               </div>
               <div class="detail-field">
                 <span class="detail-field-label">Projektziele</span>
-                <span class="detail-field-value">${pz.ziele || '-'}</span>
+                <span class="detail-field-value" style="font-weight: var(--font-weight-normal)">${pz.ziele || '-'}</span>
               </div>
             </div>
           </div>
