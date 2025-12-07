@@ -2820,13 +2820,6 @@
       return match ? match[1] : siaPhase;
     }
 
-    // Get management area label
-    function getManagementAreaLabel(areaId) {
-      if (!areaId || !dataReferences?.managementAreas) return '-';
-      const ref = dataReferences.managementAreas.find(r => r.id === areaId);
-      return ref ? ref.label : '-';
-    }
-
     // Get construction type label
     function getConstructionTypeLabel(typeId) {
       if (!typeId || !dataReferences?.constructionTypes) return '-';
@@ -3067,8 +3060,8 @@
               </div>
 
               <div class="detail-field">
-                <span class="detail-field-label">Bewirtschaftungsgebiet</span>
-                <span class="detail-field-value">${getManagementAreaLabel(project.managementArea)}</span>
+                <span class="detail-field-label">Teilportfolio</span>
+                <span class="detail-field-value">${getSubPortfolioLabel(project.subPortfolio)}</span>
               </div>
               <div class="detail-field">
                 <span class="detail-field-label">Bauart</span>
