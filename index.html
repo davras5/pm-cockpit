@@ -1617,7 +1617,7 @@
       color: var(--accent-700);
       padding-bottom: var(--space-3);
       border-bottom: 2px solid var(--accent-600);
-      margin-bottom: var(--space-4);
+      margin-bottom: var(--space-6);
     }
     .kennzahlen-section {
       margin-bottom: var(--space-4);
@@ -2852,8 +2852,15 @@
       const content = document.getElementById('detailContent');
       const g = project.grundgroessen || {};
 
+      // Calculate percentage relative to base value
+      const calcPercent = (value, base, label) => {
+        if (value === null || value === undefined || !base) return '-';
+        const pct = ((value / base) * 100).toFixed(0);
+        return `${pct}% ${label}`;
+      };
+
       // Helper to create a data row
-      const row = (abbrev, desc, value, unit, percent = '100%') => `
+      const row = (abbrev, desc, value, unit, percent) => `
         <div class="kennzahlen-row">
           <span class="kennzahlen-abbrev">${abbrev}</span>
           <span class="kennzahlen-desc">${desc}</span>
@@ -2882,6 +2889,11 @@
       const ap = g.arbeitsplatzkennzahlen || {};
       const fq = g.formquotienten || {};
 
+      // Base values for percentage calculations
+      const baseGV = gv.gv;
+      const baseGSF = gsf.gsf;
+      const baseGF = gfl.gf;
+
       content.innerHTML = `
         <div class="kennzahlen-main-header">Volumen und Flächen nach SIA 416</div>
         <div class="kennzahlen-container">
@@ -2891,9 +2903,9 @@
             <div class="kennzahlen-section">
               <div class="kennzahlen-section-header">Gebäudevolumen</div>
               <div class="kennzahlen-rows">
-                ${row('GV', 'Gebäudevolumen', formatNumber(gv.gv), 'm³', '100%')}
-                ${row('GV OG', 'Gebäudevolumen Obergeschosse', formatNumber(gv.gvOg), 'm³', '100%')}
-                ${row('GV UG', 'Gebäudevolumen Untergeschosse', formatNumber(gv.gvUg), 'm³', '100%')}
+                ${row('GV', 'Gebäudevolumen', formatNumber(gv.gv), 'm³', calcPercent(gv.gv, baseGV, 'GV'))}
+                ${row('GV OG', 'Gebäudevolumen Obergeschosse', formatNumber(gv.gvOg), 'm³', calcPercent(gv.gvOg, baseGV, 'GV'))}
+                ${row('GV UG', 'Gebäudevolumen Untergeschosse', formatNumber(gv.gvUg), 'm³', calcPercent(gv.gvUg, baseGV, 'GV'))}
               </div>
             </div>
 
@@ -2901,9 +2913,9 @@
             <div class="kennzahlen-section">
               <div class="kennzahlen-section-header">Grundstücksflächen</div>
               <div class="kennzahlen-rows">
-                ${row('GSF', 'Grundstücksfläche', formatNumber(gsf.gsf), 'm²', '100%')}
-                ${row('GGF', 'Gebäudegrundfläche', formatNumber(gsf.ggf), 'm²', '100%')}
-                ${row('UF', 'Umgebungsfläche', formatNumber(gsf.uf), 'm²', '100%')}
+                ${row('GSF', 'Grundstücksfläche', formatNumber(gsf.gsf), 'm²', calcPercent(gsf.gsf, baseGSF, 'GSF'))}
+                ${row('GGF', 'Gebäudegrundfläche', formatNumber(gsf.ggf), 'm²', calcPercent(gsf.ggf, baseGSF, 'GSF'))}
+                ${row('UF', 'Umgebungsfläche', formatNumber(gsf.uf), 'm²', calcPercent(gsf.uf, baseGSF, 'GSF'))}
               </div>
             </div>
 
@@ -2911,16 +2923,16 @@
             <div class="kennzahlen-section">
               <div class="kennzahlen-section-header">Gebäudeflächen</div>
               <div class="kennzahlen-rows">
-                ${row('GF', 'Geschossfläche', formatNumber(gfl.gf), 'm²', '100%')}
-                ${row('GF OG', 'Geschossfläche Obergeschosse', formatNumber(gfl.gfOg), 'm²', '100%')}
-                ${row('GF UG', 'Geschossfläche Untergeschosse', formatNumber(gfl.gfUg), 'm²', '100%')}
-                ${row('KF', 'Konstruktionsfläche', formatNumber(gfl.kf), 'm²', '100%')}
-                ${row('NGF', 'Nettogeschossfläche', formatNumber(gfl.ngf), 'm²', '100%')}
-                ${row('NF', 'Nutzfläche', formatNumber(gfl.nf), 'm²', '100%')}
-                ${row('HNF', 'Hauptnutzfläche', formatNumber(gfl.hnf), 'm²', '100%')}
-                ${row('NNF', 'Nebennutzfläche', formatNumber(gfl.nnf), 'm²', '100%')}
-                ${row('VF', 'Verkehrsfläche', formatNumber(gfl.vf), 'm²', '100%')}
-                ${row('FF', 'Funktionsfläche', formatNumber(gfl.ff), 'm²', '100%')}
+                ${row('GF', 'Geschossfläche', formatNumber(gfl.gf), 'm²', calcPercent(gfl.gf, baseGF, 'GF'))}
+                ${row('GF OG', 'Geschossfläche Obergeschosse', formatNumber(gfl.gfOg), 'm²', calcPercent(gfl.gfOg, baseGF, 'GF'))}
+                ${row('GF UG', 'Geschossfläche Untergeschosse', formatNumber(gfl.gfUg), 'm²', calcPercent(gfl.gfUg, baseGF, 'GF'))}
+                ${row('KF', 'Konstruktionsfläche', formatNumber(gfl.kf), 'm²', calcPercent(gfl.kf, baseGF, 'GF'))}
+                ${row('NGF', 'Nettogeschossfläche', formatNumber(gfl.ngf), 'm²', calcPercent(gfl.ngf, baseGF, 'GF'))}
+                ${row('NF', 'Nutzfläche', formatNumber(gfl.nf), 'm²', calcPercent(gfl.nf, baseGF, 'GF'))}
+                ${row('HNF', 'Hauptnutzfläche', formatNumber(gfl.hnf), 'm²', calcPercent(gfl.hnf, baseGF, 'GF'))}
+                ${row('NNF', 'Nebennutzfläche', formatNumber(gfl.nnf), 'm²', calcPercent(gfl.nnf, baseGF, 'GF'))}
+                ${row('VF', 'Verkehrsfläche', formatNumber(gfl.vf), 'm²', calcPercent(gfl.vf, baseGF, 'GF'))}
+                ${row('FF', 'Funktionsfläche', formatNumber(gfl.ff), 'm²', calcPercent(gfl.ff, baseGF, 'GF'))}
               </div>
             </div>
 
@@ -2928,16 +2940,16 @@
             <div class="kennzahlen-section">
               <div class="kennzahlen-section-header">Flächen DIN 277</div>
               <div class="kennzahlen-rows">
-                ${row('HNF 1', 'Wohnen und Aufenthalt', formatNumber(din.hnf1), 'm²', '100%')}
-                ${row('HNF 2', 'Büroarbeit', formatNumber(din.hnf2), 'm²', '100%')}
-                ${row('HNF 3', 'Produktion', formatNumber(din.hnf3), 'm²', '100%')}
-                ${row('HNF 4', 'Lagern, Verteilen, Verkaufen', formatNumber(din.hnf4), 'm²', '100%')}
-                ${row('HNF 5', 'Bildung, Unterricht, Kultur', formatNumber(din.hnf5), 'm²', '100%')}
-                ${row('HNF 6', 'Heilen, Pflegen', formatNumber(din.hnf6), 'm²', '100%')}
-                ${row('NNF 7', 'Nebennutzfläche', formatNumber(din.nnf7), 'm²', '100%')}
-                ${row('FF 8', 'Betriebstechnische Anlagen', formatNumber(din.ff8), 'm²', '100%')}
-                ${row('VF 9', 'Verkehrserschliessung und -sicherung', formatNumber(din.vf9), 'm²', '100%')}
-                ${row('BUF 10', 'Verschiedene Nutzungen', formatNumber(din.buf10), 'm²', '100%')}
+                ${row('HNF 1', 'Wohnen und Aufenthalt', formatNumber(din.hnf1), 'm²', calcPercent(din.hnf1, baseGF, 'GF'))}
+                ${row('HNF 2', 'Büroarbeit', formatNumber(din.hnf2), 'm²', calcPercent(din.hnf2, baseGF, 'GF'))}
+                ${row('HNF 3', 'Produktion', formatNumber(din.hnf3), 'm²', calcPercent(din.hnf3, baseGF, 'GF'))}
+                ${row('HNF 4', 'Lagern, Verteilen, Verkaufen', formatNumber(din.hnf4), 'm²', calcPercent(din.hnf4, baseGF, 'GF'))}
+                ${row('HNF 5', 'Bildung, Unterricht, Kultur', formatNumber(din.hnf5), 'm²', calcPercent(din.hnf5, baseGF, 'GF'))}
+                ${row('HNF 6', 'Heilen, Pflegen', formatNumber(din.hnf6), 'm²', calcPercent(din.hnf6, baseGF, 'GF'))}
+                ${row('NNF 7', 'Nebennutzfläche', formatNumber(din.nnf7), 'm²', calcPercent(din.nnf7, baseGF, 'GF'))}
+                ${row('FF 8', 'Betriebstechnische Anlagen', formatNumber(din.ff8), 'm²', calcPercent(din.ff8, baseGF, 'GF'))}
+                ${row('VF 9', 'Verkehrserschliessung und -sicherung', formatNumber(din.vf9), 'm²', calcPercent(din.vf9, baseGF, 'GF'))}
+                ${row('BUF 10', 'Verschiedene Nutzungen', formatNumber(din.buf10), 'm²', calcPercent(din.buf10, baseGF, 'GF'))}
               </div>
             </div>
           </div>
