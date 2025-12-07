@@ -405,20 +405,19 @@
     .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
     .card-image { position: relative; height: 180px; background-color: var(--neutral-200); background-size: cover; background-position: center; }
     /* Tag Style Shared */
-    .priority-tag { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; box-shadow: var(--shadow-sm); }
-    .priority-0 { background-color: var(--priority-high-bg); color: var(--priority-high-text); }
-    .priority-1 { background-color: var(--priority-normal-bg); color: var(--priority-normal-text); }
-    .priority-2 { background-color: var(--priority-low-bg); color: var(--priority-low-text); }
-    .priority-3 { background-color: var(--priority-none-bg); color: var(--priority-none-text); }
-    .priority-null { background-color: var(--priority-null-bg); color: var(--priority-null-text); border: 1px solid var(--priority-null-border); }
+    .status-tag { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; box-shadow: var(--shadow-sm); }
+    .status-active { background-color: var(--priority-normal-bg); color: var(--priority-normal-text); }
+    .status-inactive { background-color: var(--priority-none-bg); color: var(--priority-none-text); }
+    .status-pending { background-color: var(--warning-bg); color: var(--warning-text); }
+    .status-sold { background-color: var(--priority-low-bg); color: var(--priority-low-text); }
+    .status-unknown { background-color: var(--priority-null-bg); color: var(--priority-null-text); border: 1px solid var(--priority-null-border); }
 
     /* Image Tags Container */
     .image-tags { position: absolute; top: var(--space-3); left: var(--space-3); display: flex; gap: var(--space-2); z-index: 2; }
-    .year-tag { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; background-color: var(--priority-none-bg); color: var(--priority-none-text); box-shadow: var(--shadow-sm); }
 
     /* Clickable tag styles */
-    .priority-tag[data-filter], .year-tag[data-filter] { cursor: pointer; transition: transform 0.15s, filter 0.15s; }
-    .priority-tag[data-filter]:hover, .year-tag[data-filter]:hover { transform: scale(1.05); filter: brightness(0.95); }
+    .status-tag[data-filter] { cursor: pointer; transition: transform 0.15s, filter 0.15s; }
+    .status-tag[data-filter]:hover { transform: scale(1.05); filter: brightness(0.95); }
 
     .card-badge { position: absolute; top: var(--space-3); left: var(--space-3); }
     .card-content { padding: var(--space-4); }
@@ -437,7 +436,7 @@
     /* --- List View --- */
     .view-container { display: none; }
     .view-container.active { display: block; }
-    .stats-boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    .stats-boxes { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); max-width: 400px; }
     .stats-box { background: var(--neutral-50); border-radius: var(--radius-lg); padding: var(--space-5); text-align: center; box-shadow: var(--shadow-md); }
     .stats-box-value { font-size: 32px; font-weight: 600; color: var(--neutral-900); margin-bottom: var(--space-1); }
     .stats-box-label { font-size: 13px; color: var(--neutral-500); }
@@ -516,11 +515,11 @@
           0 0 0 1px rgba(255,255,255,0.3),
           0 4px 12px rgba(0,0,0,0.25);
     }
-    .marker-0 { background-color: var(--priority-high-marker); }
-    .marker-1 { background-color: var(--priority-normal-marker); }
-    .marker-2 { background-color: var(--priority-low-marker); }
-    .marker-3 { background-color: var(--priority-none-marker); }
-    .marker-null { background-color: var(--priority-null-marker); }
+    .marker-active { background-color: var(--priority-normal-marker); }
+    .marker-inactive { background-color: var(--priority-none-marker); }
+    .marker-pending { background-color: var(--warning); }
+    .marker-sold { background-color: var(--priority-low-marker); }
+    .marker-unknown { background-color: var(--priority-null-marker); }
     .marker .material-icons-outlined { color: var(--neutral-50); font-size: 16px; }
     .marker.selected {
         border: 3px solid var(--accent-600);
@@ -539,7 +538,7 @@
     .popup-link { display: block; text-align: center; padding: var(--space-2) var(--space-3); background: var(--primary-900); color: var(--neutral-50); text-decoration: none; border-radius: var(--radius-sm); margin-top: var(--space-2); cursor: pointer; }
 
     /* Responsive */
-    @media (max-width: 900px) { .stats-boxes { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 900px) { .stats-boxes { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 768px) {
         .map-container.active { display: flex; flex-direction: column; height: auto; }
         .map-sidebar { width: 100%; max-height: 250px; border-right: none; border-bottom: 1px solid var(--neutral-200); }
@@ -1346,7 +1345,7 @@
       <div class="search-row">
         <div class="search-input-wrapper">
           <span class="material-icons-outlined">search</span>
-          <input type="text" class="search-input" id="searchInput" placeholder="Suche nach Bezeichnung, Adresse, oder Wirtschaftseinheit">
+          <input type="text" class="search-input" id="searchInput" placeholder="Suche nach Titel, Adresse, Stadt oder Region">
         </div>
         <div class="view-toggle">
           <button class="view-btn" data-view="map" title="Karte"><span class="material-icons-outlined">map</span></button>
@@ -1376,14 +1375,11 @@
     <div class="view-container" id="listView">
       <div class="stats-boxes" id="statsBoxes">
         <div class="stats-box"><div class="stats-box-value" id="statsTotalObjects">0</div><div class="stats-box-label">Anzahl Objekte</div></div>
-        <div class="stats-box"><div class="stats-box-value" id="statsHighPriority">0</div><div class="stats-box-label">Hohe Priorität</div></div>
-        <div class="stats-box"><div class="stats-box-value" id="statsNormalPriority">0</div><div class="stats-box-label">Normale Priorität</div></div>
-        <div class="stats-box"><div class="stats-box-value" id="statsLowPriority">0</div><div class="stats-box-label">Geringe Priorität</div></div>
         <div class="stats-box stats-box-download" onclick="exportToExcel()"><span class="material-icons-outlined">download</span><div class="stats-box-label">Excel Download</div></div>
       </div>
       <div class="list-table-container">
         <table class="list-table">
-          <thead><tr><th></th><th>ID</th><th>Objekt</th><th>Verkaufsjahr</th><th>Priorisierung</th><th>Meilenstein</th><th>Objekt Fläche</th><th>Marktwert</th></tr></thead>
+          <thead><tr><th></th><th>Titel</th><th>Adresse</th><th>Region</th><th>Land</th><th>Status</th></tr></thead>
           <tbody id="listTableBody"></tbody>
         </table>
       </div>
@@ -1412,26 +1408,10 @@
         </div>
       </div>
       <div class="filter-modal-body">
-        <div class="filter-columns">
+        <div class="filter-columns" style="grid-template-columns: 1fr;">
           <div class="filter-column">
-            <h3 class="filter-column-title">Nutzung</h3>
-            <div class="filter-options" id="filterNutzung"></div>
-          </div>
-          <div class="filter-column">
-            <h3 class="filter-column-title">Verkaufsjahr</h3>
-            <div class="filter-options" id="filterYear"></div>
-          </div>
-          <div class="filter-column">
-            <h3 class="filter-column-title">Priorisierung</h3>
-            <div class="filter-options" id="filterPriority"></div>
-          </div>
-          <div class="filter-column">
-            <h3 class="filter-column-title">Meilenstein</h3>
-            <div class="filter-options" id="filterMilestone"></div>
-          </div>
-          <div class="filter-column">
-            <h3 class="filter-column-title">Portfolio</h3>
-            <div class="filter-options" id="filterPortfolio"></div>
+            <h3 class="filter-column-title">Status</h3>
+            <div class="filter-options" id="filterStatus"></div>
           </div>
         </div>
       </div>
@@ -1511,22 +1491,14 @@
     let markers = [];
     let markersMap = new Map();
 
-    // Advanced filter state
+    // Advanced filter state - simplified to only status
     let advancedFilters = {
-      type: new Set(),        // Nutzung
-      year: new Set(),        // Verkaufsjahr
-      priority: new Set(),    // Priorisierung
-      milestone: new Set(),   // Meilenstein
-      portfolio: new Set()    // Portfolio
+      status: new Set()       // Status filter
     };
 
     // Unique values from data (populated after load)
     let filterOptions = {
-      type: [],
-      year: [],
-      priority: [],
-      milestone: [],
-      portfolio: []
+      status: []
     };
 
     // Carousel state
@@ -1539,11 +1511,7 @@
         view: params.get('view'),
         id: params.get('id'),
         q: params.get('q'),
-        type: params.get('type'),
-        year: params.get('year'),
-        priority: params.get('priority'),
-        milestone: params.get('milestone'),
-        portfolio: params.get('portfolio')
+        status: params.get('status')
       };
     }
 
@@ -1552,12 +1520,10 @@
       if (currentView !== 'gallery') params.set('view', currentView);
       if (searchQuery) params.set('q', searchQuery);
 
-      // Add all advanced filters
-      Object.keys(advancedFilters).forEach(key => {
-        if (advancedFilters[key].size > 0) {
-          params.set(key, Array.from(advancedFilters[key]).join(','));
-        }
-      });
+      // Add status filter if active
+      if (advancedFilters.status.size > 0) {
+        params.set('status', Array.from(advancedFilters.status).join(','));
+      }
 
       const newUrl = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname;
       window.history.replaceState({}, '', newUrl);
@@ -1571,29 +1537,33 @@
         document.getElementById('searchInput').value = searchQuery;
       }
 
-      // Load all advanced filters from URL
-      ['type', 'year', 'priority', 'milestone', 'portfolio'].forEach(key => {
-        if (params[key]) {
-          params[key].split(',').forEach(val => advancedFilters[key].add(val));
-        }
-      });
+      // Load status filter from URL
+      if (params.status) {
+        params.status.split(',').forEach(val => advancedFilters.status.add(val));
+      }
     }
 
-    function getPriorityClass(priority) { return (priority === null || priority === undefined) ? 'priority-null' : `priority-${priority}`; }
-    function getPriorityLabel(priority, priorityLabel) { return (priority === null || priority === undefined) ? 'Keine Angabe' : priorityLabel; }
-    function getPriorityValue(priority) { return (priority === null || priority === undefined) ? 'null' : String(priority); }
-    function formatCHF(value) { return (!value) ? 'CHF 0' : 'CHF ' + value.toLocaleString('de-CH').replace(/,/g, "'"); }
-    function formatNumber(value) { return (!value && value !== 0) ? '0' : value.toLocaleString('de-CH').replace(/,/g, "'"); }
-    function formatPriceRange(min, max) { return ((!min) && (!max)) ? 'CHF 0 - CHF 0' : formatCHF(min) + ' - ' + formatCHF(max); }
-    function pricePerSqm(price, area) { return (!price || !area) ? 0 : Math.round(price / area); }
-    function formatCoord(value, dir) {
-      if (!value) return '-';
-      const abs = Math.abs(value);
-      const deg = Math.floor(abs);
-      const minFloat = (abs - deg) * 60;
-      const min = Math.floor(minFloat);
-      const sec = ((minFloat - min) * 60).toFixed(1);
-      return `${deg}°${min}'${sec}"${dir}`;
+    // Status helper functions
+    function getStatusClass(status) {
+      if (!status) return 'status-unknown';
+      return `status-${status.toLowerCase()}`;
+    }
+    function getStatusLabel(status) {
+      if (!status) return 'Unbekannt';
+      const labels = { 'active': 'Aktiv', 'inactive': 'Inaktiv', 'pending': 'Ausstehend', 'sold': 'Verkauft' };
+      return labels[status.toLowerCase()] || status;
+    }
+
+    // Format full address from new fields
+    function formatAddress(prop) {
+      const parts = [];
+      if (prop.street) {
+        parts.push(prop.street + (prop.streetnumber ? ' ' + prop.streetnumber : ''));
+      }
+      if (prop.zip || prop.city) {
+        parts.push([prop.zip, prop.city].filter(Boolean).join(' '));
+      }
+      return parts.join(', ') || 'Keine Adresse';
     }
 
     function getPlaceholderImage(type, id) {
@@ -1606,53 +1576,31 @@
 
     // Extract unique filter options from data
     function extractFilterOptions() {
-      const types = new Set();
-      const years = new Set();
-      const priorities = new Map(); // value -> label
-      const milestones = new Map(); // current/total -> label
-      const portfolios = new Set();
+      const statuses = new Set();
 
       properties.forEach(prop => {
-        if (prop.type) types.add(prop.type);
-        if (prop.year) years.add(prop.year);
-
-        const pKey = prop.priority !== null && prop.priority !== undefined ? String(prop.priority) : 'null';
-        const pLabel = getPriorityLabel(prop.priority, prop.priorityLabel);
-        priorities.set(pKey, pLabel);
-
-        if (prop.milestone) {
-          const mKey = `${prop.milestone.current}/${prop.milestone.total}`;
-          milestones.set(mKey, prop.milestone.label);
-        }
-
-        if (prop.portfolio) portfolios.add(prop.portfolio);
+        if (prop.status) statuses.add(prop.status);
       });
 
-      filterOptions.type = Array.from(types).sort();
-      filterOptions.year = Array.from(years).sort((a, b) => a - b);
-      filterOptions.priority = Array.from(priorities.entries()).map(([value, label]) => ({ value, label }));
-      filterOptions.milestone = Array.from(milestones.entries()).map(([value, label]) => ({ value, label }));
-      filterOptions.portfolio = Array.from(portfolios).sort();
+      filterOptions.status = Array.from(statuses).sort();
     }
 
     // Check if any filters are active
     function hasActiveFilters() {
-      return Object.values(advancedFilters).some(set => set.size > 0) || searchQuery;
+      return advancedFilters.status.size > 0 || searchQuery;
     }
 
     // Count total active filters (excluding search)
     function getActiveFilterCount() {
-      let count = 0;
-      Object.values(advancedFilters).forEach(set => count += set.size);
-      return count;
+      return advancedFilters.status.size;
     }
 
-    // Get priority counts from all properties
-    function getPriorityCounts() {
-      const counts = { '0': 0, '1': 0, '2': 0, '3': 0, 'null': 0 };
+    // Get status counts from all properties
+    function getStatusCounts() {
+      const counts = {};
       properties.forEach(prop => {
-        const pKey = prop.priority !== null && prop.priority !== undefined ? String(prop.priority) : 'null';
-        if (counts.hasOwnProperty(pKey)) counts[pKey]++;
+        const status = prop.status || 'unknown';
+        counts[status] = (counts[status] || 0) + 1;
       });
       return counts;
     }
@@ -1673,26 +1621,18 @@
       }
     }
 
-    // Render priority pills and reset button
-    function renderPriorityPills() {
+    // Render status pills and reset button
+    function renderStatusPills() {
       const container = document.getElementById('filterPills');
-      const counts = getPriorityCounts();
+      const counts = getStatusCounts();
 
-      // Priority labels mapping
-      const priorityLabels = {
-        '0': 'Hohe Priorität',
-        '1': 'Normale Priorität',
-        '2': 'Geringe Priorität',
-        '3': 'Keine Priorität',
-        'null': 'Keine Angabe'
-      };
-
-      // Build pills HTML
-      let html = ['0', '1', '2', '3', 'null'].map(pKey => {
-        const isActive = advancedFilters.priority.has(pKey);
+      // Build pills HTML for each status
+      let html = filterOptions.status.map(status => {
+        const isActive = advancedFilters.status.has(status);
+        const count = counts[status] || 0;
         return `
-          <button class="filter-pill ${isActive ? 'active' : ''}" data-priority="${pKey}">
-            ${priorityLabels[pKey]} (${counts[pKey]})
+          <button class="filter-pill ${isActive ? 'active' : ''}" data-status="${status}">
+            ${getStatusLabel(status)} (${count})
             <span class="material-icons-outlined close-icon">close</span>
           </button>
         `;
@@ -1707,14 +1647,14 @@
 
       container.innerHTML = html;
 
-      // Add click handlers for priority pills
+      // Add click handlers for status pills
       container.querySelectorAll('.filter-pill').forEach(pill => {
         pill.addEventListener('click', () => {
-          const priority = pill.dataset.priority;
-          if (advancedFilters.priority.has(priority)) {
-            advancedFilters.priority.delete(priority);
+          const status = pill.dataset.status;
+          if (advancedFilters.status.has(status)) {
+            advancedFilters.status.delete(status);
           } else {
-            advancedFilters.priority.add(priority);
+            advancedFilters.status.add(status);
           }
           applyFilters();
           renderFilterModal();
@@ -1742,37 +1682,15 @@
     // Apply all filters
     function applyFilters() {
       filteredProperties = properties.filter(prop => {
-        // Search query filter
+        // Search query filter - search across title, city, street, zip, region, country
         if (searchQuery) {
           const query = searchQuery.toLowerCase();
-          const searchFields = [prop.econUnit, prop.bldgNum, prop.title, prop.type, prop.city, prop.zip, prop.address, prop.canton].map(f => (f || '').toString().toLowerCase());
+          const searchFields = [prop.title, prop.city, prop.street, prop.zip, prop.region, prop.country].map(f => (f || '').toString().toLowerCase());
           if (!searchFields.some(field => field.includes(query))) return false;
         }
 
-        // Type filter (OR within category)
-        if (advancedFilters.type.size > 0 && !advancedFilters.type.has(prop.type)) {
-          return false;
-        }
-
-        // Year filter (OR within category)
-        if (advancedFilters.year.size > 0 && !advancedFilters.year.has(String(prop.year))) {
-          return false;
-        }
-
-        // Priority filter (OR within category)
-        if (advancedFilters.priority.size > 0) {
-          const pKey = prop.priority !== null && prop.priority !== undefined ? String(prop.priority) : 'null';
-          if (!advancedFilters.priority.has(pKey)) return false;
-        }
-
-        // Milestone filter (OR within category)
-        if (advancedFilters.milestone.size > 0) {
-          const mKey = prop.milestone ? `${prop.milestone.current}/${prop.milestone.total}` : '';
-          if (!advancedFilters.milestone.has(mKey)) return false;
-        }
-
-        // Portfolio filter (OR within category)
-        if (advancedFilters.portfolio.size > 0 && !advancedFilters.portfolio.has(prop.portfolio)) {
+        // Status filter
+        if (advancedFilters.status.size > 0 && !advancedFilters.status.has(prop.status)) {
           return false;
         }
 
@@ -1785,7 +1703,7 @@
 
       updateUrlParams();
       updateFilterButtonState();
-      renderPriorityPills();
+      renderStatusPills();
     }
 
     // Render filter modal options
@@ -1798,42 +1716,13 @@
         </div>
       `;
 
-      // Nutzung (type)
-      const typeContainer = document.getElementById('filterNutzung');
-      typeContainer.innerHTML = filterOptions.type.map(t =>
-        createOption(advancedFilters.type.has(t), 'type', t, t)
-      ).join('');
-
-      // Verkaufsjahr (year)
-      const yearContainer = document.getElementById('filterYear');
-      yearContainer.innerHTML = filterOptions.year.map(y =>
-        createOption(advancedFilters.year.has(String(y)), 'year', y, y)
-      ).join('');
-
-      // Priorisierung (priority) - show all 5 options
-      const priorityContainer = document.getElementById('filterPriority');
-      const priorityLabels = {
-        '0': 'Hohe Priorität',
-        '1': 'Normale Priorität',
-        '2': 'Geringe Priorität',
-        '3': 'Keine Priorität',
-        'null': 'Keine Angabe'
-      };
-      priorityContainer.innerHTML = ['0', '1', '2', '3', 'null'].map(pKey =>
-        createOption(advancedFilters.priority.has(pKey), 'priority', pKey, priorityLabels[pKey])
-      ).join('');
-
-      // Meilenstein (milestone)
-      const milestoneContainer = document.getElementById('filterMilestone');
-      milestoneContainer.innerHTML = filterOptions.milestone.map(m =>
-        createOption(advancedFilters.milestone.has(m.value), 'milestone', m.value, `${m.value} ${m.label}`)
-      ).join('');
-
-      // Portfolio
-      const portfolioContainer = document.getElementById('filterPortfolio');
-      portfolioContainer.innerHTML = filterOptions.portfolio.map(p =>
-        createOption(advancedFilters.portfolio.has(p), 'portfolio', p, p)
-      ).join('');
+      // Status filter
+      const statusContainer = document.getElementById('filterStatus');
+      if (statusContainer) {
+        statusContainer.innerHTML = filterOptions.status.map(s =>
+          createOption(advancedFilters.status.has(s), 'status', s, getStatusLabel(s))
+        ).join('');
+      }
 
       // Add click handlers
       document.querySelectorAll('.filter-modal .filter-option').forEach(opt => {
@@ -1928,20 +1817,17 @@
       document.getElementById('objectCount').textContent = data.length;
       grid.innerHTML = data.map(prop => `
         <div class="card" data-id="${prop.id}">
-          <div class="card-image" style="background-image: url('${getPlaceholderImage(prop.type, prop.id)}')">
+          <div class="card-image" style="background-image: url('${getPlaceholderImage(prop.title, prop.id)}')">
             <div class="image-tags">
-              <span class="year-tag" data-filter="year" data-value="${prop.year}">${prop.year}</span>
-              <span class="priority-tag ${getPriorityClass(prop.priority)}" data-filter="priority" data-value="${getPriorityValue(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
+              <span class="status-tag ${getStatusClass(prop.status)}" data-filter="status" data-value="${prop.status}">${getStatusLabel(prop.status)}</span>
             </div>
           </div>
           <div class="card-content">
-            <div class="card-label">${prop.econUnit}/${prop.bldgNum} ${prop.type}</div>
-            <div class="card-location">In ${prop.zip} ${prop.city}</div>
-            <div class="card-price">${formatPriceRange(prop.valueMin, prop.valueMax)}</div>
-            <div class="card-price-sqm">${formatCHF(pricePerSqm(prop.valueMin, prop.areaGF))} - ${formatCHF(pricePerSqm(prop.valueMax, prop.areaGF))} / m² GF</div>
+            <div class="card-label">${prop.title}</div>
+            <div class="card-location">${formatAddress(prop)}</div>
             <div class="card-details">
-              <span class="card-detail-label">Geschossfläche GF:</span><span class="card-detail-value">${prop.areaGF} m²</span>
-              <span class="card-detail-label">Buchwert:</span><span class="card-detail-value">${formatCHF(prop.bookValue)}</span>
+              <span class="card-detail-label">Land:</span><span class="card-detail-value">${prop.country || '-'}</span>
+              <span class="card-detail-label">Region:</span><span class="card-detail-value">${prop.region || '-'}</span>
             </div>
           </div>
         </div>`).join('');
@@ -1950,49 +1836,39 @@
     function renderListView() {
       const data = getDataToRender();
       document.getElementById('objectCount').textContent = data.length;
-      const stats = { total: data.length, high: 0, normal: 0, low: 0 };
-      data.forEach(p => {
-        if (p.priorityLabel === 'Hohe Priorität') stats.high++;
-        else if (p.priorityLabel === 'Normale Priorität') stats.normal++;
-        else if (p.priorityLabel === 'Geringe Priorität') stats.low++;
-      });
-      document.getElementById('statsTotalObjects').textContent = stats.total;
-      document.getElementById('statsHighPriority').textContent = stats.high;
-      document.getElementById('statsNormalPriority').textContent = stats.normal;
-      document.getElementById('statsLowPriority').textContent = stats.low;
+
+      // Update stats
+      document.getElementById('statsTotalObjects').textContent = data.length;
 
       const tbody = document.getElementById('listTableBody');
       tbody.innerHTML = data.map(prop => `
         <tr data-id="${prop.id}">
           <td><span class="material-icons-outlined object-icon">home</span></td>
-          <td>${prop.econUnit}/${prop.bldgNum}</td>
-          <td>${prop.type} in ${prop.zip} ${prop.city}</td>
-          <td><span class="year-tag" data-filter="year" data-value="${prop.year}">${prop.year}</span></td>
-          <td><span class="priority-tag ${getPriorityClass(prop.priority)}" data-filter="priority" data-value="${getPriorityValue(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span></td>
-          <td>${prop.milestone.current}/${prop.milestone.total} ${prop.milestone.label}</td>
-          <td>${prop.areaGF} m²</td>
-          <td>${formatPriceRange(prop.valueMin, prop.valueMax)}</td>
+          <td>${prop.title}</td>
+          <td>${formatAddress(prop)}</td>
+          <td>${prop.region || '-'}</td>
+          <td>${prop.country || '-'}</td>
+          <td><span class="status-tag ${getStatusClass(prop.status)}" data-filter="status" data-value="${prop.status}">${getStatusLabel(prop.status)}</span></td>
         </tr>`).join('');
     }
 
-    // --- REPAIRED SIDEBAR RENDER FUNCTION ---
+    // --- SIDEBAR RENDER FUNCTION ---
     function renderMapView() {
       const data = getDataToRender();
       document.getElementById('objectCount').textContent = data.length;
       const sidebar = document.getElementById('mapSidebar');
-      
-      // Neue Struktur: Bild-Container mit Tags (Overlay) -> Inhalt (Name + Preis)
+
+      // Simplified structure with status tag
       sidebar.innerHTML = data.map(prop => `
         <div class="map-sidebar-item" data-id="${prop.id}">
-          <div class="map-sidebar-image" style="background-image: url('${getPlaceholderImage(prop.type, prop.id)}')">
+          <div class="map-sidebar-image" style="background-image: url('${getPlaceholderImage(prop.title, prop.id)}')">
             <div class="image-tags">
-              <span class="year-tag" data-filter="year" data-value="${prop.year}">${prop.year}</span>
-              <span class="priority-tag ${getPriorityClass(prop.priority)}" data-filter="priority" data-value="${getPriorityValue(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
+              <span class="status-tag ${getStatusClass(prop.status)}" data-filter="status" data-value="${prop.status}">${getStatusLabel(prop.status)}</span>
             </div>
           </div>
           <div class="map-sidebar-content">
-            <div class="map-sidebar-title">${prop.type} in ${prop.zip} ${prop.city}</div>
-            <div class="map-sidebar-price">${formatPriceRange(prop.valueMin, prop.valueMax)}</div>
+            <div class="map-sidebar-title">${prop.title}</div>
+            <div class="map-sidebar-price">${formatAddress(prop)}</div>
           </div>
         </div>`).join('');
 
@@ -2046,7 +1922,7 @@
       data.forEach(prop => {
         if (prop.lat && prop.lng) {
           const el = document.createElement('div');
-          el.className = `marker marker-${prop.priority !== null ? prop.priority : 'null'}`;
+          el.className = `marker marker-${prop.status || 'unknown'}`;
           el.innerHTML = '<span class="material-icons-outlined">home</span>';
           el.addEventListener('click', () => {
             document.querySelectorAll('.marker').forEach(m => m.classList.remove('selected'));
@@ -2055,11 +1931,11 @@
           });
 
           const popup = new mapboxgl.Popup({ offset: 25, maxWidth: '280px' }).setHTML(`
-            <div class="popup-image" style="background-image: url('${getPlaceholderImage(prop.type, prop.id)}')"></div>
+            <div class="popup-image" style="background-image: url('${getPlaceholderImage(prop.title, prop.id)}')"></div>
             <div class="popup-content">
-              <div class="popup-title">${prop.type}</div>
-              <div class="popup-location">${prop.address}, ${prop.city}</div>
-              <div class="popup-price">${formatPriceRange(prop.valueMin, prop.valueMax)}</div>
+              <div class="popup-title">${prop.title}</div>
+              <div class="popup-location">${formatAddress(prop)}</div>
+              <div class="popup-status">${getStatusLabel(prop.status)}</div>
             </div>`);
 
           const marker = new mapboxgl.Marker(el).setLngLat([prop.lng, prop.lat]).setPopup(popup).addTo(map);
@@ -2202,8 +2078,8 @@
 
     // Unified click handler (event delegation for tags and sidebar items)
     function handleContentClick(event) {
-      // First, check if clicked on a filter tag
-      const tag = event.target.closest('.priority-tag[data-filter], .year-tag[data-filter]');
+      // First, check if clicked on a filter tag (status-tag)
+      const tag = event.target.closest('.status-tag[data-filter]');
       if (tag) {
         event.stopPropagation();
         event.preventDefault();
