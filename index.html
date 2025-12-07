@@ -1701,22 +1701,7 @@
     .bkp-table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: var(--space-6);
-    }
-    .bkp-table th {
-      font-size: var(--font-size-base);
-      font-weight: var(--font-weight-semibold);
-      color: var(--neutral-700);
-      text-align: left;
-      padding: var(--space-1) var(--space-1);
-      padding-bottom: var(--space-2);
-      white-space: nowrap;
-    }
-    .bkp-table th.text-right {
-      text-align: right;
-    }
-    .bkp-table th.bkp-header-group {
-      border-bottom: 1px solid var(--neutral-200);
+      margin-bottom: var(--space-8);
     }
     .bkp-table td {
       font-size: var(--font-size-sm);
@@ -1731,34 +1716,8 @@
     .bkp-table td.text-muted {
       color: var(--neutral-400);
     }
-    .bkp-table tbody tr {
-      border-radius: var(--radius-sm);
-    }
     .bkp-table tbody tr:hover td {
       background-color: var(--neutral-100);
-    }
-    .bkp-table .bkp-code {
-      font-weight: var(--font-weight-semibold);
-      color: var(--accent-700);
-      width: 40px;
-    }
-    .bkp-table .bkp-name {
-      min-width: 150px;
-      color: var(--neutral-600);
-    }
-    .bkp-table .bkp-bezug-value,
-    .bkp-table .bkp-bezug-unit,
-    .bkp-table .bkp-bezug-type {
-      text-align: right;
-    }
-    .bkp-table .bkp-bezug-unit {
-      color: var(--neutral-500);
-      padding-left: var(--space-1);
-      padding-right: var(--space-1);
-    }
-    .bkp-table .bkp-bezug-type {
-      color: var(--neutral-500);
-      width: 40px;
     }
     .bkp-table tr.bkp-total td {
       padding-top: var(--space-2);
@@ -1770,7 +1729,7 @@
       font-weight: var(--font-weight-semibold);
       color: var(--neutral-900);
     }
-    .bkp-table tr.bkp-summary .bkp-code {
+    .bkp-table tr.bkp-summary .data-row__id {
       color: var(--neutral-700);
     }
 
@@ -3258,11 +3217,11 @@
 
         return `
           <tr>
-            <td class="bkp-code">${row.code}</td>
-            <td class="bkp-name">${row.name}</td>
-            <td class="bkp-bezug-value text-right ${!row.bezugValue ? 'text-muted' : ''}">${row.bezugValue ? formatNumber(row.bezugValue) : '-'}</td>
-            <td class="bkp-bezug-unit">${row.bezugValue ? 'm²' : ''}</td>
-            <td class="bkp-bezug-type">${row.bezugType}</td>
+            <td class="data-row__id">${row.code}</td>
+            <td class="data-row__label">${row.name}</td>
+            <td class="text-right ${!row.bezugValue ? 'text-muted' : ''}">${row.bezugValue ? formatNumber(row.bezugValue) : '-'}</td>
+            <td class="text-muted">${row.bezugValue ? 'm²' : ''}</td>
+            <td class="text-muted">${row.bezugType}</td>
             <td class="text-right ${!hasCost ? 'text-muted' : ''}">${hasCost ? formatNumber(kennwert) : '-'}</td>
             <td class="text-right ${!hasCost ? 'text-muted' : ''}">${hasCost ? formatNumber(chfKosten) : '-'}</td>
             <td class="text-right ${!hasCost ? 'text-muted' : ''}">${calcPercentBkp16(chfKosten)}</td>
@@ -3276,15 +3235,15 @@
         <h2 class="tab-header">Kosten nach Hauptgruppen BKP</h2>
         <table class="bkp-table">
           <thead>
-            <tr>
+            <tr class="tab-section-header">
               <th>Code</th>
               <th></th>
-              <th colspan="3" class="text-right bkp-header-group">Bezugsmenge</th>
-              <th class="text-right bkp-header-group">Kennwert</th>
-              <th class="text-right bkp-header-group">CHF Kosten</th>
-              <th class="text-right bkp-header-group">%BKP 1 - 6</th>
-              <th class="text-right bkp-header-group">CHF / m³ GV</th>
-              <th class="text-right bkp-header-group">CHF / m² GF</th>
+              <th colspan="3" style="text-align: right">Bezugsmenge</th>
+              <th style="text-align: right">Kennwert</th>
+              <th style="text-align: right">CHF Kosten</th>
+              <th style="text-align: right">%BKP 1 - 6</th>
+              <th style="text-align: right">CHF / m³ GV</th>
+              <th style="text-align: right">CHF / m² GF</th>
             </tr>
           </thead>
           <tbody>
@@ -3301,7 +3260,7 @@
             </tr>
             <tr class="bkp-spacer"><td colspan="10"></td></tr>
             <tr class="bkp-summary">
-              <td class="bkp-code">1 - 6</td>
+              <td class="data-row__id">1 - 6</td>
               <td>Herstellungskosten</td>
               <td colspan="3"></td>
               <td></td>
@@ -3311,7 +3270,7 @@
               <td class="text-right">${gfValue ? formatNumber(Math.round(sumBkp16 / gfValue)) : '-'}</td>
             </tr>
             <tr class="bkp-summary">
-              <td class="bkp-code">1 - 9</td>
+              <td class="data-row__id">1 - 9</td>
               <td>Anlagekosten</td>
               <td colspan="3"></td>
               <td></td>
