@@ -3358,6 +3358,10 @@
       const project = properties.find(p => p.id === currentDetailProjectId);
       if (!project) return;
 
+      // Always update header title when switching tabs or projects
+      const title = `${project.projectNumber || '-'} - ${project.city || ''} ${project.region || ''}, ${project.projectName || '-'}`;
+      document.getElementById('detailHeaderTitle').textContent = title;
+
       // Render appropriate content
       if (tabName === 'kennzahlen') {
         renderKennzahlenContent(project);
