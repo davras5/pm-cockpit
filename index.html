@@ -1361,7 +1361,7 @@
       display: flex;
       align-items: center;
       gap: var(--space-4);
-      padding: var(--space-4) var(--space-6);
+      padding: var(--space-4) 0;
       max-width: 1440px;
       margin: 0 auto;
     }
@@ -1406,11 +1406,10 @@
 
     /* Detail Body (contains sidebar + main) */
     .detail-body {
-      flex: 1;
       display: flex;
       justify-content: center;
       padding-top: var(--space-6);
-      min-height: 0;
+      margin-bottom: var(--space-6);
     }
     .detail-view-inner {
       display: grid;
@@ -1731,13 +1730,14 @@
     }
     @media (max-width: 768px) {
       .detail-subheader-inner {
-        padding: var(--space-3) var(--space-4);
+        padding: var(--space-3) 0;
       }
       .detail-header-title {
         font-size: 14px;
       }
       .detail-body {
         padding-top: var(--space-4);
+        margin-bottom: var(--space-4);
       }
       .detail-view-inner {
         grid-template-columns: 1fr;
@@ -2056,6 +2056,17 @@
         'cancelled': 'Abgebrochen'
       };
       return labels[status.toLowerCase()] || status;
+    }
+    function getMarkerClass(status) {
+      if (!status) return 'marker-unknown';
+      const classMap = {
+        'planned': 'marker-pending',
+        'active': 'marker-active',
+        'on_hold': 'marker-inactive',
+        'completed': 'marker-sold',
+        'cancelled': 'marker-unknown'
+      };
+      return classMap[status.toLowerCase()] || 'marker-unknown';
     }
 
     // Currency formatting helper
@@ -2443,7 +2454,7 @@
       data.forEach(prop => {
         if (prop.lat && prop.lng) {
           const el = document.createElement('div');
-          el.className = `marker marker-${prop.status || 'unknown'}`;
+          el.className = `marker ${getMarkerClass(prop.status)}`;
           el.innerHTML = '<span class="material-icons-outlined">home</span>';
           el.addEventListener('click', () => {
             document.querySelectorAll('.marker').forEach(m => m.classList.remove('selected'));
@@ -2826,7 +2837,7 @@
 
         // Add marker
         const el = document.createElement('div');
-        el.className = `marker marker-${project.status || 'unknown'}`;
+        el.className = `marker ${getMarkerClass(project.status)}`;
         el.innerHTML = '<span class="material-icons-outlined">location_on</span>';
 
         new mapboxgl.Marker(el)
