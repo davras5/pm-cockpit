@@ -1708,18 +1708,19 @@
       font-weight: var(--font-weight-medium);
       color: var(--neutral-500);
       text-align: left;
-      padding: var(--space-2) var(--space-3);
-      border-bottom: 1px solid var(--neutral-200);
+      padding: var(--space-1) var(--space-1);
       white-space: nowrap;
     }
     .bkp-table th.text-right {
       text-align: right;
     }
+    .bkp-table th.bkp-header-group {
+      border-bottom: 1px solid var(--neutral-300);
+    }
     .bkp-table td {
       font-size: var(--font-size-sm);
       color: var(--neutral-700);
-      padding: var(--space-2) var(--space-3);
-      border-bottom: 1px solid var(--neutral-100);
+      padding: var(--space-1) var(--space-1);
       vertical-align: middle;
     }
     .bkp-table td.text-right {
@@ -1729,16 +1730,20 @@
     .bkp-table td.text-muted {
       color: var(--neutral-400);
     }
+    .bkp-table tbody tr {
+      border-radius: var(--radius-sm);
+    }
     .bkp-table tbody tr:hover td {
-      background-color: var(--neutral-50);
+      background-color: var(--neutral-100);
     }
     .bkp-table .bkp-code {
-      font-weight: var(--font-weight-medium);
+      font-weight: var(--font-weight-semibold);
       color: var(--accent-700);
       width: 40px;
     }
     .bkp-table .bkp-name {
       min-width: 150px;
+      color: var(--neutral-600);
     }
     .bkp-table .bkp-bezug-value,
     .bkp-table .bkp-bezug-unit,
@@ -1755,14 +1760,11 @@
       width: 40px;
     }
     .bkp-table tr.bkp-total td {
-      border-top: 1px solid var(--neutral-300);
-      border-bottom: none;
-      padding-top: var(--space-3);
+      padding-top: var(--space-2);
     }
     .bkp-table tr.bkp-summary td {
       font-weight: var(--font-weight-semibold);
       color: var(--neutral-900);
-      border-bottom: none;
     }
     .bkp-table tr.bkp-summary .bkp-code {
       color: var(--neutral-700);
@@ -3273,12 +3275,12 @@
             <tr>
               <th>Code</th>
               <th></th>
-              <th colspan="3" class="text-right">Bezugsmenge</th>
-              <th class="text-right">Kennwert</th>
-              <th class="text-right">CHF Kosten</th>
-              <th class="text-right">%BKP 1 - 6</th>
-              <th class="text-right">CHF / m³ GV</th>
-              <th class="text-right">CHF / m² GF</th>
+              <th colspan="3" class="text-right bkp-header-group">Bezugsmenge</th>
+              <th class="text-right bkp-header-group">Kennwert</th>
+              <th class="text-right bkp-header-group">CHF Kosten</th>
+              <th class="text-right bkp-header-group">%BKP 1 - 6</th>
+              <th class="text-right bkp-header-group">CHF / m³ GV</th>
+              <th class="text-right bkp-header-group">CHF / m² GF</th>
             </tr>
           </thead>
           <tbody>
