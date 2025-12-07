@@ -2591,6 +2591,9 @@
       grid.innerHTML = data.map(prop => `
         <div class="card" data-id="${prop.id}">
           <div class="card-image" style="background-image: url('${getPlaceholderImage(prop.projectName, prop.id)}')">
+            <div class="image-tags">
+              <span class="status-tag ${getStatusClass(prop.status)}" data-filter="status" data-value="${prop.status}">${getStatusLabel(prop.status)}</span>
+            </div>
           </div>
           <div class="card-content">
             <div class="card-label">${prop.projectNumber || '-'}</div>
@@ -2600,7 +2603,6 @@
               <span class="card-detail-label">Risiken:</span><span class="card-detail-value">-</span>
             </div>
             <div class="card-details" style="border-top: 1px solid var(--neutral-200); padding-top: var(--space-3);">
-              <span class="card-detail-label">Status:</span><span class="card-detail-value">${getStatusLabel(prop.status)}</span>
               <span class="card-detail-label">Teilportfolio:</span><span class="card-detail-value">${getSubPortfolioLabel(prop.subPortfolio, dataReferences)}</span>
               <span class="card-detail-label">PLBH:</span><span class="card-detail-value">${prop.projectManager || '-'}</span>
               <span class="card-detail-label">Investition:</span><span class="card-detail-value">${formatCurrency(prop.plannedTotalCost)}</span>
