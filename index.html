@@ -1695,23 +1695,28 @@
         grid-template-columns: 1fr;
         gap: var(--space-6);
       }
+      /* Unified grid for vertical stacking - first 4 columns match */
       .kennzahlen-row {
-        grid-template-columns: 60px 1fr 70px 45px 55px;
+        grid-template-columns: 85px 1fr 70px 45px 55px;
+      }
+      .kennzahlen-row-narrow {
+        grid-template-columns: 85px 1fr 70px 45px;
+      }
+      .kennzahlen-row-narrow .kennzahlen-abbrev {
+        font-size: 13px;
       }
     }
     @media (max-width: 768px) {
+      /* Unified 4-column grid for both row types */
       .kennzahlen-row {
-        grid-template-columns: 55px 1fr 65px 40px;
+        grid-template-columns: 75px 1fr 65px 40px;
         font-size: 12px;
       }
       .kennzahlen-percent {
         display: none;
       }
       .kennzahlen-row-narrow {
-        grid-template-columns: 80px 1fr 70px;
-      }
-      .kennzahlen-row-narrow .kennzahlen-unit {
-        display: none;
+        grid-template-columns: 75px 1fr 65px 40px;
       }
     }
 
@@ -3010,7 +3015,7 @@
               <div class="kennzahlen-section-header">Arbeitsplatzkennzahlen</div>
               <div class="kennzahlen-rows">
                 ${rowNarrow('AP', 'Anzahl Arbeitsplätze', formatNumber(ap.ap), '')}
-                ${rowNarrow('GF SIA 416 / AP', 'Geschossfläche / Arbeitsplätze', formatNumber(ap.gfAp, 1), '')}
+                ${rowNarrow('GF / AP', 'Geschossfläche / Arbeitsplätze', formatNumber(ap.gfAp, 1), '')}
                 ${rowNarrow('HNF 2 / AP', 'Hauptnutzfläche 2 / Arbeitsplätze', formatNumber(ap.hnf2Ap, 1), '')}
                 ${rowNarrow('BKP 1 - 8 / AP', 'Baukosten BKP 1 - 8 / Arbeitsplätze', formatNumber(ap.bkp18Ap), '')}
                 ${rowNarrow('BKP 2 / AP', 'Baukosten BKP 2 / Arbeitsplätze', formatNumber(ap.bkp2Ap), '')}
