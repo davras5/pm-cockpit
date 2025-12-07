@@ -1633,18 +1633,19 @@
     .kennzahlen-rows {
       display: flex;
       flex-direction: column;
-      gap: var(--space-1);
     }
     .kennzahlen-row {
       display: grid;
       grid-template-columns: 70px 1fr 80px 50px 60px;
       gap: var(--space-2);
-      padding: var(--space-2) 0;
+      padding: var(--space-2) var(--space-2);
+      margin: 0 calc(-1 * var(--space-2));
       align-items: center;
-      border-bottom: 1px solid var(--neutral-100);
+      border-radius: var(--radius-sm);
+      transition: background-color var(--transition-fast);
     }
-    .kennzahlen-row:last-child {
-      border-bottom: none;
+    .kennzahlen-row:hover {
+      background-color: var(--neutral-100);
     }
     .kennzahlen-abbrev {
       font-size: 13px;
@@ -1676,12 +1677,14 @@
       display: grid;
       grid-template-columns: 100px 1fr 80px 60px;
       gap: var(--space-2);
-      padding: var(--space-2) 0;
+      padding: var(--space-2) var(--space-2);
+      margin: 0 calc(-1 * var(--space-2));
       align-items: center;
-      border-bottom: 1px solid var(--neutral-100);
+      border-radius: var(--radius-sm);
+      transition: background-color var(--transition-fast);
     }
-    .kennzahlen-row-narrow:last-child {
-      border-bottom: none;
+    .kennzahlen-row-narrow:hover {
+      background-color: var(--neutral-100);
     }
     .kennzahlen-row-narrow .kennzahlen-abbrev {
       font-size: 12px;
