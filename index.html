@@ -1697,6 +1697,18 @@
       text-align: center;
     }
 
+    /* Risk Table Specific Styles */
+    .data-table--risks th:first-child,
+    .data-table--risks td:first-child {
+      width: 80px;
+    }
+    .data-table--risks .status-dots {
+      justify-content: flex-start;
+    }
+    .data-table--risks td:last-child {
+      text-align: left;
+    }
+
     /* BKP Cost Table */
     .bkp-table {
       width: 100%;
@@ -3466,33 +3478,46 @@
         }).join('');
       };
 
-      // Helper to create a risk row (unified component)
+      // Helper to create a risk table row
       const riskRow = (risk) => `
-        <div class="data-row data-row--risk">
-          <span class="data-row__id">${risk.id || ''}</span>
-          <span class="data-row__label">${risk.name || ''}</span>
-          <div class="status-dots">
-            ${renderStatusDots(risk.status)}
-          </div>
-        </div>
+        <tr>
+          <td>${risk.id || '-'}</td>
+          <td>${risk.name || '-'}</td>
+          <td>
+            <div class="status-dots">
+              ${renderStatusDots(risk.status)}
+            </div>
+          </td>
+          <td>${risk.kommentar || '-'}</td>
+        </tr>
       `;
 
-      // Helper to create a section (unified component)
+      // Helper to create a section with table
       const renderSection = (categoryKey, risks) => {
         if (!risks || risks.length === 0) return '';
         return `
           <div class="tab-section">
             <div class="tab-section-header">${categoryLabels[categoryKey] || categoryKey}</div>
-            <div class="data-rows">
-              ${risks.map(riskRow).join('')}
-            </div>
+            <table class="data-table data-table--risks">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Risiko</th>
+                  <th>Status</th>
+                  <th>Kommentar</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${risks.map(riskRow).join('')}
+              </tbody>
+            </table>
           </div>
         `;
       };
 
       content.innerHTML = `
         <h2 class="tab-header">Risiken</h2>
-        <div class="tab-container tab-container--constrained">
+        <div class="tab-container">
           ${renderSection('technisch', risiken.technisch)}
           ${renderSection('terminlich', risiken.terminlich)}
           ${renderSection('rechtlich', risiken.rechtlich)}
