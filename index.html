@@ -1984,10 +1984,22 @@
         </div>
       </div>
       <div class="filter-modal-body">
-        <div class="filter-columns" style="grid-template-columns: 1fr;">
+        <div class="filter-columns" style="grid-template-columns: repeat(4, 1fr);">
           <div class="filter-column">
             <h3 class="filter-column-title">Status</h3>
             <div class="filter-options" id="filterStatus"></div>
+          </div>
+          <div class="filter-column">
+            <h3 class="filter-column-title">Teilportfolio</h3>
+            <div class="filter-options" id="filterTeilportfolio"></div>
+          </div>
+          <div class="filter-column">
+            <h3 class="filter-column-title">SIA Phase</h3>
+            <div class="filter-options" id="filterSiaPhase"></div>
+          </div>
+          <div class="filter-column">
+            <h3 class="filter-column-title">PLBH</h3>
+            <div class="filter-options" id="filterPlbh"></div>
           </div>
         </div>
       </div>
@@ -2113,14 +2125,20 @@
     let markers = [];
     let markersMap = new Map();
 
-    // Advanced filter state - simplified to only status
+    // Advanced filter state
     let advancedFilters = {
-      status: new Set()       // Status filter
+      status: new Set(),          // Status filter
+      teilportfolio: new Set(),   // Teilportfolio filter
+      siaPhase: new Set(),        // SIA Phase filter
+      plbh: new Set()             // PLBH (Project Manager) filter
     };
 
     // Unique values from data (populated after load)
     let filterOptions = {
-      status: []
+      status: [],
+      teilportfolio: [],
+      siaPhase: [],
+      plbh: []
     };
 
     // Carousel state
@@ -2134,6 +2152,9 @@
         id: params.get('id'),
         q: params.get('q'),
         status: params.get('status'),
+        teilportfolio: params.get('teilportfolio'),
+        siaPhase: params.get('siaPhase'),
+        plbh: params.get('plbh'),
         tab: params.get('tab')
       };
     }
@@ -2151,9 +2172,18 @@
         if (currentView !== 'gallery') params.set('view', currentView);
         if (searchQuery) params.set('q', searchQuery);
 
-        // Add status filter if active
+        // Add filters if active
         if (advancedFilters.status.size > 0) {
           params.set('status', Array.from(advancedFilters.status).join(','));
+        }
+        if (advancedFilters.teilportfolio.size > 0) {
+          params.set('teilportfolio', Array.from(advancedFilters.teilportfolio).join(','));
+        }
+        if (advancedFilters.siaPhase.size > 0) {
+          params.set('siaPhase', Array.from(advancedFilters.siaPhase).join(','));
+        }
+        if (advancedFilters.plbh.size > 0) {
+          params.set('plbh', Array.from(advancedFilters.plbh).join(','));
         }
       }
 
@@ -2169,9 +2199,18 @@
         document.getElementById('searchInput').value = searchQuery;
       }
 
-      // Load status filter from URL
+      // Load filters from URL
       if (params.status) {
         params.status.split(',').forEach(val => advancedFilters.status.add(val));
+      }
+      if (params.teilportfolio) {
+        params.teilportfolio.split(',').forEach(val => advancedFilters.teilportfolio.add(val));
+      }
+      if (params.siaPhase) {
+        params.siaPhase.split(',').forEach(val => advancedFilters.siaPhase.add(val));
+      }
+      if (params.plbh) {
+        params.plbh.split(',').forEach(val => advancedFilters.plbh.add(val));
       }
     }
 
@@ -2256,22 +2295,36 @@
     // Extract unique filter options from data
     function extractFilterOptions() {
       const statuses = new Set();
+      const plbhValues = new Set();
 
       properties.forEach(prop => {
         if (prop.status) statuses.add(prop.status);
+        if (prop.projectManager) plbhValues.add(prop.projectManager);
       });
 
       filterOptions.status = Array.from(statuses).sort();
+      // For teilportfolio and siaPhase, we use references from data.json
+      filterOptions.teilportfolio = (dataReferences.subPortfolio || []).map(r => r.id);
+      filterOptions.siaPhase = (dataReferences.siaPhases || []).map(r => r.id);
+      // PLBH is extracted from actual data since there's no reference list
+      filterOptions.plbh = Array.from(plbhValues).sort();
     }
 
     // Check if any filters are active
     function hasActiveFilters() {
-      return advancedFilters.status.size > 0 || searchQuery;
+      return advancedFilters.status.size > 0 ||
+             advancedFilters.teilportfolio.size > 0 ||
+             advancedFilters.siaPhase.size > 0 ||
+             advancedFilters.plbh.size > 0 ||
+             searchQuery;
     }
 
     // Count total active filters (excluding search)
     function getActiveFilterCount() {
-      return advancedFilters.status.size;
+      return advancedFilters.status.size +
+             advancedFilters.teilportfolio.size +
+             advancedFilters.siaPhase.size +
+             advancedFilters.plbh.size;
     }
 
     // Get status counts from all properties
@@ -2305,8 +2358,9 @@
       const container = document.getElementById('filterPills');
       const counts = getStatusCounts();
 
-      // Build pills HTML for each status
-      let html = filterOptions.status.map(status => {
+      // Build pills HTML for each status - use reference values to show all statuses even with count 0
+      const allStatuses = (dataReferences.projectStatus || []).map(ref => ref.id);
+      let html = allStatuses.map(status => {
         const isActive = advancedFilters.status.has(status);
         const count = counts[status] || 0;
         return `
@@ -2373,6 +2427,21 @@
           return false;
         }
 
+        // Teilportfolio filter
+        if (advancedFilters.teilportfolio.size > 0 && !advancedFilters.teilportfolio.has(prop.subPortfolio)) {
+          return false;
+        }
+
+        // SIA Phase filter
+        if (advancedFilters.siaPhase.size > 0 && !advancedFilters.siaPhase.has(prop.siaPhase)) {
+          return false;
+        }
+
+        // PLBH filter
+        if (advancedFilters.plbh.size > 0 && !advancedFilters.plbh.has(prop.projectManager)) {
+          return false;
+        }
+
         return true;
       });
 
@@ -2395,11 +2464,36 @@
         </div>
       `;
 
-      // Status filter
+      // Status filter - use reference values to show all options
       const statusContainer = document.getElementById('filterStatus');
       if (statusContainer) {
-        statusContainer.innerHTML = filterOptions.status.map(s =>
+        const statusOptions = (dataReferences.projectStatus || []).map(ref => ref.id);
+        statusContainer.innerHTML = statusOptions.map(s =>
           createOption(advancedFilters.status.has(s), 'status', s, getStatusLabel(s))
+        ).join('');
+      }
+
+      // Teilportfolio filter
+      const teilportfolioContainer = document.getElementById('filterTeilportfolio');
+      if (teilportfolioContainer) {
+        teilportfolioContainer.innerHTML = filterOptions.teilportfolio.map(t =>
+          createOption(advancedFilters.teilportfolio.has(t), 'teilportfolio', t, getSubPortfolioLabel(t, dataReferences))
+        ).join('');
+      }
+
+      // SIA Phase filter
+      const siaPhaseContainer = document.getElementById('filterSiaPhase');
+      if (siaPhaseContainer) {
+        siaPhaseContainer.innerHTML = filterOptions.siaPhase.map(s =>
+          createOption(advancedFilters.siaPhase.has(s), 'siaPhase', s, getSiaPhaseLabel(s))
+        ).join('');
+      }
+
+      // PLBH filter
+      const plbhContainer = document.getElementById('filterPlbh');
+      if (plbhContainer) {
+        plbhContainer.innerHTML = filterOptions.plbh.map(p =>
+          createOption(advancedFilters.plbh.has(p), 'plbh', p, p)
         ).join('');
       }
 
