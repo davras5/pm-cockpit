@@ -1326,6 +1326,274 @@
     .login-link:hover {
       text-decoration: underline;
     }
+
+    /* --- Detail View Styles --- */
+    .detail-view {
+      display: none;
+      position: fixed;
+      top: 64px; /* Below header */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--neutral-100);
+      z-index: 100;
+    }
+    .detail-view.active {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+    }
+
+    /* Detail Sidebar */
+    .detail-sidebar {
+      background: var(--neutral-50);
+      border-right: 1px solid var(--neutral-200);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .detail-sidebar-header {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--neutral-200);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--neutral-700);
+      background: var(--neutral-50);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .detail-sidebar-list {
+      flex: 1;
+      overflow-y: auto;
+    }
+    .detail-sidebar-item {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--neutral-200);
+      cursor: pointer;
+      transition: background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .detail-sidebar-item:hover {
+      background-color: var(--neutral-100);
+    }
+    .detail-sidebar-item.active {
+      background-color: var(--accent-100);
+      border-left: 3px solid var(--accent-600);
+      padding-left: calc(var(--space-4) - 3px);
+    }
+    .detail-sidebar-item .material-icons-outlined {
+      color: var(--neutral-400);
+      font-size: 20px;
+    }
+    .detail-sidebar-item.active .material-icons-outlined {
+      color: var(--accent-600);
+    }
+    .detail-sidebar-item-text {
+      font-size: 13px;
+      color: var(--neutral-700);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .detail-sidebar-item.active .detail-sidebar-item-text {
+      color: var(--neutral-900);
+      font-weight: 500;
+    }
+
+    /* Detail Main Content */
+    .detail-main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Detail Header */
+    .detail-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-6);
+      background: var(--neutral-50);
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    .detail-header-icon {
+      color: var(--neutral-500);
+      font-size: 24px;
+    }
+    .detail-header-title {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--neutral-900);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .detail-back-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--neutral-300);
+      background: var(--neutral-50);
+      color: var(--neutral-700);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .detail-back-btn:hover {
+      background: var(--neutral-100);
+      border-color: var(--neutral-400);
+    }
+    .detail-back-btn .material-icons-outlined {
+      font-size: 18px;
+    }
+
+    /* Detail Tabs */
+    .detail-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 var(--space-6);
+      background: var(--neutral-50);
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    .detail-tab {
+      padding: var(--space-4) var(--space-5);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--neutral-600);
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .detail-tab:hover {
+      color: var(--neutral-900);
+      background: var(--neutral-100);
+    }
+    .detail-tab.active {
+      color: var(--accent-600);
+      border-bottom-color: var(--accent-600);
+    }
+    .detail-tab:disabled {
+      color: var(--neutral-400);
+      cursor: not-allowed;
+    }
+    .detail-tab:disabled:hover {
+      background: transparent;
+    }
+
+    /* Detail Content Area */
+    .detail-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-6);
+    }
+
+    /* Detail Media Section (Image + Map) */
+    .detail-media {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+    .detail-image {
+      height: 280px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--neutral-200);
+      border-radius: var(--radius-lg);
+    }
+    .detail-map-container {
+      height: 280px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      background-color: var(--neutral-200);
+    }
+    #detailMap {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Detail Project Type Label */
+    .detail-type-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--neutral-700);
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--neutral-200);
+    }
+
+    /* Detail Fields Grid */
+    .detail-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+    .detail-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .detail-field-label {
+      font-size: 12px;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .detail-field-value {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--neutral-900);
+    }
+    .detail-field-value.highlight {
+      color: var(--accent-600);
+    }
+
+    /* Responsive Detail View */
+    @media (max-width: 1024px) {
+      .detail-view.active {
+        grid-template-columns: 240px 1fr;
+      }
+      .detail-media {
+        grid-template-columns: 1fr;
+      }
+      .detail-image,
+      .detail-map-container {
+        height: 220px;
+      }
+    }
+    @media (max-width: 768px) {
+      .detail-view.active {
+        grid-template-columns: 1fr;
+      }
+      .detail-sidebar {
+        display: none;
+      }
+      .detail-tabs {
+        overflow-x: auto;
+        padding: 0 var(--space-4);
+      }
+      .detail-tab {
+        padding: var(--space-3) var(--space-4);
+        font-size: 13px;
+      }
+      .detail-content {
+        padding: var(--space-4);
+      }
+      .detail-fields {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1478,6 +1746,38 @@
     </div>
   </div>
 
+  <!-- Detail View -->
+  <div class="detail-view" id="detailView">
+    <div class="detail-sidebar">
+      <div class="detail-sidebar-header">
+        Bauprojekte (<span id="detailProjectCount">0</span>)
+      </div>
+      <div class="detail-sidebar-list" id="detailSidebarList">
+        <!-- Project list items will be rendered here -->
+      </div>
+    </div>
+    <div class="detail-main">
+      <div class="detail-header">
+        <span class="material-icons-outlined detail-header-icon">apartment</span>
+        <h1 class="detail-header-title" id="detailHeaderTitle">-</h1>
+        <button class="detail-back-btn" onclick="closeDetailView()">
+          <span class="material-icons-outlined">arrow_back</span>
+          Zurück zur Übersicht
+        </button>
+      </div>
+      <div class="detail-tabs">
+        <button class="detail-tab active" data-tab="uebersicht">Übersicht</button>
+        <button class="detail-tab" data-tab="projektziele" disabled>Projektziele</button>
+        <button class="detail-tab" data-tab="risiken" disabled>Risiken</button>
+        <button class="detail-tab" data-tab="kennzahlen" disabled>Grundgrössen und Kennzahlen</button>
+        <button class="detail-tab" data-tab="checkliste" disabled>Checkliste Lieferobjekte</button>
+      </div>
+      <div class="detail-content" id="detailContent">
+        <!-- Tab content will be rendered here -->
+      </div>
+    </div>
+  </div>
+
   <footer class="footer">
     <a href="https://github.com/davras5/pm-cockpit" class="footer-link" target="_blank" rel="noopener noreferrer">Quellcode</a>
     <a href="https://www.admin.ch/gov/de/start/rechtliches.html" class="footer-link" target="_blank" rel="noopener noreferrer">Rechtliches</a>
@@ -1522,12 +1822,18 @@
 
     function updateUrlParams() {
       const params = new URLSearchParams();
-      if (currentView !== 'gallery') params.set('view', currentView);
-      if (searchQuery) params.set('q', searchQuery);
 
-      // Add status filter if active
-      if (advancedFilters.status.size > 0) {
-        params.set('status', Array.from(advancedFilters.status).join(','));
+      // Add project ID if in detail view
+      if (currentDetailProjectId) {
+        params.set('id', currentDetailProjectId);
+      } else {
+        if (currentView !== 'gallery') params.set('view', currentView);
+        if (searchQuery) params.set('q', searchQuery);
+
+        // Add status filter if active
+        if (advancedFilters.status.size > 0) {
+          params.set('status', Array.from(advancedFilters.status).join(','));
+        }
       }
 
       const newUrl = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname;
@@ -1971,6 +2277,7 @@
               <div class="popup-title">${prop.projectNumber || '-'}</div>
               <div class="popup-location">${prop.projectName || '-'}</div>
               <div class="popup-status">${getStatusLabel(prop.status)}</div>
+              <a class="popup-link" data-id="${prop.id}">Details anzeigen</a>
             </div>`);
 
           const marker = new mapboxgl.Marker(el).setLngLat([prop.lng, prop.lat]).setPopup(popup).addTo(map);
@@ -2060,6 +2367,11 @@
 
         // Other Escape handlers
         if (e.key === 'Escape') {
+          // Close detail view first if open
+          if (document.getElementById('detailView').classList.contains('active')) {
+            closeDetailView();
+            return;
+          }
           if (document.getElementById('filterModalOverlay').classList.contains('active')) {
             closeFilterModal();
           }
@@ -2111,6 +2423,229 @@
       closeLoginDialog();
     }
 
+    // --- Detail View State ---
+    let detailMap = null;
+    let detailMapLoaded = false;
+    let currentDetailProjectId = null;
+    let previousView = 'gallery';
+
+    // Get SIA phase label (just the number like "32")
+    function getSiaPhaseNumber(siaPhase) {
+      if (!siaPhase) return '-';
+      // Extract just the number from 'sia_32' -> '32'
+      const match = siaPhase.match(/sia_(\d+)/);
+      return match ? match[1] : siaPhase;
+    }
+
+    // Get management area label
+    function getManagementAreaLabel(areaId) {
+      if (!areaId || !dataReferences?.managementAreas) return '-';
+      const ref = dataReferences.managementAreas.find(r => r.id === areaId);
+      return ref ? ref.label : '-';
+    }
+
+    // Get construction type label
+    function getConstructionTypeLabel(typeId) {
+      if (!typeId || !dataReferences?.constructionTypes) return '-';
+      const ref = dataReferences.constructionTypes.find(r => r.id === typeId);
+      return ref ? ref.label : '-';
+    }
+
+    // Get SIA phase full label
+    function getSiaPhaseLabel(siaPhase) {
+      if (!siaPhase || !dataReferences?.siaPhases) return '-';
+      const ref = dataReferences.siaPhases.find(r => r.id === siaPhase);
+      return ref ? ref.label : '-';
+    }
+
+    // Open detail view
+    function openDetailView(projectId, skipHistory = false) {
+      const project = properties.find(p => p.id === projectId);
+      if (!project) return;
+
+      currentDetailProjectId = projectId;
+      previousView = currentView;
+
+      // Render sidebar with all projects
+      renderDetailSidebar();
+
+      // Render project details
+      renderDetailContent(project);
+
+      // Show detail view
+      document.getElementById('detailView').classList.add('active');
+      document.querySelector('.search-section').style.display = 'none';
+      document.getElementById('main').style.display = 'none';
+
+      // Update URL with pushState for browser navigation
+      if (!skipHistory) {
+        const params = new URLSearchParams();
+        params.set('id', projectId);
+        window.history.pushState({ projectId }, '', `${window.location.pathname}?${params.toString()}`);
+      }
+
+      // Initialize or update detail map
+      setTimeout(() => {
+        initializeDetailMap(project);
+      }, 100);
+    }
+
+    // Close detail view
+    function closeDetailView(skipHistory = false) {
+      currentDetailProjectId = null;
+      document.getElementById('detailView').classList.remove('active');
+      document.querySelector('.search-section').style.display = '';
+      document.getElementById('main').style.display = '';
+
+      // Clean up detail map
+      if (detailMap) {
+        detailMap.remove();
+        detailMap = null;
+        detailMapLoaded = false;
+      }
+
+      // Update URL with pushState for browser navigation
+      if (!skipHistory) {
+        const params = new URLSearchParams();
+        if (currentView !== 'gallery') params.set('view', currentView);
+        if (searchQuery) params.set('q', searchQuery);
+        if (advancedFilters.status.size > 0) {
+          params.set('status', Array.from(advancedFilters.status).join(','));
+        }
+        const newUrl = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname;
+        window.history.pushState({}, '', newUrl);
+      }
+    }
+
+    // Render detail sidebar with project list
+    function renderDetailSidebar() {
+      const data = getDataToRender();
+      const container = document.getElementById('detailSidebarList');
+      document.getElementById('detailProjectCount').textContent = data.length;
+
+      container.innerHTML = data.map(prop => `
+        <div class="detail-sidebar-item ${prop.id === currentDetailProjectId ? 'active' : ''}" data-detail-id="${prop.id}">
+          <span class="material-icons-outlined">apartment</span>
+          <span class="detail-sidebar-item-text">${prop.projectNumber || '-'}</span>
+        </div>
+      `).join('');
+
+      // Add click handlers
+      container.querySelectorAll('.detail-sidebar-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const id = item.dataset.detailId;
+          if (id && id !== currentDetailProjectId) {
+            openDetailView(id);
+          }
+        });
+      });
+
+      // Scroll to active item
+      const activeItem = container.querySelector('.detail-sidebar-item.active');
+      if (activeItem) {
+        activeItem.scrollIntoView({ block: 'nearest' });
+      }
+    }
+
+    // Render detail content (Übersicht tab)
+    function renderDetailContent(project) {
+      // Update header
+      const title = `${project.projectNumber || '-'} - ${project.city || ''} ${project.region || ''}, ${project.projectName || '-'}`;
+      document.getElementById('detailHeaderTitle').textContent = title;
+
+      // Render content
+      const content = document.getElementById('detailContent');
+      content.innerHTML = `
+        <div class="detail-media">
+          <div class="detail-image" style="background-image: url('${getPlaceholderImage(project.projectName, project.id)}')"></div>
+          <div class="detail-map-container">
+            <div id="detailMap"></div>
+          </div>
+        </div>
+
+        <div class="detail-type-label">${getSiaPhaseLabel(project.siaPhase).split(' - ')[1] || 'Bauprojekt'}</div>
+
+        <div class="detail-fields">
+          <div class="detail-field">
+            <span class="detail-field-label">BBL Projektstart</span>
+            <span class="detail-field-value">${project.projectStart || '-'}</span>
+          </div>
+          <div class="detail-field">
+            <span class="detail-field-label">Baumassnahmen erfasst</span>
+            <span class="detail-field-value">${project.lastModified || '-'}</span>
+          </div>
+
+          <div class="detail-field">
+            <span class="detail-field-label">BBL Teilbereich Projektmanagement</span>
+            <span class="detail-field-value">${getManagementAreaLabel(project.managementArea)}</span>
+          </div>
+          <div class="detail-field">
+            <span class="detail-field-label">SIA Phase Projekt</span>
+            <span class="detail-field-value">${getSiaPhaseNumber(project.siaPhase)}</span>
+          </div>
+
+          <div class="detail-field">
+            <span class="detail-field-label">BBL Projektnummer</span>
+            <span class="detail-field-value highlight">${project.projectNumber || '-'}</span>
+          </div>
+          <div class="detail-field">
+            <span class="detail-field-label">Art der Baumassnahme</span>
+            <span class="detail-field-value">${getConstructionTypeLabel(project.constructionType)}</span>
+          </div>
+
+          <div class="detail-field">
+            <span class="detail-field-label">BBL Projektbezeichnung</span>
+            <span class="detail-field-value">${project.city || ''} ${project.region || ''}, ${project.street || ''} ${project.streetNumber || ''}, ${project.projectName || '-'}</span>
+          </div>
+          <div class="detail-field">
+            <span class="detail-field-label">Gesamtkosten des Projektes (Geplant)</span>
+            <span class="detail-field-value">${formatCurrency(project.plannedTotalCost)}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // Initialize detail map
+    function initializeDetailMap(project) {
+      const container = document.getElementById('detailMap');
+      if (!container) return;
+
+      // Remove existing map if any
+      if (detailMap) {
+        detailMap.remove();
+        detailMap = null;
+      }
+
+      // Check if we have coordinates
+      if (!project.lat || !project.lng) {
+        container.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--neutral-500);">Keine Standortdaten verfügbar</div>';
+        return;
+      }
+
+      detailMap = new mapboxgl.Map({
+        container: 'detailMap',
+        style: 'mapbox://styles/mapbox/light-v11',
+        center: [project.lng, project.lat],
+        zoom: 15,
+        interactive: true
+      });
+
+      detailMap.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+      detailMap.on('load', () => {
+        detailMapLoaded = true;
+
+        // Add marker
+        const el = document.createElement('div');
+        el.className = `marker marker-${project.status || 'unknown'}`;
+        el.innerHTML = '<span class="material-icons-outlined">location_on</span>';
+
+        new mapboxgl.Marker(el)
+          .setLngLat([project.lng, project.lat])
+          .addTo(detailMap);
+      });
+    }
+
     // Unified click handler (event delegation for tags and sidebar items)
     function handleContentClick(event) {
       // First, check if clicked on a filter tag (status-tag)
@@ -2134,6 +2669,27 @@
         return;
       }
 
+      // Check if clicked on a gallery card
+      const card = event.target.closest('.card[data-id]');
+      if (card) {
+        openDetailView(card.dataset.id);
+        return;
+      }
+
+      // Check if clicked on a list table row
+      const tableRow = event.target.closest('.list-table tbody tr[data-id]');
+      if (tableRow) {
+        openDetailView(tableRow.dataset.id);
+        return;
+      }
+
+      // Check if clicked on "Details anzeigen" button in map popup
+      const popupLink = event.target.closest('.popup-link[data-id]');
+      if (popupLink) {
+        openDetailView(popupLink.dataset.id);
+        return;
+      }
+
       // Check if clicked on a map sidebar item
       const sidebarItem = event.target.closest('.map-sidebar-item[data-id]');
       if (sidebarItem) {
@@ -2148,7 +2704,22 @@
     // Handle browser back/forward navigation
     window.addEventListener('popstate', (event) => {
       const params = new URLSearchParams(window.location.search);
+      const projectId = params.get('id');
       const view = params.get('view');
+
+      // Handle detail view navigation
+      if (projectId) {
+        const project = properties.find(p => p.id === projectId);
+        if (project) {
+          openDetailView(projectId, true); // skipHistory = true
+        }
+        return;
+      }
+
+      // Close detail view if navigating away from it
+      if (document.getElementById('detailView').classList.contains('active')) {
+        closeDetailView(true); // skipHistory = true
+      }
 
       if (view && ['gallery', 'list', 'map'].includes(view)) {
         setView(view);
@@ -2196,6 +2767,15 @@
         filteredProperties = [...properties];
         extractFilterOptions();
         applyFilters();
+
+        // Check if URL has project ID and open detail view
+        const params = getUrlParams();
+        if (params.id) {
+          const project = properties.find(p => p.id === params.id);
+          if (project) {
+            openDetailView(params.id, true); // skipHistory = true for initial load
+          }
+        }
       })
       .catch(err => {
         console.error('Error loading data:', err);
