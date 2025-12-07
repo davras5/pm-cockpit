@@ -465,6 +465,18 @@
           { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": 2 },
           { "id": "PE / S 05", "name": "Personalmangel", "status": 2 }
         ]
+      },
+      "projektziele": {
+        "ausgangslage": "Die bestehende Fassade des Bürogebäudes an der Freilagerstrasse weist nach 25 Jahren Nutzung erhebliche Schäden auf. Die Wärmedämmung entspricht nicht mehr den aktuellen energetischen Anforderungen und es treten vermehrt Feuchtigkeitsprobleme auf.",
+        "ziele": "Energetische Sanierung der Gebäudehülle auf Minergie-Standard. Verbesserung des Raumklimas und Reduktion der Betriebskosten um 30%. Aufwertung des Erscheinungsbildes unter Berücksichtigung des Ortsbildschutzes.",
+        "meilensteine": [
+          { "name": "Projektstart", "plannedDate": "15.01.2024" },
+          { "name": "Vorprojekt abgeschlossen", "plannedDate": "15.04.2024" },
+          { "name": "Bauprojekt abgeschlossen", "plannedDate": "30.09.2024" },
+          { "name": "Baubewilligung erteilt", "plannedDate": "15.12.2024" },
+          { "name": "Ausführungsstart", "plannedDate": "01.03.2025" },
+          { "name": "Bauabnahme", "plannedDate": "30.06.2025" }
+        ]
       }
     },
     {
@@ -562,6 +574,19 @@
           { "id": "PE / S 01", "name": "Unzureichende Ressourcenplanung", "status": 2 },
           { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": 2 },
           { "id": "PE / S 05", "name": "Personalmangel", "status": 2 }
+        ]
+      },
+      "projektziele": {
+        "ausgangslage": "Die Haustechnik des Bundeshaus West stammt aus den 1980er Jahren und entspricht nicht mehr den heutigen Anforderungen an Energieeffizienz und Betriebssicherheit. Wiederkehrende Ausfälle der Klimaanlage beeinträchtigen den Parlamentsbetrieb.",
+        "ziele": "Vollständige Erneuerung der HLKSE-Anlagen unter laufendem Betrieb. Reduktion des Energieverbrauchs um 40%. Integration eines modernen Gebäudeleitsystems für optimierte Betriebsführung.",
+        "meilensteine": [
+          { "name": "Projektstart", "plannedDate": "01.03.2024" },
+          { "name": "Bedarfsanalyse abgeschlossen", "plannedDate": "30.04.2024" },
+          { "name": "Vorprojekt abgeschlossen", "plannedDate": "31.08.2024" },
+          { "name": "Bauprojekt abgeschlossen", "plannedDate": "28.02.2025" },
+          { "name": "Ausschreibung abgeschlossen", "plannedDate": "30.06.2025" },
+          { "name": "Ausführungsstart", "plannedDate": "01.09.2025" },
+          { "name": "Inbetriebnahme", "plannedDate": "31.12.2025" }
         ]
       }
     }
