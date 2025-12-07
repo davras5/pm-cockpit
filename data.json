@@ -263,6 +263,24 @@
             "dafGf": { "alias": "Dachfläche / Geschossfläche" }
           }
         }
+      },
+      {
+        "id": "kostenBkp",
+        "alias": "Kosten nach Hauptgruppen BKP",
+        "format": "object",
+        "entity": "project",
+        "schema": {
+          "bkp0": { "kennwert": { "alias": "Kennwert", "unit": "CHF/m²" }, "chfKosten": { "alias": "CHF Kosten", "unit": "CHF" } },
+          "bkp1": { "kennwert": { "alias": "Kennwert", "unit": "CHF/m²" }, "chfKosten": { "alias": "CHF Kosten", "unit": "CHF" } },
+          "bkp2": { "kennwert": { "alias": "Kennwert", "unit": "CHF/m²" }, "chfKosten": { "alias": "CHF Kosten", "unit": "CHF" } },
+          "bkp3": { "kennwert": { "alias": "Kennwert", "unit": "CHF/m²" }, "chfKosten": { "alias": "CHF Kosten", "unit": "CHF" } },
+          "bkp4": { "kennwert": { "alias": "Kennwert", "unit": "CHF/m²" }, "chfKosten": { "alias": "CHF Kosten", "unit": "CHF" } },
+          "bkp5": { "kennwert": { "alias": "Kennwert", "unit": "CHF/m²" }, "chfKosten": { "alias": "CHF Kosten", "unit": "CHF" } },
+          "bkp6": { "kennwert": { "alias": "Kennwert", "unit": "CHF/m²" }, "chfKosten": { "alias": "CHF Kosten", "unit": "CHF" } },
+          "bkp7": { "kennwert": { "alias": "Kennwert", "unit": "CHF/m²" }, "chfKosten": { "alias": "CHF Kosten", "unit": "CHF" } },
+          "bkp8": { "kennwert": { "alias": "Kennwert", "unit": "CHF/m²" }, "chfKosten": { "alias": "CHF Kosten", "unit": "CHF" } },
+          "bkp9": { "kennwert": { "alias": "Kennwert", "unit": "CHF/m²" }, "chfKosten": { "alias": "CHF Kosten", "unit": "CHF" } }
+        }
       }
     ],
     "references": {
@@ -443,6 +461,18 @@
           "dafGf": 0.17
         }
       },
+      "kostenBkp": {
+        "bkp0": { "kennwert": 0, "chfKosten": 0 },
+        "bkp1": { "kennwert": 19, "chfKosten": 680000 },
+        "bkp2": { "kennwert": 2154, "chfKosten": 77780000 },
+        "bkp3": { "kennwert": 0, "chfKosten": 0 },
+        "bkp4": { "kennwert": 90, "chfKosten": 3250000 },
+        "bkp5": { "kennwert": 71, "chfKosten": 2550000 },
+        "bkp6": { "kennwert": 71, "chfKosten": 0 },
+        "bkp7": { "kennwert": 0, "chfKosten": 0 },
+        "bkp8": { "kennwert": 0, "chfKosten": 0 },
+        "bkp9": { "kennwert": 147, "chfKosten": 5300000 }
+      },
       "risiken": {
         "technisch": [
           { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": 3 },
@@ -552,6 +582,18 @@
           "awfGf": 0.42,
           "dafGf": 0.15
         }
+      },
+      "kostenBkp": {
+        "bkp0": { "kennwert": 0, "chfKosten": 0 },
+        "bkp1": { "kennwert": 15, "chfKosten": 420000 },
+        "bkp2": { "kennwert": 1850, "chfKosten": 52725000 },
+        "bkp3": { "kennwert": 85, "chfKosten": 2422500 },
+        "bkp4": { "kennwert": 65, "chfKosten": 1852500 },
+        "bkp5": { "kennwert": 55, "chfKosten": 1567500 },
+        "bkp6": { "kennwert": 40, "chfKosten": 1140000 },
+        "bkp7": { "kennwert": 0, "chfKosten": 0 },
+        "bkp8": { "kennwert": 120, "chfKosten": 3420000 },
+        "bkp9": { "kennwert": 95, "chfKosten": 2707500 }
       },
       "risiken": {
         "technisch": [
