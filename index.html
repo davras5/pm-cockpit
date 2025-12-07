@@ -765,12 +765,6 @@
 
     /* --- Shared Tab Container Styles --- */
     .tab-container { padding: 0; }
-    .tab-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 0 16px 0;
-    }
     .tab-title {
       font-size: 18px;
       font-weight: 600;
@@ -1544,10 +1538,10 @@
 
     /* Tab Main Header - consistent title for all tabs */
     .tab-header {
-      font-size: var(--font-size-md);
+      font-size: var(--font-size-lg);
       font-weight: var(--font-weight-semibold);
       color: var(--accent-700);
-      margin-bottom: var(--space-6);
+      margin-bottom: var(--space-5);
     }
 
     /* Tab Container - unified wrapper for tab content */
@@ -1573,7 +1567,7 @@
 
     /* Tab Section - consistent section wrapper */
     .tab-section {
-      margin-bottom: var(--space-4);
+      margin-bottom: var(--space-6);
     }
     .tab-section-header {
       font-size: var(--font-size-base);
@@ -1885,21 +1879,21 @@
     .detail-fields {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--space-5) var(--space-6);  /* 20px row gap, 24px column gap for visual rhythm */
+      gap: var(--space-4) var(--space-6);  /* 16px row gap, 24px column gap */
     }
     .detail-field {
       display: flex;
       flex-direction: column;
-      gap: var(--space-2);
+      gap: var(--space-1);
     }
     .detail-field-label {
-      font-size: 12px;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
       color: var(--neutral-500);
-      letter-spacing: 0.5px;
     }
     .detail-field-value {
-      font-size: 15px;
-      font-weight: 500;
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-medium);
       color: var(--neutral-900);
     }
     .detail-field-value.highlight {
