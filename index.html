@@ -1620,7 +1620,7 @@
     .kennzahlen-section {
       margin-bottom: var(--space-4);
     }
-    .kennzahlen-section-header {
+    .section-header {
       font-size: 14px;
       font-weight: 600;
       color: var(--neutral-700);
@@ -1636,8 +1636,7 @@
       display: grid;
       grid-template-columns: 80px 1fr 80px 50px 60px;
       gap: var(--space-2);
-      padding: var(--space-1);  /* 4px vertical for clean display */
-      margin: 0 calc(-1 * var(--space-2));
+      padding: var(--space-1) 0;
       align-items: center;
       border-radius: var(--radius-sm);
       transition: background-color var(--transition-fast);
@@ -1675,8 +1674,7 @@
       display: grid;
       grid-template-columns: 110px 1fr 80px 60px;
       gap: var(--space-2);
-      padding: var(--space-1);  /* 4px vertical for clean display */
-      margin: 0 calc(-1 * var(--space-2));
+      padding: var(--space-1) 0;
       align-items: center;
       border-radius: var(--radius-sm);
       transition: background-color var(--transition-fast);
@@ -1728,14 +1726,6 @@
     }
     .risiken-section {
       margin-bottom: var(--space-2);
-    }
-    .risiken-section-header {
-      font-size: 14px;
-      font-weight: 600;
-      font-style: italic;
-      color: var(--neutral-700);
-      padding-bottom: var(--space-2);
-      margin-bottom: var(--space-3);
     }
     .risiken-rows {
       display: flex;
@@ -3015,7 +3005,7 @@
           <div class="kennzahlen-column">
             <!-- Gebäudevolumen -->
             <div class="kennzahlen-section">
-              <div class="kennzahlen-section-header">Gebäudevolumen</div>
+              <div class="section-header">Gebäudevolumen</div>
               <div class="kennzahlen-rows">
                 ${row('GV', 'Gebäudevolumen', formatNumber(gv.gv), 'm³', calcPercent(gv.gv, baseGV, 'GV'))}
                 ${row('GV OG', 'Gebäudevolumen Obergeschosse', formatNumber(gv.gvOg), 'm³', calcPercent(gv.gvOg, baseGV, 'GV'))}
@@ -3025,7 +3015,7 @@
 
             <!-- Grundstücksflächen -->
             <div class="kennzahlen-section">
-              <div class="kennzahlen-section-header">Grundstücksflächen</div>
+              <div class="section-header">Grundstücksflächen</div>
               <div class="kennzahlen-rows">
                 ${row('GSF', 'Grundstücksfläche', formatNumber(gsf.gsf), 'm²', calcPercent(gsf.gsf, baseGSF, 'GSF'))}
                 ${row('GGF', 'Gebäudegrundfläche', formatNumber(gsf.ggf), 'm²', calcPercent(gsf.ggf, baseGSF, 'GSF'))}
@@ -3035,7 +3025,7 @@
 
             <!-- Gebäudeflächen -->
             <div class="kennzahlen-section">
-              <div class="kennzahlen-section-header">Gebäudeflächen</div>
+              <div class="section-header">Gebäudeflächen</div>
               <div class="kennzahlen-rows">
                 ${row('GF', 'Geschossfläche', formatNumber(gfl.gf), 'm²', calcPercent(gfl.gf, baseGF, 'GF'))}
                 ${row('GF OG', 'Geschossfläche Obergeschosse', formatNumber(gfl.gfOg), 'm²', calcPercent(gfl.gfOg, baseGF, 'GF'))}
@@ -3052,7 +3042,7 @@
 
             <!-- Flächen DIN 277 -->
             <div class="kennzahlen-section">
-              <div class="kennzahlen-section-header">Flächen DIN 277</div>
+              <div class="section-header">Flächen DIN 277</div>
               <div class="kennzahlen-rows">
                 ${row('HNF 1', 'Wohnen und Aufenthalt', formatNumber(din.hnf1), 'm²', calcPercent(din.hnf1, baseGF, 'GF'))}
                 ${row('HNF 2', 'Büroarbeit', formatNumber(din.hnf2), 'm²', calcPercent(din.hnf2, baseGF, 'GF'))}
@@ -3072,7 +3062,7 @@
           <div class="kennzahlen-column">
             <!-- Allgemeine Angaben -->
             <div class="kennzahlen-section">
-              <div class="kennzahlen-section-header">Allgemeine Angaben</div>
+              <div class="section-header">Allgemeine Angaben</div>
               <div class="kennzahlen-rows">
                 ${rowNarrow('', 'Anzahl Gebäude Stockwerke', formatNumber(allg.geschosse), '')}
                 ${rowNarrow('', 'Anzahl Gebäude Stockwerke UG', formatNumber(allg.geschosseUg), '')}
@@ -3081,7 +3071,7 @@
 
             <!-- Kennzahlen Wirtschaftlichkeit der Grundrisse -->
             <div class="kennzahlen-section">
-              <div class="kennzahlen-section-header">Kennzahlen Wirtschaftlichkeit der Grundrisse</div>
+              <div class="section-header">Kennzahlen Wirtschaftlichkeit der Grundrisse</div>
               <div class="kennzahlen-rows">
                 ${rowNarrow('HNF / GF', 'Hauptnutzfläche / Geschossfläche', formatPercent(kw.hnfGf), '')}
                 ${rowNarrow('VMF / GF', 'Vermietbare Fläche / Geschossfläche', formatPercent(kw.vmfGf), '')}
@@ -3090,7 +3080,7 @@
 
             <!-- Arbeitsplatzkennzahlen -->
             <div class="kennzahlen-section">
-              <div class="kennzahlen-section-header">Arbeitsplatzkennzahlen</div>
+              <div class="section-header">Arbeitsplatzkennzahlen</div>
               <div class="kennzahlen-rows">
                 ${rowNarrow('AP', 'Anzahl Arbeitsplätze', formatNumber(ap.ap), '')}
                 ${rowNarrow('GF / AP', 'Geschossfläche / Arbeitsplätze', formatNumber(ap.gfAp, 1), '')}
@@ -3103,7 +3093,7 @@
 
             <!-- Formquotienten nach eBKP-H -->
             <div class="kennzahlen-section">
-              <div class="kennzahlen-section-header">Formquotienten nach eBKP-H</div>
+              <div class="section-header">Formquotienten nach eBKP-H</div>
               <div class="kennzahlen-rows">
                 ${rowNarrow('AWF / GF', 'Aussenwandfläche / Geschossfläche', formatNumber(fq.awfGf, 2), '')}
                 ${rowNarrow('DAF / GF', 'Dachfläche / Geschossfläche', formatNumber(fq.dafGf, 2), '')}
@@ -3129,10 +3119,14 @@
 
       // Helper to create status dots (1=green, 2=orange, 3=red)
       const renderStatusDots = (status) => {
-        const levels = ['low', 'medium', 'high'];
+        const levels = [
+          { class: 'low', title: 'Geringes Risiko' },
+          { class: 'medium', title: 'Mittleres Risiko' },
+          { class: 'high', title: 'Hohes Risiko' }
+        ];
         return levels.map((level, index) => {
           const isActive = status === (index + 1);
-          return `<div class="risiken-status-dot${isActive ? ` ${level}` : ''}"></div>`;
+          return `<div class="risiken-status-dot${isActive ? ` ${level.class}` : ''}" title="${level.title}"></div>`;
         }).join('');
       };
 
@@ -3152,7 +3146,7 @@
         if (!risks || risks.length === 0) return '';
         return `
           <div class="risiken-section">
-            <div class="risiken-section-header">${categoryLabels[categoryKey] || categoryKey}</div>
+            <div class="section-header">${categoryLabels[categoryKey] || categoryKey}</div>
             <div class="risiken-rows">
               ${risks.map(riskRow).join('')}
             </div>
