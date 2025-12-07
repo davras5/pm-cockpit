@@ -1698,9 +1698,20 @@
     }
 
     /* Risk Table Specific Styles */
-    .data-table--risks th:first-child,
-    .data-table--risks td:first-child {
+    .data-table--risks {
+      table-layout: fixed;
+    }
+    .data-table--risks th:nth-child(1),
+    .data-table--risks td:nth-child(1) {
       width: 80px;
+    }
+    .data-table--risks th:nth-child(2),
+    .data-table--risks td:nth-child(2) {
+      width: 35%;
+    }
+    .data-table--risks th:nth-child(3),
+    .data-table--risks td:nth-child(3) {
+      width: 100px;
     }
     .data-table--risks .status-dots {
       justify-content: flex-start;

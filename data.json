@@ -460,25 +460,25 @@
       },
       "risiken": {
         "technisch": [
-          { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": 3 },
-          { "id": "PE / T 02", "name": "Übernahme einer fehlerhaften oder unvollständigen Planung", "status": 2 }
+          { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": 3, "kommentar": "Externe Prüfung beauftragt, Ergebnisse ausstehend" },
+          { "id": "PE / T 02", "name": "Übernahme einer fehlerhaften oder unvollständigen Planung", "status": 2, "kommentar": "Planungsqualität wird laufend überwacht" }
         ],
         "terminlich": [
-          { "id": "PE / Z 02", "name": "Unrealistische Vorgangsdauern im Terminplan", "status": 2 },
-          { "id": "PE / Z 05", "name": "Verspätete Lieferung Lieferanten", "status": 1 },
-          { "id": "PE / Z 07", "name": "Verzögerung Baugenehmigungsverfahren etc.", "status": 1 },
-          { "id": "PE / Z 08", "name": "Verzögerung interne Genehmigungsverfahren", "status": 2 }
+          { "id": "PE / Z 02", "name": "Unrealistische Vorgangsdauern im Terminplan", "status": 2, "kommentar": "Pufferzeiten wurden eingeplant" },
+          { "id": "PE / Z 05", "name": "Verspätete Lieferung Lieferanten", "status": 1, "kommentar": "Lieferantenverträge mit Pönalen abgesichert" },
+          { "id": "PE / Z 07", "name": "Verzögerung Baugenehmigungsverfahren etc.", "status": 1, "kommentar": "Vorabstimmung mit Behörden erfolgt" },
+          { "id": "PE / Z 08", "name": "Verzögerung interne Genehmigungsverfahren", "status": 2, "kommentar": "" }
         ],
         "rechtlich": [
-          { "id": "PE / R 02", "name": "Konflikte mit Nachunternehmern, Auftraggebern o.ä", "status": 2 },
-          { "id": "PE / R 03", "name": "Konflikte mit Öffentlichkeit", "status": 2 },
-          { "id": "PE / R 07", "name": "Leistungsänderung durch den Auftraggeber", "status": 2 },
-          { "id": "PE / R 08", "name": "Fehlende Baugenehmigung", "status": 3 }
+          { "id": "PE / R 02", "name": "Konflikte mit Nachunternehmern, Auftraggebern o.ä", "status": 2, "kommentar": "Klare Vertragsregelungen definiert" },
+          { "id": "PE / R 03", "name": "Konflikte mit Öffentlichkeit", "status": 2, "kommentar": "Kommunikationskonzept in Arbeit" },
+          { "id": "PE / R 07", "name": "Leistungsänderung durch den Auftraggeber", "status": 2, "kommentar": "Change-Request-Prozess etabliert" },
+          { "id": "PE / R 08", "name": "Fehlende Baugenehmigung", "status": 3, "kommentar": "Antrag eingereicht, Rückfragen offen" }
         ],
         "sonstige": [
-          { "id": "PE / S 01", "name": "Unzureichende Ressourcenplanung", "status": 1 },
-          { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": 2 },
-          { "id": "PE / S 05", "name": "Personalmangel", "status": 2 }
+          { "id": "PE / S 01", "name": "Unzureichende Ressourcenplanung", "status": 1, "kommentar": "Personalplanung abgeschlossen" },
+          { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": 2, "kommentar": "Eskalationsprozess definiert" },
+          { "id": "PE / S 05", "name": "Personalmangel", "status": 2, "kommentar": "Externe Unterstützung wird geprüft" }
         ]
       },
       "projektziele": {
@@ -581,25 +581,25 @@
       },
       "risiken": {
         "technisch": [
-          { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": 2 },
-          { "id": "PE / T 02", "name": "Übernahme einer fehlerhaften oder unvollständigen Planung", "status": 1 }
+          { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": 2, "kommentar": "Qualitätssicherung durch externes Büro" },
+          { "id": "PE / T 02", "name": "Übernahme einer fehlerhaften oder unvollständigen Planung", "status": 1, "kommentar": "Bestandspläne vollständig vorhanden" }
         ],
         "terminlich": [
-          { "id": "PE / Z 02", "name": "Unrealistische Vorgangsdauern im Terminplan", "status": 2 },
-          { "id": "PE / Z 05", "name": "Verspätete Lieferung Lieferanten", "status": 2 },
-          { "id": "PE / Z 07", "name": "Verzögerung Baugenehmigungsverfahren etc.", "status": 1 },
-          { "id": "PE / Z 08", "name": "Verzögerung interne Genehmigungsverfahren", "status": 1 }
+          { "id": "PE / Z 02", "name": "Unrealistische Vorgangsdauern im Terminplan", "status": 2, "kommentar": "Abstimmung mit Parlamentsbetrieb erforderlich" },
+          { "id": "PE / Z 05", "name": "Verspätete Lieferung Lieferanten", "status": 2, "kommentar": "Lange Lieferzeiten für Spezialkomponenten" },
+          { "id": "PE / Z 07", "name": "Verzögerung Baugenehmigungsverfahren etc.", "status": 1, "kommentar": "" },
+          { "id": "PE / Z 08", "name": "Verzögerung interne Genehmigungsverfahren", "status": 1, "kommentar": "Schnelle Entscheidungswege etabliert" }
         ],
         "rechtlich": [
-          { "id": "PE / R 02", "name": "Konflikte mit Nachunternehmern, Auftraggebern o.ä", "status": 1 },
-          { "id": "PE / R 03", "name": "Konflikte mit Öffentlichkeit", "status": 3 },
-          { "id": "PE / R 07", "name": "Leistungsänderung durch den Auftraggeber", "status": 2 },
-          { "id": "PE / R 08", "name": "Fehlende Baugenehmigung", "status": 1 }
+          { "id": "PE / R 02", "name": "Konflikte mit Nachunternehmern, Auftraggebern o.ä", "status": 1, "kommentar": "Bewährte Partnerunternehmen" },
+          { "id": "PE / R 03", "name": "Konflikte mit Öffentlichkeit", "status": 3, "kommentar": "Hohe mediale Aufmerksamkeit, Kommunikationsplan aktiv" },
+          { "id": "PE / R 07", "name": "Leistungsänderung durch den Auftraggeber", "status": 2, "kommentar": "Anforderungen werden noch konkretisiert" },
+          { "id": "PE / R 08", "name": "Fehlende Baugenehmigung", "status": 1, "kommentar": "Denkmalschutz-Abstimmung erfolgt" }
         ],
         "sonstige": [
-          { "id": "PE / S 01", "name": "Unzureichende Ressourcenplanung", "status": 2 },
-          { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": 2 },
-          { "id": "PE / S 05", "name": "Personalmangel", "status": 2 }
+          { "id": "PE / S 01", "name": "Unzureichende Ressourcenplanung", "status": 2, "kommentar": "Spezialisierte Fachkräfte knapp" },
+          { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": 2, "kommentar": "Politische Gremien involviert" },
+          { "id": "PE / S 05", "name": "Personalmangel", "status": 2, "kommentar": "" }
         ]
       },
       "projektziele": {
