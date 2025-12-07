@@ -1613,10 +1613,11 @@
     }
     .data-table--risks th:nth-child(3),
     .data-table--risks td:nth-child(3) {
-      width: 80px;
+      width: 64px;
     }
     .data-table--risks .status-dots {
       justify-content: flex-start;
+      gap: var(--space-2);
     }
     .data-table--risks th:last-child,
     .data-table--risks td:last-child {
@@ -1767,6 +1768,30 @@
       background-position: center;
       background-color: var(--neutral-200);
       border-radius: var(--radius-lg);
+      position: relative;
+      cursor: pointer;
+      transition: filter 0.2s ease;
+    }
+    .detail-image:hover {
+      filter: brightness(0.95);
+    }
+    .detail-image__badge {
+      position: absolute;
+      bottom: var(--space-3);
+      right: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-2);
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      pointer-events: none;
+    }
+    .detail-image__badge .material-icons-outlined {
+      font-size: 16px;
     }
     .detail-map-container {
       height: 280px;
@@ -2053,7 +2078,7 @@
             <button class="detail-tab" data-tab="projektziele">Projektziele</button>
             <button class="detail-tab" data-tab="risiken">Risiken</button>
             <button class="detail-tab" data-tab="kennzahlen">Grundgrössen und Kennzahlen</button>
-            <button class="detail-tab" data-tab="checkliste" disabled>Checkliste Lieferobjekte</button>
+            <button class="detail-tab" data-tab="checkliste" disabled>Checkliste Projektdokumentation</button>
           </div>
           <div class="detail-content" id="detailContent">
             <!-- Tab content will be rendered here -->
@@ -2209,6 +2234,16 @@
       const imageIndex = Math.abs(hash) % 5;
       const images = ['https://images.unsplash.com/photo-1504307651254-35680f356dfd', 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5', 'https://images.unsplash.com/photo-1503387762-592deb58ef4e', 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece', 'https://images.unsplash.com/photo-1590644365607-1c5a1a5d0c3e'];
       return images[imageIndex] + '?w=400&h=300&fit=crop';
+    }
+
+    function getProjectGalleryImages(id) {
+      const images = ['https://images.unsplash.com/photo-1504307651254-35680f356dfd', 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5', 'https://images.unsplash.com/photo-1503387762-592deb58ef4e', 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece', 'https://images.unsplash.com/photo-1590644365607-1c5a1a5d0c3e'];
+      // Rotate array based on project ID so each project starts with a different image
+      const idStr = String(id);
+      const hash = idStr.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a; }, 0);
+      const startIndex = Math.abs(hash) % images.length;
+      const rotated = [...images.slice(startIndex), ...images.slice(0, startIndex)];
+      return rotated.map(img => img + '?w=400&h=300&fit=crop');
     }
 
     // Extract unique filter options from data
@@ -2950,7 +2985,12 @@
         <h2 class="tab-header">Übersicht</h2>
         <div class="tab-container">
           <div class="detail-media">
-            <div class="detail-image" style="background-image: url('${getPlaceholderImage(project.projectName, project.id)}')"></div>
+            <div class="detail-image" style="background-image: url('${getPlaceholderImage(project.projectName, project.id)}')" onclick="openCarousel(getProjectGalleryImages(${project.id}))" title="Galerie öffnen">
+              <div class="detail-image__badge">
+                <span class="material-icons-outlined">photo_library</span>
+                <span>5</span>
+              </div>
+            </div>
             <div class="detail-map-container">
               <div id="detailMap"></div>
             </div>
