@@ -132,13 +132,6 @@
         "entity": "project"
       },
       {
-        "id": "managementArea",
-        "alias": "Bewirtschaftungsgebiet",
-        "format": "reference",
-        "reference": "managementAreas",
-        "entity": "project"
-      },
-      {
         "id": "projectStatus",
         "alias": "Projektstatus",
         "format": "reference",
@@ -325,13 +318,6 @@
         { "id": "demolition", "label": "Rückbau" },
         { "id": "maintenance", "label": "Instandhaltung" }
       ],
-      "managementAreas": [
-        { "id": "area_north", "label": "Bewirtschaftungsgebiet Nord" },
-        { "id": "area_south", "label": "Bewirtschaftungsgebiet Süd" },
-        { "id": "area_east", "label": "Bewirtschaftungsgebiet Ost" },
-        { "id": "area_west", "label": "Bewirtschaftungsgebiet West" },
-        { "id": "area_central", "label": "Bewirtschaftungsgebiet Zentral" }
-      ],
       "subPortfolio": [
         { "id": "office", "label": "Bürogebäude" },
         { "id": "residential", "label": "Wohngebäude" },
@@ -394,7 +380,6 @@
       "projectNumber": "PRJ-2024-0001",
       "siaPhase": "sia_32",
       "projectManager": "Hans Müller",
-      "managementArea": "area_central",
       "projectStatus": "active",
       "projectStart": "15.01.2024",
       "bimProjectStart": "01.02.2024",
@@ -516,7 +501,6 @@
       "projectNumber": "PRJ-2024-0002",
       "siaPhase": "sia_41",
       "projectManager": "Anna Schmidt",
-      "managementArea": "area_central",
       "projectStatus": "planned",
       "projectStart": "01.03.2024",
       "bimProjectStart": "15.03.2024",
