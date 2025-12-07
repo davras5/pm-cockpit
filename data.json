@@ -201,6 +201,68 @@
         "alias": "Letzte Änderung",
         "format": "datetime",
         "entity": "project"
+      },
+      {
+        "id": "grundgroessen",
+        "alias": "Grundgrössen und Kennzahlen",
+        "format": "object",
+        "entity": "project",
+        "schema": {
+          "gebaeudevolumen": {
+            "gv": { "alias": "Gebäudevolumen", "unit": "m³" },
+            "gvOg": { "alias": "Gebäudevolumen Obergeschosse", "unit": "m³" },
+            "gvUg": { "alias": "Gebäudevolumen Untergeschosse", "unit": "m³" }
+          },
+          "grundstueckflaechen": {
+            "gsf": { "alias": "Grundstücksfläche", "unit": "m²" },
+            "ggf": { "alias": "Gebäudegrundfläche", "unit": "m²" },
+            "uf": { "alias": "Umgebungsfläche", "unit": "m²" }
+          },
+          "gebaeudeflaechen": {
+            "gf": { "alias": "Geschossfläche", "unit": "m²" },
+            "gfOg": { "alias": "Geschossfläche Obergeschosse", "unit": "m²" },
+            "gfUg": { "alias": "Geschossfläche Untergeschosse", "unit": "m²" },
+            "kf": { "alias": "Konstruktionsfläche", "unit": "m²" },
+            "ngf": { "alias": "Nettogeschossfläche", "unit": "m²" },
+            "nf": { "alias": "Nutzfläche", "unit": "m²" },
+            "hnf": { "alias": "Hauptnutzfläche", "unit": "m²" },
+            "nnf": { "alias": "Nebennutzfläche", "unit": "m²" },
+            "vf": { "alias": "Verkehrsfläche", "unit": "m²" },
+            "ff": { "alias": "Funktionsfläche", "unit": "m²" }
+          },
+          "flaechenDin277": {
+            "hnf1": { "alias": "Wohnen und Aufenthalt", "unit": "m²" },
+            "hnf2": { "alias": "Büroarbeit", "unit": "m²" },
+            "hnf3": { "alias": "Produktion", "unit": "m²" },
+            "hnf4": { "alias": "Lagern, Verteilen, Verkaufen", "unit": "m²" },
+            "hnf5": { "alias": "Bildung, Unterricht, Kultur", "unit": "m²" },
+            "hnf6": { "alias": "Heilen, Pflegen", "unit": "m²" },
+            "nnf7": { "alias": "Nebennutzfläche", "unit": "m²" },
+            "ff8": { "alias": "Betriebstechnische Anlagen", "unit": "m²" },
+            "vf9": { "alias": "Verkehrserschliessung und -sicherung", "unit": "m²" },
+            "buf10": { "alias": "Verschiedene Nutzungen", "unit": "m²" }
+          },
+          "allgemeineAngaben": {
+            "geschosse": { "alias": "Anzahl Gebäude Stockwerke" },
+            "geschosseUg": { "alias": "Anzahl Gebäude Stockwerke UG" }
+          },
+          "kennzahlenWirtschaftlichkeit": {
+            "hnfGf": { "alias": "Hauptnutzfläche / Geschossfläche" },
+            "vmfGf": { "alias": "Vermietbare Fläche / Geschossfläche" }
+          },
+          "arbeitsplatzkennzahlen": {
+            "ap": { "alias": "Anzahl Arbeitsplätze" },
+            "gfAp": { "alias": "Geschossfläche / Arbeitsplätze" },
+            "hnf2Ap": { "alias": "Hauptnutzfläche 2 / Arbeitsplätze" },
+            "bkp18Ap": { "alias": "Baukosten BKP 1 - 8 / Arbeitsplätze" },
+            "bkp2Ap": { "alias": "Baukosten BKP 2 / Arbeitsplätze" },
+            "bkp9Ap": { "alias": "Baukosten BKP 9 / Arbeitsplätze" }
+          },
+          "formquotienten": {
+            "awfGf": { "alias": "Aussenwandfläche / Geschossfläche" },
+            "dafGf": { "alias": "Dachfläche / Geschossfläche" }
+          }
+        }
       }
     ],
     "references": {
@@ -324,7 +386,63 @@
       "plannedTotalCost": 2500000,
       "relatedProjects": [],
       "subPortfolio": "office",
-      "lastModified": "08.12.2023 15:36"
+      "lastModified": "08.12.2023 15:36",
+      "grundgroessen": {
+        "gebaeudevolumen": {
+          "gv": 45200,
+          "gvOg": 38500,
+          "gvUg": 6700
+        },
+        "grundstueckflaechen": {
+          "gsf": 4850,
+          "ggf": 2100,
+          "uf": 2750
+        },
+        "gebaeudeflaechen": {
+          "gf": 12400,
+          "gfOg": 10200,
+          "gfUg": 2200,
+          "kf": 1850,
+          "ngf": 10550,
+          "nf": 9200,
+          "hnf": 7850,
+          "nnf": 680,
+          "vf": 1020,
+          "ff": 350
+        },
+        "flaechenDin277": {
+          "hnf1": 320,
+          "hnf2": 6450,
+          "hnf3": null,
+          "hnf4": 280,
+          "hnf5": 450,
+          "hnf6": null,
+          "nnf7": 680,
+          "ff8": 350,
+          "vf9": 1020,
+          "buf10": 350
+        },
+        "allgemeineAngaben": {
+          "geschosse": 6,
+          "geschosseUg": 2
+        },
+        "kennzahlenWirtschaftlichkeit": {
+          "hnfGf": 0.633,
+          "vmfGf": 0.742
+        },
+        "arbeitsplatzkennzahlen": {
+          "ap": 185,
+          "gfAp": 67.0,
+          "hnf2Ap": 34.9,
+          "bkp18Ap": 13514,
+          "bkp2Ap": 9459,
+          "bkp9Ap": 2703
+        },
+        "formquotienten": {
+          "awfGf": 0.38,
+          "dafGf": 0.17
+        }
+      }
     },
     {
       "id": "p1a2c3d4-2001-4000-8000-000000000002",
@@ -343,7 +461,63 @@
       "plannedTotalCost": 1800000,
       "relatedProjects": ["p1a2c3d4-2001-4000-8000-000000000001"],
       "subPortfolio": "office",
-      "lastModified": "08.12.2023 11:48"
+      "lastModified": "08.12.2023 11:48",
+      "grundgroessen": {
+        "gebaeudevolumen": {
+          "gv": 125000,
+          "gvOg": 95000,
+          "gvUg": 30000
+        },
+        "grundstueckflaechen": {
+          "gsf": 8500,
+          "ggf": 4200,
+          "uf": 4300
+        },
+        "gebaeudeflaechen": {
+          "gf": 28500,
+          "gfOg": 21800,
+          "gfUg": 6700,
+          "kf": 4275,
+          "ngf": 24225,
+          "nf": 21200,
+          "hnf": 18100,
+          "nnf": 1520,
+          "vf": 2350,
+          "ff": 780
+        },
+        "flaechenDin277": {
+          "hnf1": 850,
+          "hnf2": 14200,
+          "hnf3": null,
+          "hnf4": 620,
+          "hnf5": 1280,
+          "hnf6": 450,
+          "nnf7": 1520,
+          "ff8": 780,
+          "vf9": 2350,
+          "buf10": 700
+        },
+        "allgemeineAngaben": {
+          "geschosse": 8,
+          "geschosseUg": 3
+        },
+        "kennzahlenWirtschaftlichkeit": {
+          "hnfGf": 0.635,
+          "vmfGf": 0.755
+        },
+        "arbeitsplatzkennzahlen": {
+          "ap": 420,
+          "gfAp": 67.9,
+          "hnf2Ap": 33.8,
+          "bkp18Ap": 4286,
+          "bkp2Ap": 3000,
+          "bkp9Ap": 857
+        },
+        "formquotienten": {
+          "awfGf": 0.42,
+          "dafGf": 0.15
+        }
+      }
     }
   ]
 }

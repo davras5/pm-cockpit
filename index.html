@@ -1600,6 +1600,119 @@
       color: var(--accent-600);
     }
 
+    /* Kennzahlen Tab Layout */
+    .kennzahlen-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+    .kennzahlen-column {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+    .kennzahlen-main-header {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent-700);
+      padding-bottom: var(--space-3);
+      border-bottom: 2px solid var(--accent-600);
+      margin-bottom: var(--space-4);
+    }
+    .kennzahlen-section {
+      margin-bottom: var(--space-4);
+    }
+    .kennzahlen-section-header {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--neutral-700);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--neutral-200);
+      margin-bottom: var(--space-3);
+    }
+    .kennzahlen-rows {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .kennzahlen-row {
+      display: grid;
+      grid-template-columns: 70px 1fr 80px 50px 60px;
+      gap: var(--space-2);
+      padding: var(--space-2) 0;
+      align-items: center;
+      border-bottom: 1px solid var(--neutral-100);
+    }
+    .kennzahlen-row:last-child {
+      border-bottom: none;
+    }
+    .kennzahlen-abbrev {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-700);
+    }
+    .kennzahlen-desc {
+      font-size: 13px;
+      color: var(--neutral-600);
+    }
+    .kennzahlen-value {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--neutral-900);
+      text-align: right;
+    }
+    .kennzahlen-unit {
+      font-size: 12px;
+      color: var(--neutral-500);
+      text-align: left;
+    }
+    .kennzahlen-percent {
+      font-size: 12px;
+      color: var(--neutral-400);
+      text-align: right;
+    }
+    /* Narrower row variant for right column */
+    .kennzahlen-row-narrow {
+      display: grid;
+      grid-template-columns: 100px 1fr 80px 60px;
+      gap: var(--space-2);
+      padding: var(--space-2) 0;
+      align-items: center;
+      border-bottom: 1px solid var(--neutral-100);
+    }
+    .kennzahlen-row-narrow:last-child {
+      border-bottom: none;
+    }
+    .kennzahlen-row-narrow .kennzahlen-abbrev {
+      font-size: 12px;
+    }
+
+    /* Responsive Kennzahlen */
+    @media (max-width: 1024px) {
+      .kennzahlen-container {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+      }
+      .kennzahlen-row {
+        grid-template-columns: 60px 1fr 70px 45px 55px;
+      }
+    }
+    @media (max-width: 768px) {
+      .kennzahlen-row {
+        grid-template-columns: 55px 1fr 65px 40px;
+        font-size: 12px;
+      }
+      .kennzahlen-percent {
+        display: none;
+      }
+      .kennzahlen-row-narrow {
+        grid-template-columns: 80px 1fr 70px;
+      }
+      .kennzahlen-row-narrow .kennzahlen-unit {
+        display: none;
+      }
+    }
+
     /* Responsive Detail View */
     @media (max-width: 1024px) {
       .detail-view-inner {
@@ -1831,7 +1944,7 @@
             <button class="detail-tab active" data-tab="uebersicht">Übersicht</button>
             <button class="detail-tab" data-tab="projektziele" disabled>Projektziele</button>
             <button class="detail-tab" data-tab="risiken" disabled>Risiken</button>
-            <button class="detail-tab" data-tab="kennzahlen" disabled>Grundgrössen und Kennzahlen</button>
+            <button class="detail-tab" data-tab="kennzahlen">Grundgrössen und Kennzahlen</button>
             <button class="detail-tab" data-tab="checkliste" disabled>Checkliste Lieferobjekte</button>
           </div>
           <div class="detail-content" id="detailContent">
@@ -2719,6 +2832,196 @@
       });
     }
 
+    // Format number with thousands separator (Swiss format)
+    function formatNumber(value, decimals = 0) {
+      if (value === null || value === undefined) return '-';
+      return new Intl.NumberFormat('de-CH', {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals
+      }).format(value);
+    }
+
+    // Format percentage
+    function formatPercent(value) {
+      if (value === null || value === undefined) return '-';
+      return (value * 100).toFixed(1) + '%';
+    }
+
+    // Render Kennzahlen content (Grundgrössen und Kennzahlen tab)
+    function renderKennzahlenContent(project) {
+      const content = document.getElementById('detailContent');
+      const g = project.grundgroessen || {};
+
+      // Helper to create a data row
+      const row = (abbrev, desc, value, unit, percent = '100%') => `
+        <div class="kennzahlen-row">
+          <span class="kennzahlen-abbrev">${abbrev}</span>
+          <span class="kennzahlen-desc">${desc}</span>
+          <span class="kennzahlen-value">${value}</span>
+          <span class="kennzahlen-unit">${unit}</span>
+          <span class="kennzahlen-percent">${percent}</span>
+        </div>
+      `;
+
+      // Helper for narrow rows (right column)
+      const rowNarrow = (abbrev, desc, value, unit = '') => `
+        <div class="kennzahlen-row-narrow">
+          <span class="kennzahlen-abbrev">${abbrev}</span>
+          <span class="kennzahlen-desc">${desc}</span>
+          <span class="kennzahlen-value">${value}</span>
+          <span class="kennzahlen-unit">${unit}</span>
+        </div>
+      `;
+
+      const gv = g.gebaeudevolumen || {};
+      const gsf = g.grundstueckflaechen || {};
+      const gfl = g.gebaeudeflaechen || {};
+      const din = g.flaechenDin277 || {};
+      const allg = g.allgemeineAngaben || {};
+      const kw = g.kennzahlenWirtschaftlichkeit || {};
+      const ap = g.arbeitsplatzkennzahlen || {};
+      const fq = g.formquotienten || {};
+
+      content.innerHTML = `
+        <div class="kennzahlen-container">
+          <!-- Left Column: Volumen und Flächen nach SIA 416 -->
+          <div class="kennzahlen-column">
+            <div class="kennzahlen-main-header">Volumen und Flächen nach SIA 416</div>
+
+            <!-- Gebäudevolumen -->
+            <div class="kennzahlen-section">
+              <div class="kennzahlen-section-header">Gebäudevolumen</div>
+              <div class="kennzahlen-rows">
+                ${row('GV', 'Gebäudevolumen', formatNumber(gv.gv), 'm³', '100%')}
+                ${row('GV OG', 'Gebäudevolumen Obergeschosse', formatNumber(gv.gvOg), 'm³', '100%')}
+                ${row('GV UG', 'Gebäudevolumen Untergeschosse', formatNumber(gv.gvUg), 'm³', '100%')}
+              </div>
+            </div>
+
+            <!-- Grundstücksflächen -->
+            <div class="kennzahlen-section">
+              <div class="kennzahlen-section-header">Grundstücksflächen</div>
+              <div class="kennzahlen-rows">
+                ${row('GSF', 'Grundstücksfläche', formatNumber(gsf.gsf), 'm²', '100%')}
+                ${row('GGF', 'Gebäudegrundfläche', formatNumber(gsf.ggf), 'm²', '100%')}
+                ${row('UF', 'Umgebungsfläche', formatNumber(gsf.uf), 'm²', '100%')}
+              </div>
+            </div>
+
+            <!-- Gebäudeflächen -->
+            <div class="kennzahlen-section">
+              <div class="kennzahlen-section-header">Gebäudeflächen</div>
+              <div class="kennzahlen-rows">
+                ${row('GF', 'Geschossfläche', formatNumber(gfl.gf), 'm²', '100%')}
+                ${row('GF OG', 'Geschossfläche Obergeschosse', formatNumber(gfl.gfOg), 'm²', '100%')}
+                ${row('GF UG', 'Geschossfläche Untergeschosse', formatNumber(gfl.gfUg), 'm²', '100%')}
+                ${row('KF', 'Konstruktionsfläche', formatNumber(gfl.kf), 'm²', '100%')}
+                ${row('NGF', 'Nettogeschossfläche', formatNumber(gfl.ngf), 'm²', '100%')}
+                ${row('NF', 'Nutzfläche', formatNumber(gfl.nf), 'm²', '100%')}
+                ${row('HNF', 'Hauptnutzfläche', formatNumber(gfl.hnf), 'm²', '100%')}
+                ${row('NNF', 'Nebennutzfläche', formatNumber(gfl.nnf), 'm²', '100%')}
+                ${row('VF', 'Verkehrsfläche', formatNumber(gfl.vf), 'm²', '100%')}
+                ${row('FF', 'Funktionsfläche', formatNumber(gfl.ff), 'm²', '100%')}
+              </div>
+            </div>
+
+            <!-- Flächen DIN 277 -->
+            <div class="kennzahlen-section">
+              <div class="kennzahlen-section-header">Flächen DIN 277</div>
+              <div class="kennzahlen-rows">
+                ${row('HNF 1', 'Wohnen und Aufenthalt', formatNumber(din.hnf1), 'm²', '100%')}
+                ${row('HNF 2', 'Büroarbeit', formatNumber(din.hnf2), 'm²', '100%')}
+                ${row('HNF 3', 'Produktion', formatNumber(din.hnf3), 'm²', '100%')}
+                ${row('HNF 4', 'Lagern, Verteilen, Verkaufen', formatNumber(din.hnf4), 'm²', '100%')}
+                ${row('HNF 5', 'Bildung, Unterricht, Kultur', formatNumber(din.hnf5), 'm²', '100%')}
+                ${row('HNF 6', 'Heilen, Pflegen', formatNumber(din.hnf6), 'm²', '100%')}
+                ${row('NNF 7', 'Nebennutzfläche', formatNumber(din.nnf7), 'm²', '100%')}
+                ${row('FF 8', 'Betriebstechnische Anlagen', formatNumber(din.ff8), 'm²', '100%')}
+                ${row('VF 9', 'Verkehrserschliessung und -sicherung', formatNumber(din.vf9), 'm²', '100%')}
+                ${row('BUF 10', 'Verschiedene Nutzungen', formatNumber(din.buf10), 'm²', '100%')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Kennzahlen -->
+          <div class="kennzahlen-column">
+            <!-- Allgemeine Angaben -->
+            <div class="kennzahlen-section">
+              <div class="kennzahlen-section-header">Allgemeine Angaben</div>
+              <div class="kennzahlen-rows">
+                ${rowNarrow('', 'Anzahl Gebäude Stockwerke', formatNumber(allg.geschosse), '')}
+                ${rowNarrow('', 'Anzahl Gebäude Stockwerke UG', formatNumber(allg.geschosseUg), '')}
+              </div>
+            </div>
+
+            <!-- Kennzahlen Wirtschaftlichkeit der Grundrisse -->
+            <div class="kennzahlen-section">
+              <div class="kennzahlen-section-header">Kennzahlen Wirtschaftlichkeit der Grundrisse</div>
+              <div class="kennzahlen-rows">
+                ${rowNarrow('HNF SIA 416 / GF', 'Hauptnutzfläche / Geschossfläche', formatPercent(kw.hnfGf), '')}
+                ${rowNarrow('VMF SIA 165 / GF', 'Vermietbare Fläche / Geschossfläche', formatPercent(kw.vmfGf), '')}
+              </div>
+            </div>
+
+            <!-- Arbeitsplatzkennzahlen -->
+            <div class="kennzahlen-section">
+              <div class="kennzahlen-section-header">Arbeitsplatzkennzahlen</div>
+              <div class="kennzahlen-rows">
+                ${rowNarrow('AP', 'Anzahl Arbeitsplätze', formatNumber(ap.ap), '')}
+                ${rowNarrow('GF SIA 416 / AP', 'Geschossfläche / Arbeitsplätze', formatNumber(ap.gfAp, 1), '')}
+                ${rowNarrow('HNF 2 / AP', 'Hauptnutzfläche 2 / Arbeitsplätze', formatNumber(ap.hnf2Ap, 1), '')}
+                ${rowNarrow('BKP 1 - 8 / AP', 'Baukosten BKP 1 - 8 / Arbeitsplätze', formatNumber(ap.bkp18Ap), '')}
+                ${rowNarrow('BKP 2 / AP', 'Baukosten BKP 2 / Arbeitsplätze', formatNumber(ap.bkp2Ap), '')}
+                ${rowNarrow('BKP 9 / AP', 'Baukosten BKP 9 / Arbeitsplätze', formatNumber(ap.bkp9Ap), '')}
+              </div>
+            </div>
+
+            <!-- Formquotienten nach eBKP-H -->
+            <div class="kennzahlen-section">
+              <div class="kennzahlen-section-header">Formquotienten nach eBKP-H</div>
+              <div class="kennzahlen-rows">
+                ${rowNarrow('AWF / GF', 'Aussenwandfläche / Geschossfläche', formatNumber(fq.awfGf, 2), '')}
+                ${rowNarrow('DAF / GF', 'Dachfläche / Geschossfläche', formatNumber(fq.dafGf, 2), '')}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Handle tab switching in detail view
+    function switchDetailTab(tabName) {
+      // Update active tab button
+      document.querySelectorAll('.detail-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.tab === tabName);
+      });
+
+      // Get current project
+      const project = properties.find(p => p.id === currentDetailProjectId);
+      if (!project) return;
+
+      // Render appropriate content
+      if (tabName === 'kennzahlen') {
+        renderKennzahlenContent(project);
+      } else if (tabName === 'uebersicht') {
+        renderDetailContent(project);
+        // Re-initialize detail map after rendering
+        setTimeout(() => {
+          initializeDetailMap(project);
+        }, 100);
+      }
+    }
+
+    // Set up detail tab click handlers
+    function setupDetailTabs() {
+      document.querySelectorAll('.detail-tab').forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          if (e.target.disabled) return;
+          switchDetailTab(e.target.dataset.tab);
+        });
+      });
+    }
+
     // Unified click handler (event delegation for tags and sidebar items)
     function handleContentClick(event) {
       // First, check if clicked on a filter tag (status-tag)
@@ -2803,6 +3106,7 @@
     setupFilterModal();
     setupSearch();
     setupViewToggle();
+    setupDetailTabs();
     loadFiltersFromUrl();
     setView(currentView);
 
