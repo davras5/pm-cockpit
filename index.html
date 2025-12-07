@@ -1720,6 +1720,92 @@
       }
     }
 
+    /* Risiken Tab Layout */
+    .risiken-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+    .risiken-main-header {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent-700);
+      padding-bottom: var(--space-3);
+      border-bottom: 2px solid var(--accent-600);
+      margin-bottom: var(--space-4);
+    }
+    .risiken-section {
+      margin-bottom: var(--space-2);
+    }
+    .risiken-section-header {
+      font-size: 14px;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--neutral-700);
+      padding-bottom: var(--space-2);
+      margin-bottom: var(--space-3);
+    }
+    .risiken-rows {
+      display: flex;
+      flex-direction: column;
+    }
+    .risiken-row {
+      display: grid;
+      grid-template-columns: 75px 1fr 200px;
+      gap: var(--space-3);
+      padding: var(--space-2) 0;
+      align-items: center;
+      border-radius: var(--radius-sm);
+      transition: background-color var(--transition-fast);
+    }
+    .risiken-row:hover {
+      background-color: var(--neutral-100);
+    }
+    .risiken-id {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent-700);
+    }
+    .risiken-name {
+      font-size: 13px;
+      color: var(--neutral-700);
+    }
+    .risiken-status {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: flex-end;
+    }
+    .risiken-status-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: var(--neutral-300);
+      flex-shrink: 0;
+    }
+    .risiken-status-dot.low {
+      background-color: #84cc16; /* lime-500 */
+    }
+    .risiken-status-dot.medium {
+      background-color: #eab308; /* yellow-500 */
+    }
+    .risiken-status-dot.high {
+      background-color: #dc2626; /* red-600 */
+    }
+
+    /* Responsive Risiken */
+    @media (max-width: 768px) {
+      .risiken-row {
+        grid-template-columns: 70px 1fr 150px;
+      }
+      .risiken-status {
+        gap: var(--space-2);
+      }
+      .risiken-status-dot {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
     /* Responsive Detail View */
     @media (max-width: 1024px) {
       .detail-view-inner {
@@ -1954,7 +2040,7 @@
           <div class="detail-tabs">
             <button class="detail-tab active" data-tab="uebersicht">Übersicht</button>
             <button class="detail-tab" data-tab="projektziele" disabled>Projektziele</button>
-            <button class="detail-tab" data-tab="risiken" disabled>Risiken</button>
+            <button class="detail-tab" data-tab="risiken">Risiken</button>
             <button class="detail-tab" data-tab="kennzahlen">Grundgrössen und Kennzahlen</button>
             <button class="detail-tab" data-tab="checkliste" disabled>Checkliste Lieferobjekte</button>
           </div>
@@ -3036,6 +3122,62 @@
       `;
     }
 
+    // Render Risiken content (Risiken tab)
+    function renderRisikenContent(project) {
+      const content = document.getElementById('detailContent');
+      const risiken = project.risiken || {};
+
+      // Category labels for display
+      const categoryLabels = {
+        technisch: 'Technisch',
+        terminlich: 'Terminlich',
+        rechtlich: 'Rechtlich',
+        sonstige: 'Sonstige'
+      };
+
+      // Helper to create status dots
+      const renderStatusDots = (statusArray) => {
+        return (statusArray || [null, null, null, null, null]).map(status => {
+          const statusClass = status ? ` ${status}` : '';
+          return `<div class="risiken-status-dot${statusClass}"></div>`;
+        }).join('');
+      };
+
+      // Helper to create a risk row
+      const riskRow = (risk) => `
+        <div class="risiken-row">
+          <span class="risiken-id">${risk.id || ''}</span>
+          <span class="risiken-name">${risk.name || ''}</span>
+          <div class="risiken-status">
+            ${renderStatusDots(risk.status)}
+          </div>
+        </div>
+      `;
+
+      // Helper to create a section
+      const renderSection = (categoryKey, risks) => {
+        if (!risks || risks.length === 0) return '';
+        return `
+          <div class="risiken-section">
+            <div class="risiken-section-header">${categoryLabels[categoryKey] || categoryKey}</div>
+            <div class="risiken-rows">
+              ${risks.map(riskRow).join('')}
+            </div>
+          </div>
+        `;
+      };
+
+      content.innerHTML = `
+        <div class="risiken-main-header">Risiken</div>
+        <div class="risiken-container">
+          ${renderSection('technisch', risiken.technisch)}
+          ${renderSection('terminlich', risiken.terminlich)}
+          ${renderSection('rechtlich', risiken.rechtlich)}
+          ${renderSection('sonstige', risiken.sonstige)}
+        </div>
+      `;
+    }
+
     // Handle tab switching in detail view
     function switchDetailTab(tabName) {
       // Track current tab
@@ -3053,6 +3195,8 @@
       // Render appropriate content
       if (tabName === 'kennzahlen') {
         renderKennzahlenContent(project);
+      } else if (tabName === 'risiken') {
+        renderRisikenContent(project);
       } else if (tabName === 'uebersicht') {
         renderDetailContent(project);
         // Re-initialize detail map after rendering
