@@ -188,6 +188,19 @@
         "alias": "Verwandte Projekte",
         "format": "array",
         "entity": "project"
+      },
+      {
+        "id": "subPortfolio",
+        "alias": "Teilportfolio",
+        "format": "reference",
+        "reference": "subPortfolio",
+        "entity": "project"
+      },
+      {
+        "id": "lastModified",
+        "alias": "Letzte Änderung",
+        "format": "datetime",
+        "entity": "project"
       }
     ],
     "references": {
@@ -292,7 +305,9 @@
       "bimLevel": "level_2",
       "constructionType": "renovation",
       "plannedTotalCost": 2500000,
-      "relatedProjects": []
+      "relatedProjects": [],
+      "subPortfolio": "office",
+      "lastModified": "08.12.2023 15:36"
     },
     {
       "id": "p1a2c3d4-2001-4000-8000-000000000002",
@@ -309,7 +324,9 @@
       "bimLevel": "level_2",
       "constructionType": "renovation",
       "plannedTotalCost": 1800000,
-      "relatedProjects": ["p1a2c3d4-2001-4000-8000-000000000001"]
+      "relatedProjects": ["p1a2c3d4-2001-4000-8000-000000000001"],
+      "subPortfolio": "office",
+      "lastModified": "08.12.2023 11:48"
     }
   ]
 }
