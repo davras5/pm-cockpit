@@ -1701,21 +1701,22 @@
     .bkp-table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: var(--space-4);
+      margin-bottom: var(--space-6);
     }
     .bkp-table th {
-      font-size: var(--font-size-xs);
-      font-weight: var(--font-weight-medium);
-      color: var(--neutral-500);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--neutral-700);
       text-align: left;
       padding: var(--space-1) var(--space-1);
+      padding-bottom: var(--space-2);
       white-space: nowrap;
     }
     .bkp-table th.text-right {
       text-align: right;
     }
     .bkp-table th.bkp-header-group {
-      border-bottom: 1px solid var(--neutral-300);
+      border-bottom: 1px solid var(--neutral-200);
     }
     .bkp-table td {
       font-size: var(--font-size-sm);
@@ -1761,6 +1762,9 @@
     }
     .bkp-table tr.bkp-total td {
       padding-top: var(--space-2);
+    }
+    .bkp-table tr.bkp-spacer td {
+      padding: var(--space-2) 0;
     }
     .bkp-table tr.bkp-summary td {
       font-weight: var(--font-weight-semibold);
@@ -3295,6 +3299,7 @@
               <td></td>
               <td></td>
             </tr>
+            <tr class="bkp-spacer"><td colspan="10"></td></tr>
             <tr class="bkp-summary">
               <td class="bkp-code">1 - 6</td>
               <td>Herstellungskosten</td>
