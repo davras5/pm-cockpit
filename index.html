@@ -1337,15 +1337,23 @@
       bottom: 0;
       background: var(--neutral-100);
       z-index: 100;
+      overflow-y: auto;
     }
     .detail-view.active {
+      display: flex;
+      justify-content: center;
+    }
+    .detail-view-inner {
       display: grid;
       grid-template-columns: 280px 1fr;
+      width: 100%;
+      max-width: 1440px;
+      background: var(--neutral-50);
+      box-shadow: var(--shadow-lg);
     }
 
     /* Detail Sidebar */
     .detail-sidebar {
-      background: var(--neutral-50);
       border-right: 1px solid var(--neutral-200);
       overflow-y: auto;
       display: flex;
@@ -1561,7 +1569,7 @@
 
     /* Responsive Detail View */
     @media (max-width: 1024px) {
-      .detail-view.active {
+      .detail-view-inner {
         grid-template-columns: 240px 1fr;
       }
       .detail-media {
@@ -1573,7 +1581,7 @@
       }
     }
     @media (max-width: 768px) {
-      .detail-view.active {
+      .detail-view-inner {
         grid-template-columns: 1fr;
       }
       .detail-sidebar {
@@ -1748,32 +1756,34 @@
 
   <!-- Detail View -->
   <div class="detail-view" id="detailView">
-    <div class="detail-sidebar">
-      <div class="detail-sidebar-header">
-        Bauprojekte (<span id="detailProjectCount">0</span>)
+    <div class="detail-view-inner">
+      <div class="detail-sidebar">
+        <div class="detail-sidebar-header">
+          Bauprojekte (<span id="detailProjectCount">0</span>)
+        </div>
+        <div class="detail-sidebar-list" id="detailSidebarList">
+          <!-- Project list items will be rendered here -->
+        </div>
       </div>
-      <div class="detail-sidebar-list" id="detailSidebarList">
-        <!-- Project list items will be rendered here -->
-      </div>
-    </div>
-    <div class="detail-main">
-      <div class="detail-header">
-        <span class="material-icons-outlined detail-header-icon">apartment</span>
-        <h1 class="detail-header-title" id="detailHeaderTitle">-</h1>
-        <button class="detail-back-btn" onclick="closeDetailView()">
-          <span class="material-icons-outlined">arrow_back</span>
-          Zurück zur Übersicht
-        </button>
-      </div>
-      <div class="detail-tabs">
-        <button class="detail-tab active" data-tab="uebersicht">Übersicht</button>
-        <button class="detail-tab" data-tab="projektziele" disabled>Projektziele</button>
-        <button class="detail-tab" data-tab="risiken" disabled>Risiken</button>
-        <button class="detail-tab" data-tab="kennzahlen" disabled>Grundgrössen und Kennzahlen</button>
-        <button class="detail-tab" data-tab="checkliste" disabled>Checkliste Lieferobjekte</button>
-      </div>
-      <div class="detail-content" id="detailContent">
-        <!-- Tab content will be rendered here -->
+      <div class="detail-main">
+        <div class="detail-header">
+          <span class="material-icons-outlined detail-header-icon">apartment</span>
+          <h1 class="detail-header-title" id="detailHeaderTitle">-</h1>
+          <button class="detail-back-btn" onclick="closeDetailView()">
+            <span class="material-icons-outlined">arrow_back</span>
+            Zurück zur Übersicht
+          </button>
+        </div>
+        <div class="detail-tabs">
+          <button class="detail-tab active" data-tab="uebersicht">Übersicht</button>
+          <button class="detail-tab" data-tab="projektziele" disabled>Projektziele</button>
+          <button class="detail-tab" data-tab="risiken" disabled>Risiken</button>
+          <button class="detail-tab" data-tab="kennzahlen" disabled>Grundgrössen und Kennzahlen</button>
+          <button class="detail-tab" data-tab="checkliste" disabled>Checkliste Lieferobjekte</button>
+        </div>
+        <div class="detail-content" id="detailContent">
+          <!-- Tab content will be rendered here -->
+        </div>
       </div>
     </div>
   </div>
