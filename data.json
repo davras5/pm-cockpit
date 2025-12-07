@@ -340,26 +340,26 @@
     {
       "id": "b1a2c3d4-1001-4000-8000-000000000001",
       "buildingNumber": "GB-2024-001",
-      "plotNumber": "1234-56",
-      "designation": "Bürogebäude Freilagerstrasse",
-      "egid": "123456789",
+      "plotNumber": "BE-1234",
+      "designation": "Bundesverwaltungszentrum Zollikofen",
+      "egid": "301456789",
       "buildingStatus": "active",
       "subPortfolio": "office",
-      "lat": 47.3769,
-      "lng": 8.5417,
-      "street": "Freilagerstrasse",
-      "streetNumber": "12",
-      "zip": "8004",
-      "city": "Zürich",
-      "region": "Zürich",
+      "lat": 46.9983,
+      "lng": 7.4576,
+      "street": "Fellerstrasse",
+      "streetNumber": "21",
+      "zip": "3052",
+      "city": "Zollikofen",
+      "region": "Bern",
       "country": "CH"
     },
     {
       "id": "b1a2c3d4-1001-4000-8000-000000000002",
       "buildingNumber": "GB-2024-002",
-      "plotNumber": "5678-90",
+      "plotNumber": "BE-5678",
       "designation": "Bundeshaus West",
-      "egid": "987654321",
+      "egid": "301987654",
       "buildingStatus": "active",
       "subPortfolio": "office",
       "lat": 46.9465,
@@ -370,13 +370,64 @@
       "city": "Bern",
       "region": "Bern",
       "country": "CH"
+    },
+    {
+      "id": "b1a2c3d4-1001-4000-8000-000000000003",
+      "buildingNumber": "GB-2024-003",
+      "plotNumber": "GE-2341",
+      "designation": "Palais des Nations - Bundesverwaltung",
+      "egid": "291234567",
+      "buildingStatus": "active",
+      "subPortfolio": "office",
+      "lat": 46.2265,
+      "lng": 6.1406,
+      "street": "Avenue de la Paix",
+      "streetNumber": "8-14",
+      "zip": "1211",
+      "city": "Genf",
+      "region": "Genf",
+      "country": "CH"
+    },
+    {
+      "id": "b1a2c3d4-1001-4000-8000-000000000004",
+      "buildingNumber": "GB-2024-004",
+      "plotNumber": "BS-9012",
+      "designation": "Zollverwaltung Basel",
+      "egid": "270456123",
+      "buildingStatus": "active",
+      "subPortfolio": "infrastructure",
+      "lat": 47.5596,
+      "lng": 7.5886,
+      "street": "Elisabethenstrasse",
+      "streetNumber": "31",
+      "zip": "4010",
+      "city": "Basel",
+      "region": "Basel-Stadt",
+      "country": "CH"
+    },
+    {
+      "id": "b1a2c3d4-1001-4000-8000-000000000005",
+      "buildingNumber": "GB-2024-005",
+      "plotNumber": "VD-7890",
+      "designation": "Bundesgericht Lausanne",
+      "egid": "280789456",
+      "buildingStatus": "active",
+      "subPortfolio": "cultural",
+      "lat": 46.5197,
+      "lng": 6.6323,
+      "street": "Avenue du Tribunal-Fédéral",
+      "streetNumber": "29",
+      "zip": "1005",
+      "city": "Lausanne",
+      "region": "Waadt",
+      "country": "CH"
     }
   ],
   "projects": [
     {
       "id": "p1a2c3d4-2001-4000-8000-000000000001",
       "buildingId": "b1a2c3d4-1001-4000-8000-000000000001",
-      "projectName": "Fassadensanierung Freilagerstrasse",
+      "projectName": "Fassadensanierung BVZ Zollikofen",
       "projectNumber": "PRJ-2024-0001",
       "siaPhase": "sia_32",
       "projectManager": "Hans Müller",
@@ -386,60 +437,60 @@
       "bimProjectEnd": "30.06.2025",
       "bimLevel": "level_2",
       "constructionType": "renovation",
-      "plannedTotalCost": 2500000,
+      "plannedTotalCost": 8500000,
       "relatedProjects": [],
       "subPortfolio": "office",
-      "lastModified": "08.12.2023 15:36",
+      "lastModified": "05.12.2024 15:36",
       "grundgroessen": {
         "gebaeudevolumen": {
-          "gv": 45200,
-          "gvOg": 38500,
-          "gvUg": 6700
+          "gv": 85200,
+          "gvOg": 68500,
+          "gvUg": 16700
         },
         "grundstueckflaechen": {
-          "gsf": 4850,
-          "ggf": 2100,
-          "uf": 2750
+          "gsf": 12850,
+          "ggf": 4100,
+          "uf": 8750
         },
         "gebaeudeflaechen": {
-          "gf": 12400,
-          "gfOg": 10200,
-          "gfUg": 2200,
-          "kf": 1850,
-          "ngf": 10550,
-          "nf": 9200,
-          "hnf": 7850,
-          "nnf": 680,
-          "vf": 1020,
-          "ff": 350
+          "gf": 22400,
+          "gfOg": 18200,
+          "gfUg": 4200,
+          "kf": 3350,
+          "ngf": 19050,
+          "nf": 16800,
+          "hnf": 14250,
+          "nnf": 1180,
+          "vf": 1820,
+          "ff": 650
         },
         "flaechenDin277": {
-          "hnf1": 320,
-          "hnf2": 6450,
+          "hnf1": 420,
+          "hnf2": 12450,
           "hnf3": null,
-          "hnf4": 280,
-          "hnf5": 450,
+          "hnf4": 480,
+          "hnf5": 550,
           "hnf6": null,
-          "nnf7": 680,
-          "ff8": 350,
-          "vf9": 1020,
+          "nnf7": 1180,
+          "ff8": 650,
+          "vf9": 1820,
           "buf10": 350
         },
         "allgemeineAngaben": {
-          "geschosse": 6,
+          "geschosse": 8,
           "geschosseUg": 2
         },
         "kennzahlenWirtschaftlichkeit": {
-          "hnfGf": 0.633,
-          "vmfGf": 0.742
+          "hnfGf": 0.636,
+          "vmfGf": 0.752
         },
         "arbeitsplatzkennzahlen": {
-          "ap": 185,
-          "gfAp": 67.0,
-          "hnf2Ap": 34.9,
-          "bkp18Ap": 13514,
-          "bkp2Ap": 9459,
-          "bkp9Ap": 2703
+          "ap": 385,
+          "gfAp": 58.2,
+          "hnf2Ap": 32.3,
+          "bkp18Ap": 22078,
+          "bkp2Ap": 15455,
+          "bkp9Ap": 4416
         },
         "formquotienten": {
           "awfGf": 0.38,
@@ -448,15 +499,15 @@
       },
       "kostenBkp": {
         "bkp0": { "kennwert": 0, "chfKosten": 0 },
-        "bkp1": { "kennwert": 19, "chfKosten": 680000 },
-        "bkp2": { "kennwert": 2154, "chfKosten": 77780000 },
+        "bkp1": { "kennwert": 22, "chfKosten": 492800 },
+        "bkp2": { "kennwert": 2654, "chfKosten": 59449600 },
         "bkp3": { "kennwert": 0, "chfKosten": 0 },
-        "bkp4": { "kennwert": 90, "chfKosten": 3250000 },
-        "bkp5": { "kennwert": 71, "chfKosten": 2550000 },
-        "bkp6": { "kennwert": 71, "chfKosten": 0 },
+        "bkp4": { "kennwert": 95, "chfKosten": 2128000 },
+        "bkp5": { "kennwert": 78, "chfKosten": 1747200 },
+        "bkp6": { "kennwert": 45, "chfKosten": 1008000 },
         "bkp7": { "kennwert": 0, "chfKosten": 0 },
         "bkp8": { "kennwert": 0, "chfKosten": 0 },
-        "bkp9": { "kennwert": 147, "chfKosten": 5300000 }
+        "bkp9": { "kennwert": 156, "chfKosten": 3494400 }
       },
       "risiken": {
         "technisch": [
@@ -482,8 +533,8 @@
         ]
       },
       "projektziele": {
-        "ausgangslage": "Die bestehende Fassade des Bürogebäudes an der Freilagerstrasse weist nach 25 Jahren Nutzung erhebliche Schäden auf. Die Wärmedämmung entspricht nicht mehr den aktuellen energetischen Anforderungen und es treten vermehrt Feuchtigkeitsprobleme auf.",
-        "ziele": "Energetische Sanierung der Gebäudehülle auf Minergie-Standard. Verbesserung des Raumklimas und Reduktion der Betriebskosten um 30%. Aufwertung des Erscheinungsbildes unter Berücksichtigung des Ortsbildschutzes.",
+        "ausgangslage": "Die bestehende Fassade des Bundesverwaltungszentrums Zollikofen weist nach 30 Jahren Nutzung erhebliche Schäden auf. Die Wärmedämmung entspricht nicht mehr den aktuellen energetischen Anforderungen gemäss Energiestrategie 2050 des Bundes.",
+        "ziele": "Energetische Sanierung der Gebäudehülle auf Minergie-P-Standard. Verbesserung des Raumklimas und Reduktion der Betriebskosten um 35%. Integration von Photovoltaik-Elementen in die Fassade.",
         "meilensteine": [
           { "name": "Projektstart", "plannedDate": "15.01.2024", "actualDate": "15.01.2024", "status": "completed" },
           { "name": "Vorprojekt abgeschlossen", "plannedDate": "15.04.2024", "actualDate": "20.04.2024", "status": "completed" },
@@ -497,70 +548,70 @@
     {
       "id": "p1a2c3d4-2001-4000-8000-000000000002",
       "buildingId": "b1a2c3d4-1001-4000-8000-000000000002",
-      "projectName": "Haustechnik Erneuerung Bundeshaus",
+      "projectName": "HLKS-Erneuerung Bundeshaus West",
       "projectNumber": "PRJ-2024-0002",
       "siaPhase": "sia_41",
       "projectManager": "Anna Schmidt",
-      "projectStatus": "planned",
+      "projectStatus": "active",
       "projectStart": "01.03.2024",
       "bimProjectStart": "15.03.2024",
-      "bimProjectEnd": "31.12.2025",
+      "bimProjectEnd": "31.12.2026",
       "bimLevel": "level_2",
       "constructionType": "renovation",
-      "plannedTotalCost": 1800000,
+      "plannedTotalCost": 12500000,
       "relatedProjects": ["p1a2c3d4-2001-4000-8000-000000000001"],
       "subPortfolio": "office",
-      "lastModified": "08.12.2023 11:48",
+      "lastModified": "03.12.2024 11:48",
       "grundgroessen": {
         "gebaeudevolumen": {
-          "gv": 125000,
-          "gvOg": 95000,
+          "gv": 145000,
+          "gvOg": 115000,
           "gvUg": 30000
         },
         "grundstueckflaechen": {
-          "gsf": 8500,
-          "ggf": 4200,
-          "uf": 4300
+          "gsf": 9500,
+          "ggf": 4800,
+          "uf": 4700
         },
         "gebaeudeflaechen": {
-          "gf": 28500,
-          "gfOg": 21800,
+          "gf": 32500,
+          "gfOg": 25800,
           "gfUg": 6700,
-          "kf": 4275,
-          "ngf": 24225,
-          "nf": 21200,
-          "hnf": 18100,
-          "nnf": 1520,
-          "vf": 2350,
-          "ff": 780
+          "kf": 4875,
+          "ngf": 27625,
+          "nf": 24200,
+          "hnf": 20600,
+          "nnf": 1720,
+          "vf": 2680,
+          "ff": 880
         },
         "flaechenDin277": {
-          "hnf1": 850,
-          "hnf2": 14200,
+          "hnf1": 950,
+          "hnf2": 16200,
           "hnf3": null,
-          "hnf4": 620,
-          "hnf5": 1280,
-          "hnf6": 450,
-          "nnf7": 1520,
-          "ff8": 780,
-          "vf9": 2350,
+          "hnf4": 720,
+          "hnf5": 1480,
+          "hnf6": 550,
+          "nnf7": 1720,
+          "ff8": 880,
+          "vf9": 2680,
           "buf10": 700
         },
         "allgemeineAngaben": {
-          "geschosse": 8,
+          "geschosse": 9,
           "geschosseUg": 3
         },
         "kennzahlenWirtschaftlichkeit": {
-          "hnfGf": 0.635,
+          "hnfGf": 0.634,
           "vmfGf": 0.755
         },
         "arbeitsplatzkennzahlen": {
-          "ap": 420,
-          "gfAp": 67.9,
+          "ap": 480,
+          "gfAp": 67.7,
           "hnf2Ap": 33.8,
-          "bkp18Ap": 4286,
-          "bkp2Ap": 3000,
-          "bkp9Ap": 857
+          "bkp18Ap": 26042,
+          "bkp2Ap": 18229,
+          "bkp9Ap": 5208
         },
         "formquotienten": {
           "awfGf": 0.42,
@@ -569,15 +620,15 @@
       },
       "kostenBkp": {
         "bkp0": { "kennwert": 0, "chfKosten": 0 },
-        "bkp1": { "kennwert": 15, "chfKosten": 420000 },
-        "bkp2": { "kennwert": 1850, "chfKosten": 52725000 },
-        "bkp3": { "kennwert": 85, "chfKosten": 2422500 },
-        "bkp4": { "kennwert": 65, "chfKosten": 1852500 },
-        "bkp5": { "kennwert": 55, "chfKosten": 1567500 },
-        "bkp6": { "kennwert": 40, "chfKosten": 1140000 },
+        "bkp1": { "kennwert": 18, "chfKosten": 585000 },
+        "bkp2": { "kennwert": 2150, "chfKosten": 69875000 },
+        "bkp3": { "kennwert": 95, "chfKosten": 3087500 },
+        "bkp4": { "kennwert": 72, "chfKosten": 2340000 },
+        "bkp5": { "kennwert": 62, "chfKosten": 2015000 },
+        "bkp6": { "kennwert": 48, "chfKosten": 1560000 },
         "bkp7": { "kennwert": 0, "chfKosten": 0 },
-        "bkp8": { "kennwert": 120, "chfKosten": 3420000 },
-        "bkp9": { "kennwert": 95, "chfKosten": 2707500 }
+        "bkp8": { "kennwert": 135, "chfKosten": 4387500 },
+        "bkp9": { "kennwert": 108, "chfKosten": 3510000 }
       },
       "risiken": {
         "technisch": [
@@ -603,16 +654,368 @@
         ]
       },
       "projektziele": {
-        "ausgangslage": "Die Haustechnik des Bundeshaus West stammt aus den 1980er Jahren und entspricht nicht mehr den heutigen Anforderungen an Energieeffizienz und Betriebssicherheit. Wiederkehrende Ausfälle der Klimaanlage beeinträchtigen den Parlamentsbetrieb.",
-        "ziele": "Vollständige Erneuerung der HLKSE-Anlagen unter laufendem Betrieb. Reduktion des Energieverbrauchs um 40%. Integration eines modernen Gebäudeleitsystems für optimierte Betriebsführung.",
+        "ausgangslage": "Die Heizungs-, Lüftungs-, Klima- und Sanitäranlagen des Bundeshaus West stammen aus den 1990er Jahren und entsprechen nicht mehr den heutigen Anforderungen an Energieeffizienz und Betriebssicherheit. Wiederkehrende Ausfälle der Klimaanlage beeinträchtigen den Parlamentsbetrieb.",
+        "ziele": "Vollständige Erneuerung der HLKS-Anlagen unter laufendem Parlamentsbetrieb. Reduktion des Energieverbrauchs um 40%. Integration eines modernen Gebäudeleitsystems. Erfüllung der CO2-Neutralitätsziele des Bundes bis 2030.",
         "meilensteine": [
           { "name": "Projektstart", "plannedDate": "01.03.2024", "actualDate": "01.03.2024", "status": "completed" },
-          { "name": "Bedarfsanalyse abgeschlossen", "plannedDate": "30.04.2024", "actualDate": null, "status": "pending" },
+          { "name": "Bedarfsanalyse abgeschlossen", "plannedDate": "30.04.2024", "actualDate": "28.04.2024", "status": "completed" },
           { "name": "Vorprojekt abgeschlossen", "plannedDate": "31.08.2024", "actualDate": null, "status": "pending" },
           { "name": "Bauprojekt abgeschlossen", "plannedDate": "28.02.2025", "actualDate": null, "status": "pending" },
           { "name": "Ausschreibung abgeschlossen", "plannedDate": "30.06.2025", "actualDate": null, "status": "pending" },
           { "name": "Ausführungsstart", "plannedDate": "01.09.2025", "actualDate": null, "status": "pending" },
-          { "name": "Inbetriebnahme", "plannedDate": "31.12.2025", "actualDate": null, "status": "pending" }
+          { "name": "Inbetriebnahme", "plannedDate": "31.12.2026", "actualDate": null, "status": "pending" }
+        ]
+      }
+    },
+    {
+      "id": "p1a2c3d4-2001-4000-8000-000000000003",
+      "buildingId": "b1a2c3d4-1001-4000-8000-000000000003",
+      "projectName": "Neubau Verwaltungszentrum Genf",
+      "projectNumber": "PRJ-2024-0003",
+      "siaPhase": "sia_31",
+      "projectManager": "Pierre Dubois",
+      "projectStatus": "planned",
+      "projectStart": "01.06.2024",
+      "bimProjectStart": "15.06.2024",
+      "bimProjectEnd": "31.12.2028",
+      "bimLevel": "level_3",
+      "constructionType": "new_construction",
+      "plannedTotalCost": 85000000,
+      "relatedProjects": [],
+      "subPortfolio": "office",
+      "lastModified": "01.12.2024 09:15",
+      "grundgroessen": {
+        "gebaeudevolumen": {
+          "gv": 125000,
+          "gvOg": 98000,
+          "gvUg": 27000
+        },
+        "grundstueckflaechen": {
+          "gsf": 8500,
+          "ggf": 3200,
+          "uf": 5300
+        },
+        "gebaeudeflaechen": {
+          "gf": 28000,
+          "gfOg": 22000,
+          "gfUg": 6000,
+          "kf": 4200,
+          "ngf": 23800,
+          "nf": 21000,
+          "hnf": 17850,
+          "nnf": 1470,
+          "vf": 2310,
+          "ff": 770
+        },
+        "flaechenDin277": {
+          "hnf1": 380,
+          "hnf2": 15200,
+          "hnf3": null,
+          "hnf4": 620,
+          "hnf5": 1150,
+          "hnf6": null,
+          "nnf7": 1470,
+          "ff8": 770,
+          "vf9": 2310,
+          "buf10": 500
+        },
+        "allgemeineAngaben": {
+          "geschosse": 10,
+          "geschosseUg": 2
+        },
+        "kennzahlenWirtschaftlichkeit": {
+          "hnfGf": 0.638,
+          "vmfGf": 0.768
+        },
+        "arbeitsplatzkennzahlen": {
+          "ap": 520,
+          "gfAp": 53.8,
+          "hnf2Ap": 29.2,
+          "bkp18Ap": 163462,
+          "bkp2Ap": 114423,
+          "bkp9Ap": 32692
+        },
+        "formquotienten": {
+          "awfGf": 0.35,
+          "dafGf": 0.11
+        }
+      },
+      "kostenBkp": {
+        "bkp0": { "kennwert": 85, "chfKosten": 2380000 },
+        "bkp1": { "kennwert": 320, "chfKosten": 8960000 },
+        "bkp2": { "kennwert": 2125, "chfKosten": 59500000 },
+        "bkp3": { "kennwert": 180, "chfKosten": 5040000 },
+        "bkp4": { "kennwert": 145, "chfKosten": 4060000 },
+        "bkp5": { "kennwert": 95, "chfKosten": 2660000 },
+        "bkp6": { "kennwert": 0, "chfKosten": 0 },
+        "bkp7": { "kennwert": 0, "chfKosten": 0 },
+        "bkp8": { "kennwert": 0, "chfKosten": 0 },
+        "bkp9": { "kennwert": 175, "chfKosten": 4900000 }
+      },
+      "risiken": {
+        "technisch": [
+          { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": 1, "kommentar": "Erfahrenes Planungsteam mit BIM-Expertise" },
+          { "id": "PE / T 02", "name": "Komplexe Baugrundverhältnisse", "status": 3, "kommentar": "Geologische Gutachten zeigen anspruchsvolle Verhältnisse" }
+        ],
+        "terminlich": [
+          { "id": "PE / Z 02", "name": "Unrealistische Vorgangsdauern im Terminplan", "status": 1, "kommentar": "Ausreichend Puffer eingeplant" },
+          { "id": "PE / Z 05", "name": "Verspätete Lieferung Lieferanten", "status": 2, "kommentar": "Internationale Beschaffung erforderlich" },
+          { "id": "PE / Z 07", "name": "Verzögerung Baugenehmigungsverfahren", "status": 2, "kommentar": "Abstimmung mit kantonalen Behörden läuft" }
+        ],
+        "rechtlich": [
+          { "id": "PE / R 02", "name": "Konflikte mit Nachunternehmern", "status": 1, "kommentar": "Rahmenverträge in Vorbereitung" },
+          { "id": "PE / R 03", "name": "Konflikte mit Öffentlichkeit", "status": 2, "kommentar": "Informationsveranstaltungen geplant" }
+        ],
+        "sonstige": [
+          { "id": "PE / S 01", "name": "Unzureichende Ressourcenplanung", "status": 1, "kommentar": "Projektteam vollständig besetzt" },
+          { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": 2, "kommentar": "Internationale Abstimmung mit EDA erforderlich" }
+        ]
+      },
+      "projektziele": {
+        "ausgangslage": "Die Schweizer Bundesverwaltung benötigt in Genf zusätzliche Büroflächen für die wachsenden internationalen Aufgaben. Die bestehenden Mietobjekte sind zu verstreut und ineffizient.",
+        "ziele": "Erstellung eines modernen, klimaneutralen Verwaltungsgebäudes nach SNBS Gold-Standard. Zusammenführung von 520 Arbeitsplätzen verschiedener Bundesstellen. Förderung von New-Work-Konzepten und flexiblen Arbeitsformen.",
+        "meilensteine": [
+          { "name": "Projektstart", "plannedDate": "01.06.2024", "actualDate": "01.06.2024", "status": "completed" },
+          { "name": "Machbarkeitsstudie", "plannedDate": "30.09.2024", "actualDate": null, "status": "pending" },
+          { "name": "Vorprojekt abgeschlossen", "plannedDate": "30.06.2025", "actualDate": null, "status": "pending" },
+          { "name": "Bauprojekt abgeschlossen", "plannedDate": "31.12.2025", "actualDate": null, "status": "pending" },
+          { "name": "Baubewilligung erteilt", "plannedDate": "30.06.2026", "actualDate": null, "status": "pending" },
+          { "name": "Baubeginn", "plannedDate": "01.09.2026", "actualDate": null, "status": "pending" },
+          { "name": "Bezug", "plannedDate": "31.12.2028", "actualDate": null, "status": "pending" }
+        ]
+      }
+    },
+    {
+      "id": "p1a2c3d4-2001-4000-8000-000000000004",
+      "buildingId": "b1a2c3d4-1001-4000-8000-000000000004",
+      "projectName": "Gesamtsanierung Zollverwaltung Basel",
+      "projectNumber": "PRJ-2024-0004",
+      "siaPhase": "sia_52",
+      "projectManager": "Martin Frei",
+      "projectStatus": "active",
+      "projectStart": "01.09.2023",
+      "bimProjectStart": "01.10.2023",
+      "bimProjectEnd": "30.06.2025",
+      "bimLevel": "level_2",
+      "constructionType": "renovation",
+      "plannedTotalCost": 18500000,
+      "relatedProjects": [],
+      "subPortfolio": "infrastructure",
+      "lastModified": "06.12.2024 14:22",
+      "grundgroessen": {
+        "gebaeudevolumen": {
+          "gv": 52000,
+          "gvOg": 42000,
+          "gvUg": 10000
+        },
+        "grundstueckflaechen": {
+          "gsf": 5200,
+          "ggf": 2100,
+          "uf": 3100
+        },
+        "gebaeudeflaechen": {
+          "gf": 14500,
+          "gfOg": 11800,
+          "gfUg": 2700,
+          "kf": 2175,
+          "ngf": 12325,
+          "nf": 10800,
+          "hnf": 9180,
+          "nnf": 756,
+          "vf": 1188,
+          "ff": 396
+        },
+        "flaechenDin277": {
+          "hnf1": 210,
+          "hnf2": 7850,
+          "hnf3": null,
+          "hnf4": 520,
+          "hnf5": 380,
+          "hnf6": null,
+          "nnf7": 756,
+          "ff8": 396,
+          "vf9": 1188,
+          "buf10": 220
+        },
+        "allgemeineAngaben": {
+          "geschosse": 6,
+          "geschosseUg": 1
+        },
+        "kennzahlenWirtschaftlichkeit": {
+          "hnfGf": 0.633,
+          "vmfGf": 0.745
+        },
+        "arbeitsplatzkennzahlen": {
+          "ap": 245,
+          "gfAp": 59.2,
+          "hnf2Ap": 32.0,
+          "bkp18Ap": 75510,
+          "bkp2Ap": 52857,
+          "bkp9Ap": 15102
+        },
+        "formquotienten": {
+          "awfGf": 0.41,
+          "dafGf": 0.14
+        }
+      },
+      "kostenBkp": {
+        "bkp0": { "kennwert": 0, "chfKosten": 0 },
+        "bkp1": { "kennwert": 28, "chfKosten": 406000 },
+        "bkp2": { "kennwert": 2480, "chfKosten": 35960000 },
+        "bkp3": { "kennwert": 125, "chfKosten": 1812500 },
+        "bkp4": { "kennwert": 165, "chfKosten": 2392500 },
+        "bkp5": { "kennwert": 88, "chfKosten": 1276000 },
+        "bkp6": { "kennwert": 52, "chfKosten": 754000 },
+        "bkp7": { "kennwert": 0, "chfKosten": 0 },
+        "bkp8": { "kennwert": 185, "chfKosten": 2682500 },
+        "bkp9": { "kennwert": 142, "chfKosten": 2059000 }
+      },
+      "risiken": {
+        "technisch": [
+          { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": 1, "kommentar": "Planung abgeschlossen und geprüft" },
+          { "id": "PE / T 03", "name": "Unbekannte Bestandssituation", "status": 2, "kommentar": "Während Bauausführung einige Überraschungen aufgetreten" }
+        ],
+        "terminlich": [
+          { "id": "PE / Z 02", "name": "Unrealistische Vorgangsdauern", "status": 1, "kommentar": "Im Plan" },
+          { "id": "PE / Z 05", "name": "Verspätete Lieferung", "status": 1, "kommentar": "Alle kritischen Komponenten auf der Baustelle" },
+          { "id": "PE / Z 08", "name": "Verzögerung interne Genehmigungen", "status": 1, "kommentar": "Alle Freigaben erteilt" }
+        ],
+        "rechtlich": [
+          { "id": "PE / R 02", "name": "Konflikte mit Nachunternehmern", "status": 2, "kommentar": "Kleinere Nachtragsverhandlungen laufend" },
+          { "id": "PE / R 03", "name": "Konflikte mit Öffentlichkeit", "status": 1, "kommentar": "Gute Akzeptanz in der Nachbarschaft" }
+        ],
+        "sonstige": [
+          { "id": "PE / S 01", "name": "Ressourcenplanung", "status": 1, "kommentar": "Bauausführung läuft stabil" },
+          { "id": "PE / S 05", "name": "Personalmangel", "status": 1, "kommentar": "Ausreichend Fachpersonal vorhanden" }
+        ]
+      },
+      "projektziele": {
+        "ausgangslage": "Das Gebäude der Zollverwaltung in Basel stammt aus den 1970er Jahren. Die technischen Anlagen sind am Ende ihrer Lebensdauer, die Büroräume entsprechen nicht mehr modernen Standards, und das Gebäude erfüllt die Sicherheitsanforderungen nicht mehr vollständig.",
+        "ziele": "Umfassende Sanierung des Gebäudes bei laufendem Betrieb. Modernisierung aller technischen Anlagen. Verbesserung der Sicherheitsinfrastruktur. Schaffung moderner, flexibler Arbeitsplätze. Energetische Sanierung nach Minergie-Standard.",
+        "meilensteine": [
+          { "name": "Projektstart", "plannedDate": "01.09.2023", "actualDate": "01.09.2023", "status": "completed" },
+          { "name": "Vorprojekt abgeschlossen", "plannedDate": "15.12.2023", "actualDate": "15.12.2023", "status": "completed" },
+          { "name": "Bauprojekt abgeschlossen", "plannedDate": "31.03.2024", "actualDate": "28.03.2024", "status": "completed" },
+          { "name": "Ausschreibung abgeschlossen", "plannedDate": "30.06.2024", "actualDate": "25.06.2024", "status": "completed" },
+          { "name": "Baubeginn Phase 1", "plannedDate": "01.09.2024", "actualDate": "02.09.2024", "status": "completed" },
+          { "name": "Baubeginn Phase 2", "plannedDate": "01.03.2025", "actualDate": null, "status": "pending" },
+          { "name": "Bauabnahme", "plannedDate": "30.06.2025", "actualDate": null, "status": "pending" }
+        ]
+      }
+    },
+    {
+      "id": "p1a2c3d4-2001-4000-8000-000000000005",
+      "buildingId": "b1a2c3d4-1001-4000-8000-000000000005",
+      "projectName": "Innenausbau Bundesgericht Lausanne",
+      "projectNumber": "PRJ-2024-0005",
+      "siaPhase": "sia_33",
+      "projectManager": "Sophie Rochat",
+      "projectStatus": "active",
+      "projectStart": "15.04.2024",
+      "bimProjectStart": "01.05.2024",
+      "bimProjectEnd": "31.03.2026",
+      "bimLevel": "level_1",
+      "constructionType": "conversion",
+      "plannedTotalCost": 6800000,
+      "relatedProjects": [],
+      "subPortfolio": "cultural",
+      "lastModified": "04.12.2024 16:45",
+      "grundgroessen": {
+        "gebaeudevolumen": {
+          "gv": 78000,
+          "gvOg": 62000,
+          "gvUg": 16000
+        },
+        "grundstueckflaechen": {
+          "gsf": 12000,
+          "ggf": 4500,
+          "uf": 7500
+        },
+        "gebaeudeflaechen": {
+          "gf": 18500,
+          "gfOg": 15000,
+          "gfUg": 3500,
+          "kf": 2775,
+          "ngf": 15725,
+          "nf": 13800,
+          "hnf": 11730,
+          "nnf": 966,
+          "vf": 1518,
+          "ff": 506
+        },
+        "flaechenDin277": {
+          "hnf1": 180,
+          "hnf2": 5420,
+          "hnf3": null,
+          "hnf4": 380,
+          "hnf5": 4850,
+          "hnf6": null,
+          "nnf7": 966,
+          "ff8": 506,
+          "vf9": 1518,
+          "buf10": 900
+        },
+        "allgemeineAngaben": {
+          "geschosse": 5,
+          "geschosseUg": 1
+        },
+        "kennzahlenWirtschaftlichkeit": {
+          "hnfGf": 0.634,
+          "vmfGf": 0.746
+        },
+        "arbeitsplatzkennzahlen": {
+          "ap": 165,
+          "gfAp": 112.1,
+          "hnf2Ap": 32.8,
+          "bkp18Ap": 41212,
+          "bkp2Ap": 28848,
+          "bkp9Ap": 8242
+        },
+        "formquotienten": {
+          "awfGf": 0.45,
+          "dafGf": 0.24
+        }
+      },
+      "kostenBkp": {
+        "bkp0": { "kennwert": 0, "chfKosten": 0 },
+        "bkp1": { "kennwert": 15, "chfKosten": 277500 },
+        "bkp2": { "kennwert": 1850, "chfKosten": 34225000 },
+        "bkp3": { "kennwert": 0, "chfKosten": 0 },
+        "bkp4": { "kennwert": 185, "chfKosten": 3422500 },
+        "bkp5": { "kennwert": 125, "chfKosten": 2312500 },
+        "bkp6": { "kennwert": 68, "chfKosten": 1258000 },
+        "bkp7": { "kennwert": 0, "chfKosten": 0 },
+        "bkp8": { "kennwert": 0, "chfKosten": 0 },
+        "bkp9": { "kennwert": 95, "chfKosten": 1757500 }
+      },
+      "risiken": {
+        "technisch": [
+          { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": 2, "kommentar": "Planprüfung läuft" },
+          { "id": "PE / T 04", "name": "Denkmalschutzauflagen", "status": 3, "kommentar": "Intensive Abstimmung mit Denkmalpflege erforderlich" }
+        ],
+        "terminlich": [
+          { "id": "PE / Z 02", "name": "Unrealistische Vorgangsdauern", "status": 2, "kommentar": "Denkmalschutzauflagen können Verzögerungen verursachen" },
+          { "id": "PE / Z 07", "name": "Verzögerung Baugenehmigungsverfahren", "status": 3, "kommentar": "Baubewilligung noch ausstehend" }
+        ],
+        "rechtlich": [
+          { "id": "PE / R 02", "name": "Konflikte mit Nachunternehmern", "status": 1, "kommentar": "Spezialisierte Restauratoren beauftragt" },
+          { "id": "PE / R 03", "name": "Konflikte mit Öffentlichkeit", "status": 1, "kommentar": "Hohe Akzeptanz für Instandhaltung historischer Gebäude" }
+        ],
+        "sonstige": [
+          { "id": "PE / S 01", "name": "Ressourcenplanung", "status": 2, "kommentar": "Spezialisierte Handwerker schwer verfügbar" },
+          { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": 2, "kommentar": "Abstimmung mit Bundesgericht und Denkmalpflege" }
+        ]
+      },
+      "projektziele": {
+        "ausgangslage": "Das historische Gebäude des Bundesgerichts in Lausanne benötigt eine Modernisierung der Innenräume. Die bestehende Infrastruktur ist veraltet, während die denkmalgeschützte Bausubstanz erhalten bleiben muss.",
+        "ziele": "Behutsamer Innenausbau unter Wahrung des historischen Charakters. Modernisierung der IT-Infrastruktur und Medientechnik in den Gerichtssälen. Verbesserung der Barrierefreiheit. Optimierung der Raumakustik.",
+        "meilensteine": [
+          { "name": "Projektstart", "plannedDate": "15.04.2024", "actualDate": "15.04.2024", "status": "completed" },
+          { "name": "Bestandsaufnahme abgeschlossen", "plannedDate": "30.06.2024", "actualDate": "28.06.2024", "status": "completed" },
+          { "name": "Denkmalpflege-Konzept", "plannedDate": "30.09.2024", "actualDate": "15.10.2024", "status": "completed" },
+          { "name": "Baubewilligung erteilt", "plannedDate": "31.01.2025", "actualDate": null, "status": "pending" },
+          { "name": "Ausführungsstart", "plannedDate": "01.05.2025", "actualDate": null, "status": "pending" },
+          { "name": "Bauabnahme", "plannedDate": "31.03.2026", "actualDate": null, "status": "pending" }
         ]
       }
     }
