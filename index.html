@@ -1697,6 +1697,77 @@
       text-align: center;
     }
 
+    /* BKP Cost Table */
+    .bkp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: var(--space-4);
+    }
+    .bkp-table th {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      color: var(--neutral-500);
+      text-align: left;
+      padding: var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--neutral-200);
+      white-space: nowrap;
+    }
+    .bkp-table th.text-right {
+      text-align: right;
+    }
+    .bkp-table td {
+      font-size: var(--font-size-sm);
+      color: var(--neutral-700);
+      padding: var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--neutral-100);
+      vertical-align: middle;
+    }
+    .bkp-table td.text-right {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .bkp-table td.text-muted {
+      color: var(--neutral-400);
+    }
+    .bkp-table tbody tr:hover td {
+      background-color: var(--neutral-50);
+    }
+    .bkp-table .bkp-code {
+      font-weight: var(--font-weight-medium);
+      color: var(--accent-700);
+      width: 40px;
+    }
+    .bkp-table .bkp-name {
+      min-width: 150px;
+    }
+    .bkp-table .bkp-bezug-value,
+    .bkp-table .bkp-bezug-unit,
+    .bkp-table .bkp-bezug-type {
+      text-align: right;
+    }
+    .bkp-table .bkp-bezug-unit {
+      color: var(--neutral-500);
+      padding-left: var(--space-1);
+      padding-right: var(--space-1);
+    }
+    .bkp-table .bkp-bezug-type {
+      color: var(--neutral-500);
+      width: 40px;
+    }
+    .bkp-table tr.bkp-total td {
+      border-top: 1px solid var(--neutral-300);
+      border-bottom: none;
+      padding-top: var(--space-3);
+    }
+    .bkp-table tr.bkp-summary td {
+      font-weight: var(--font-weight-semibold);
+      color: var(--neutral-900);
+      border-bottom: none;
+    }
+    .bkp-table tr.bkp-summary .bkp-code {
+      color: var(--neutral-700);
+    }
+
     /* Table Status Badge */
     .table-status {
       display: inline-flex;
@@ -3111,6 +3182,142 @@
       return (value * 100).toFixed(1) + '%';
     }
 
+    // Render BKP Cost section
+    function renderKostenBkpSection(project) {
+      const kostenBkp = project.kostenBkp || {};
+      const g = project.grundgroessen || {};
+      const gsf = g.grundstueckflaechen || {};
+      const gfl = g.gebaeudeflaechen || {};
+      const gv = g.gebaeudevolumen || {};
+
+      // Reference values
+      const gsfValue = gsf.gsf;
+      const gfValue = gfl.gf;
+      const nfValue = gfl.nf;
+      const gvValue = gv.gv;
+
+      // BKP row definitions (hardcoded)
+      const bkpRows = [
+        { code: 0, name: 'Grundstück', bezugType: 'GSF', bezugValue: gsfValue },
+        { code: 1, name: 'Vorbereitung', bezugType: '-', bezugValue: null },
+        { code: 2, name: 'Gebäude', bezugType: 'GF', bezugValue: gfValue },
+        { code: 3, name: 'Betriebseinrichtungen', bezugType: '-', bezugValue: null },
+        { code: 4, name: 'Umgebung', bezugType: '-', bezugValue: null },
+        { code: 5, name: 'Baunebenkosten', bezugType: '-', bezugValue: null },
+        { code: 6, name: 'Reserve', bezugType: '-', bezugValue: null },
+        { code: 7, name: 'Reserve', bezugType: '-', bezugValue: null },
+        { code: 8, name: 'Honorar / Risiko', bezugType: '-', bezugValue: null },
+        { code: 9, name: 'Ausstattung', bezugType: 'NF', bezugValue: nfValue }
+      ];
+
+      // Get costs for each BKP
+      const getCosts = (code) => {
+        const key = `bkp${code}`;
+        return kostenBkp[key] || { kennwert: 0, chfKosten: 0 };
+      };
+
+      // Calculate sum of BKP 1-6
+      const sumBkp16 = [1, 2, 3, 4, 5, 6].reduce((sum, code) => sum + (getCosts(code).chfKosten || 0), 0);
+
+      // Calculate sum of BKP 1-9
+      const sumBkp19 = [1, 2, 3, 4, 5, 6, 7, 8, 9].reduce((sum, code) => sum + (getCosts(code).chfKosten || 0), 0);
+
+      // Calculate total (0-9)
+      const sumTotal = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].reduce((sum, code) => sum + (getCosts(code).chfKosten || 0), 0);
+
+      // Helper to calculate percentage of BKP 1-6
+      const calcPercentBkp16 = (chfKosten) => {
+        if (!chfKosten || !sumBkp16) return '-';
+        return ((chfKosten / sumBkp16) * 100).toFixed(1) + '%';
+      };
+
+      // Helper to calculate CHF/m³ GV
+      const calcChfPerGV = (chfKosten) => {
+        if (!chfKosten || !gvValue) return '-';
+        return formatNumber(Math.round(chfKosten / gvValue));
+      };
+
+      // Helper to calculate CHF/m² GF
+      const calcChfPerGF = (chfKosten) => {
+        if (!chfKosten || !gfValue) return '-';
+        return formatNumber(Math.round(chfKosten / gfValue));
+      };
+
+      // Render a single BKP row
+      const renderRow = (row) => {
+        const costs = getCosts(row.code);
+        const kennwert = costs.kennwert || 0;
+        const chfKosten = costs.chfKosten || 0;
+        const hasCost = chfKosten > 0;
+
+        return `
+          <tr>
+            <td class="bkp-code">${row.code}</td>
+            <td class="bkp-name">${row.name}</td>
+            <td class="bkp-bezug-value text-right ${!row.bezugValue ? 'text-muted' : ''}">${row.bezugValue ? formatNumber(row.bezugValue) : '-'}</td>
+            <td class="bkp-bezug-unit">${row.bezugValue ? 'm²' : ''}</td>
+            <td class="bkp-bezug-type">${row.bezugType}</td>
+            <td class="text-right ${!hasCost ? 'text-muted' : ''}">${hasCost ? formatNumber(kennwert) : '-'}</td>
+            <td class="text-right ${!hasCost ? 'text-muted' : ''}">${hasCost ? formatNumber(chfKosten) : '-'}</td>
+            <td class="text-right ${!hasCost ? 'text-muted' : ''}">${calcPercentBkp16(chfKosten)}</td>
+            <td class="text-right ${!hasCost ? 'text-muted' : ''}">${calcChfPerGV(chfKosten)}</td>
+            <td class="text-right ${!hasCost ? 'text-muted' : ''}">${calcChfPerGF(chfKosten)}</td>
+          </tr>
+        `;
+      };
+
+      return `
+        <h2 class="tab-header">Kosten nach Hauptgruppen BKP</h2>
+        <table class="bkp-table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th></th>
+              <th colspan="3" class="text-right">Bezugsmenge</th>
+              <th class="text-right">Kennwert</th>
+              <th class="text-right">CHF Kosten</th>
+              <th class="text-right">%BKP 1 - 6</th>
+              <th class="text-right">CHF / m³ GV</th>
+              <th class="text-right">CHF / m² GF</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${bkpRows.map(renderRow).join('')}
+            <tr class="bkp-total">
+              <td></td>
+              <td>Total</td>
+              <td colspan="3"></td>
+              <td></td>
+              <td class="text-right">${formatNumber(sumTotal)}</td>
+              <td class="text-right">100.0%</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="bkp-summary">
+              <td class="bkp-code">1 - 6</td>
+              <td>Herstellungskosten</td>
+              <td colspan="3"></td>
+              <td></td>
+              <td class="text-right">${formatNumber(sumBkp16)}</td>
+              <td></td>
+              <td class="text-right">${gvValue ? formatNumber(Math.round(sumBkp16 / gvValue)) : '-'}</td>
+              <td class="text-right">${gfValue ? formatNumber(Math.round(sumBkp16 / gfValue)) : '-'}</td>
+            </tr>
+            <tr class="bkp-summary">
+              <td class="bkp-code">1 - 9</td>
+              <td>Anlagekosten</td>
+              <td colspan="3"></td>
+              <td></td>
+              <td class="text-right">${formatNumber(sumBkp19)}</td>
+              <td></td>
+              <td class="text-right">${gvValue ? formatNumber(Math.round(sumBkp19 / gvValue)) : '-'}</td>
+              <td class="text-right">${gfValue ? formatNumber(Math.round(sumBkp19 / gfValue)) : '-'}</td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+    }
+
     // Render Kennzahlen content (Grundgrössen und Kennzahlen tab)
     function renderKennzahlenContent(project) {
       const content = document.getElementById('detailContent');
@@ -3159,6 +3366,7 @@
       const baseGF = gfl.gf;
 
       content.innerHTML = `
+        ${renderKostenBkpSection(project)}
         <h2 class="tab-header">Volumen und Flächen nach SIA 416</h2>
         <div class="tab-container tab-container--two-column">
           <!-- Left Column: Volumen und Flächen nach SIA 416 -->
