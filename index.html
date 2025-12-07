@@ -1537,6 +1537,255 @@
       padding: var(--space-8) var(--space-10);  /* 32px vertical, 40px horizontal for breathing room */
     }
 
+    /* ========================================
+       UNIFIED TAB COMPONENTS
+       Consistent styling across all detail tabs
+       ======================================== */
+
+    /* Tab Main Header - consistent title for all tabs */
+    .tab-header {
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      color: var(--accent-700);
+      margin-bottom: var(--space-6);
+    }
+
+    /* Tab Container - unified wrapper for tab content */
+    .tab-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+    .tab-container--constrained {
+      max-width: 700px;
+    }
+    .tab-container--two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-10);
+    }
+    @media (max-width: 1024px) {
+      .tab-container--two-column {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+      }
+    }
+
+    /* Tab Section - consistent section wrapper */
+    .tab-section {
+      margin-bottom: var(--space-4);
+    }
+    .tab-section-header {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--neutral-700);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--neutral-200);
+      margin-bottom: var(--space-3);
+    }
+
+    /* Data Rows Container */
+    .data-rows {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Unified Data Row - flexible grid-based row component */
+    .data-row {
+      display: grid;
+      grid-template-columns: var(--row-cols, 80px 1fr 80px 50px 60px);
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-1);
+      align-items: center;
+      border-radius: var(--radius-sm);
+      transition: background-color var(--transition-fast);
+    }
+    .data-row:hover {
+      background-color: var(--neutral-100);
+    }
+    .data-row--narrow {
+      --row-cols: 110px 1fr 80px 60px;
+    }
+    .data-row--risk {
+      --row-cols: 75px 1fr 100px;
+      gap: var(--space-3);
+    }
+
+    /* Data Row Cell Types */
+    .data-row__id {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--accent-700);
+    }
+    .data-row__label {
+      font-size: var(--font-size-sm);
+      color: var(--neutral-600);
+    }
+    .data-row__value {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--neutral-900);
+      text-align: right;
+    }
+    .data-row__unit {
+      font-size: var(--font-size-xs);
+      color: var(--neutral-500);
+      text-align: left;
+    }
+    .data-row__meta {
+      font-size: var(--font-size-xs);
+      color: var(--neutral-400);
+      text-align: right;
+    }
+
+    /* Status Dots for Risk Indicators */
+    .status-dots {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: flex-end;
+    }
+    .status-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--neutral-300);
+      flex-shrink: 0;
+    }
+    .status-dot--low {
+      background-color: #84cc16;
+    }
+    .status-dot--medium {
+      background-color: #eab308;
+    }
+    .status-dot--high {
+      background-color: #dc2626;
+    }
+
+    /* Unified Data Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .data-table th {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: left;
+      padding: var(--space-2) var(--space-3);
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    .data-table th:last-child {
+      text-align: center;
+      width: 100px;
+    }
+    .data-table td {
+      font-size: var(--font-size-base);
+      color: var(--neutral-700);
+      padding: var(--space-3);
+      border-bottom: 1px solid var(--neutral-100);
+      vertical-align: middle;
+    }
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+    .data-table tbody tr:hover td {
+      background-color: var(--neutral-100);
+    }
+    .data-table td:last-child {
+      text-align: center;
+    }
+
+    /* Table Status Badge */
+    .table-status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+    }
+    .table-status--completed {
+      background-color: var(--success-50);
+      color: var(--success-700);
+    }
+    .table-status--pending {
+      background-color: var(--neutral-100);
+      color: var(--neutral-600);
+    }
+
+    /* Table Action Button */
+    .table-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--neutral-300);
+      border-radius: var(--radius-sm);
+      background: white;
+      color: var(--neutral-600);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .table-action-btn:hover {
+      background: var(--neutral-100);
+      border-color: var(--neutral-400);
+      color: var(--neutral-700);
+    }
+    .table-action-btn--completed {
+      background: var(--success-50);
+      border-color: var(--success-200);
+      color: var(--success-600);
+    }
+    .table-action-btn .material-icons-outlined {
+      font-size: 18px;
+    }
+
+    /* Empty State */
+    .empty-state {
+      font-size: var(--font-size-base);
+      color: var(--neutral-500);
+      font-style: italic;
+      padding: var(--space-4);
+      text-align: center;
+    }
+
+    /* Responsive Data Rows */
+    @media (max-width: 1024px) {
+      .data-row {
+        --row-cols: 95px 1fr 70px 45px 55px;
+      }
+      .data-row--narrow {
+        --row-cols: 95px 1fr 70px 45px;
+      }
+    }
+    @media (max-width: 768px) {
+      .data-row {
+        --row-cols: 85px 1fr 65px 40px;
+      }
+      .data-row__meta {
+        display: none;
+      }
+      .data-row--narrow {
+        --row-cols: 85px 1fr 65px 40px;
+      }
+      .data-row--risk {
+        --row-cols: 70px 1fr 80px;
+      }
+      .status-dots {
+        gap: var(--space-2);
+      }
+      .status-dot {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    /* ======================================== */
+
     /* Detail Media Section (Image + Map) */
     .detail-media {
       display: grid;
@@ -1589,13 +1838,7 @@
       color: var(--accent-600);
     }
 
-    /* Detail Section (for Übersicht tab sections) */
-    .detail-section {
-      margin-bottom: var(--space-6);
-    }
-    .detail-section .section-header {
-      margin-bottom: var(--space-4);
-    }
+    /* Detail Info Message */
     .detail-info-message {
       display: flex;
       align-items: center;
@@ -1609,288 +1852,6 @@
     .detail-info-message .material-icons-outlined {
       font-size: 18px;
       color: var(--neutral-500);
-    }
-
-    /* Kennzahlen Tab Layout */
-    .kennzahlen-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-10);
-    }
-    .kennzahlen-column {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-6);
-    }
-    .tab-main-header {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--accent-700);
-      padding-bottom: var(--space-3);
-      margin-bottom: var(--space-8);
-    }
-    .kennzahlen-section {
-      margin-bottom: var(--space-4);
-    }
-    .section-header {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--neutral-700);
-      padding-bottom: var(--space-2);
-      border-bottom: 1px solid var(--neutral-200);
-      margin-bottom: var(--space-3);
-    }
-    .kennzahlen-rows {
-      display: flex;
-      flex-direction: column;
-    }
-    .kennzahlen-row {
-      display: grid;
-      grid-template-columns: 80px 1fr 80px 50px 60px;
-      gap: var(--space-2);
-      padding: var(--space-1) 0;
-      align-items: center;
-      border-radius: var(--radius-sm);
-      transition: background-color var(--transition-fast);
-    }
-    .kennzahlen-row:hover {
-      background-color: var(--neutral-100);
-    }
-    .kennzahlen-abbrev {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--accent-700);
-    }
-    .kennzahlen-desc {
-      font-size: 13px;
-      color: var(--neutral-600);
-    }
-    .kennzahlen-value {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--neutral-900);
-      text-align: right;
-    }
-    .kennzahlen-unit {
-      font-size: 12px;
-      color: var(--neutral-500);
-      text-align: left;
-    }
-    .kennzahlen-percent {
-      font-size: 12px;
-      color: var(--neutral-400);
-      text-align: right;
-    }
-    /* Narrower row variant for right column */
-    .kennzahlen-row-narrow {
-      display: grid;
-      grid-template-columns: 110px 1fr 80px 60px;
-      gap: var(--space-2);
-      padding: var(--space-1) 0;
-      align-items: center;
-      border-radius: var(--radius-sm);
-      transition: background-color var(--transition-fast);
-    }
-    .kennzahlen-row-narrow:hover {
-      background-color: var(--neutral-100);
-    }
-    .kennzahlen-row-narrow .kennzahlen-abbrev {
-      font-size: 12px;
-    }
-
-    /* Responsive Kennzahlen */
-    @media (max-width: 1024px) {
-      .kennzahlen-container {
-        grid-template-columns: 1fr;
-        gap: var(--space-6);
-      }
-      /* Unified grid for vertical stacking - first 4 columns match */
-      .kennzahlen-row {
-        grid-template-columns: 95px 1fr 70px 45px 55px;
-      }
-      .kennzahlen-row-narrow {
-        grid-template-columns: 95px 1fr 70px 45px;
-      }
-      .kennzahlen-row-narrow .kennzahlen-abbrev {
-        font-size: 13px;
-      }
-    }
-    @media (max-width: 768px) {
-      /* Unified 4-column grid for both row types */
-      .kennzahlen-row {
-        grid-template-columns: 85px 1fr 65px 40px;
-        font-size: 12px;
-      }
-      .kennzahlen-percent {
-        display: none;
-      }
-      .kennzahlen-row-narrow {
-        grid-template-columns: 85px 1fr 65px 40px;
-      }
-    }
-
-    /* Risiken Tab Layout */
-    .risiken-container {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-8);
-      max-width: 600px;
-    }
-    .risiken-section {
-      margin-bottom: var(--space-2);
-    }
-    .risiken-rows {
-      display: flex;
-      flex-direction: column;
-    }
-    .risiken-row {
-      display: grid;
-      grid-template-columns: 75px 1fr 100px;
-      gap: var(--space-3);
-      padding: var(--space-1);
-      align-items: center;
-      border-radius: var(--radius-sm);
-      transition: background-color var(--transition-fast);
-    }
-    .risiken-row:hover {
-      background-color: var(--neutral-100);
-    }
-    .risiken-id {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--accent-700);
-    }
-    .risiken-name {
-      font-size: 13px;
-      color: var(--neutral-700);
-    }
-    .risiken-status {
-      display: flex;
-      gap: var(--space-4);
-      justify-content: flex-end;
-    }
-    .risiken-status-dot {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background-color: var(--neutral-300);
-      flex-shrink: 0;
-    }
-    .risiken-status-dot.low {
-      background-color: #84cc16; /* lime-500 */
-    }
-    .risiken-status-dot.medium {
-      background-color: #eab308; /* yellow-500 */
-    }
-    .risiken-status-dot.high {
-      background-color: #dc2626; /* red-600 */
-    }
-
-    /* Responsive Risiken */
-    @media (max-width: 768px) {
-      .risiken-row {
-        grid-template-columns: 70px 1fr 80px;
-      }
-      .risiken-status {
-        gap: var(--space-2);
-      }
-      .risiken-status-dot {
-        width: 14px;
-        height: 14px;
-      }
-    }
-
-    /* Projektziele Tab Layout */
-    .projektziele-container {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-6);
-    }
-
-    /* Meilensteine Table */
-    .meilensteine-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .meilensteine-table th {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--neutral-500);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      text-align: left;
-      padding: var(--space-2) var(--space-3);
-      border-bottom: 1px solid var(--neutral-200);
-    }
-    .meilensteine-table th:last-child {
-      text-align: center;
-      width: 100px;
-    }
-    .meilensteine-table td {
-      font-size: 14px;
-      color: var(--neutral-700);
-      padding: var(--space-3);
-      border-bottom: 1px solid var(--neutral-100);
-      vertical-align: middle;
-    }
-    .meilensteine-table tr:last-child td {
-      border-bottom: none;
-    }
-    .meilensteine-table tr:hover td {
-      background-color: var(--neutral-50);
-    }
-    .meilensteine-table td:last-child {
-      text-align: center;
-    }
-    .meilensteine-status {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-1);
-      font-size: 12px;
-      font-weight: 500;
-      padding: var(--space-1) var(--space-2);
-      border-radius: var(--radius-sm);
-    }
-    .meilensteine-status.completed {
-      background-color: var(--success-50);
-      color: var(--success-700);
-    }
-    .meilensteine-status.pending {
-      background-color: var(--neutral-100);
-      color: var(--neutral-600);
-    }
-    .meilensteine-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border: 1px solid var(--neutral-300);
-      border-radius: var(--radius-sm);
-      background: white;
-      color: var(--neutral-600);
-      cursor: pointer;
-      transition: all var(--transition-fast);
-    }
-    .meilensteine-btn:hover {
-      background: var(--neutral-100);
-      border-color: var(--neutral-400);
-      color: var(--neutral-700);
-    }
-    .meilensteine-btn.completed {
-      background: var(--success-50);
-      border-color: var(--success-200);
-      color: var(--success-600);
-    }
-    .meilensteine-btn .material-icons-outlined {
-      font-size: 18px;
-    }
-    .meilensteine-empty {
-      font-size: 14px;
-      color: var(--neutral-500);
-      font-style: italic;
-      padding: var(--space-4);
-      text-align: center;
     }
 
     /* Responsive Detail View */
@@ -2956,12 +2917,12 @@
       // Get building data
       const building = project.building;
 
-      // Render building section
+      // Render building section (unified components)
       const renderBuildingSection = () => {
         if (!building) {
           return `
-            <div class="detail-section">
-              <div class="section-header">Gebäude</div>
+            <div class="tab-section">
+              <div class="tab-section-header">Gebäude</div>
               <div class="detail-info-message">
                 <span class="material-icons-outlined">info</span>
                 <span>Kein Gebäude gefunden</span>
@@ -2975,8 +2936,8 @@
         const cityLine = [building.zip, building.city].filter(Boolean).join(' ') || '-';
 
         return `
-          <div class="detail-section">
-            <div class="section-header">Gebäude</div>
+          <div class="tab-section">
+            <div class="tab-section-header">Gebäude</div>
             <div class="detail-fields">
               <div class="detail-field">
                 <span class="detail-field-label">Bezeichnung</span>
@@ -3027,67 +2988,70 @@
         `;
       };
 
-      // Render content
+      // Render content (unified components)
       const content = document.getElementById('detailContent');
       content.innerHTML = `
-        <div class="detail-media">
-          <div class="detail-image" style="background-image: url('${getPlaceholderImage(project.projectName, project.id)}')"></div>
-          <div class="detail-map-container">
-            <div id="detailMap"></div>
-          </div>
-        </div>
-
-        <div class="detail-section">
-          <div class="section-header">Bauprojekt</div>
-          <div class="detail-fields">
-            <div class="detail-field">
-              <span class="detail-field-label">Projektbezeichnung</span>
-              <span class="detail-field-value">${project.projectName || '-'}</span>
-            </div>
-            <div class="detail-field">
-              <span class="detail-field-label">SIA Phase</span>
-              <span class="detail-field-value">${getSiaPhaseNumber(project.siaPhase)}</span>
-            </div>
-
-            <div class="detail-field">
-              <span class="detail-field-label">Projektnummer</span>
-              <span class="detail-field-value highlight">${project.projectNumber || '-'}</span>
-            </div>
-            <div class="detail-field">
-              <span class="detail-field-label">Projektstart</span>
-              <span class="detail-field-value">${project.projectStart || '-'}</span>
-            </div>
-
-            <div class="detail-field">
-              <span class="detail-field-label">Bewirtschaftungsgebiet</span>
-              <span class="detail-field-value">${getManagementAreaLabel(project.managementArea)}</span>
-            </div>
-            <div class="detail-field">
-              <span class="detail-field-label">Bauart</span>
-              <span class="detail-field-value">${getConstructionTypeLabel(project.constructionType)}</span>
-            </div>
-
-            <div class="detail-field">
-              <span class="detail-field-label">Projektstatus</span>
-              <span class="detail-field-value">${getStatusLabel(project.status)}</span>
-            </div>
-            <div class="detail-field">
-              <span class="detail-field-label">Geplante Gesamtkosten</span>
-              <span class="detail-field-value">${formatCurrency(project.plannedTotalCost)}</span>
-            </div>
-
-            <div class="detail-field">
-              <span class="detail-field-label">Projektleiter BBL</span>
-              <span class="detail-field-value">${project.projectManager || '-'}</span>
-            </div>
-            <div class="detail-field">
-              <span class="detail-field-label">Letzte Änderung</span>
-              <span class="detail-field-value">${project.lastModified || '-'}</span>
+        <h2 class="tab-header">Übersicht</h2>
+        <div class="tab-container">
+          <div class="detail-media">
+            <div class="detail-image" style="background-image: url('${getPlaceholderImage(project.projectName, project.id)}')"></div>
+            <div class="detail-map-container">
+              <div id="detailMap"></div>
             </div>
           </div>
-        </div>
 
-        ${renderBuildingSection()}
+          <div class="tab-section">
+            <div class="tab-section-header">Bauprojekt</div>
+            <div class="detail-fields">
+              <div class="detail-field">
+                <span class="detail-field-label">Projektbezeichnung</span>
+                <span class="detail-field-value">${project.projectName || '-'}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-field-label">SIA Phase</span>
+                <span class="detail-field-value">${getSiaPhaseNumber(project.siaPhase)}</span>
+              </div>
+
+              <div class="detail-field">
+                <span class="detail-field-label">Projektnummer</span>
+                <span class="detail-field-value highlight">${project.projectNumber || '-'}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-field-label">Projektstart</span>
+                <span class="detail-field-value">${project.projectStart || '-'}</span>
+              </div>
+
+              <div class="detail-field">
+                <span class="detail-field-label">Bewirtschaftungsgebiet</span>
+                <span class="detail-field-value">${getManagementAreaLabel(project.managementArea)}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-field-label">Bauart</span>
+                <span class="detail-field-value">${getConstructionTypeLabel(project.constructionType)}</span>
+              </div>
+
+              <div class="detail-field">
+                <span class="detail-field-label">Projektstatus</span>
+                <span class="detail-field-value">${getStatusLabel(project.status)}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-field-label">Geplante Gesamtkosten</span>
+                <span class="detail-field-value">${formatCurrency(project.plannedTotalCost)}</span>
+              </div>
+
+              <div class="detail-field">
+                <span class="detail-field-label">Projektleiter BBL</span>
+                <span class="detail-field-value">${project.projectManager || '-'}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-field-label">Letzte Änderung</span>
+                <span class="detail-field-value">${project.lastModified || '-'}</span>
+              </div>
+            </div>
+          </div>
+
+          ${renderBuildingSection()}
+        </div>
       `;
     }
 
@@ -3159,24 +3123,24 @@
         return `${pct}% ${label}`;
       };
 
-      // Helper to create a data row
+      // Helper to create a data row (unified component)
       const row = (abbrev, desc, value, unit, percent) => `
-        <div class="kennzahlen-row">
-          <span class="kennzahlen-abbrev">${abbrev}</span>
-          <span class="kennzahlen-desc">${desc}</span>
-          <span class="kennzahlen-value">${value}</span>
-          <span class="kennzahlen-unit">${unit}</span>
-          <span class="kennzahlen-percent">${percent}</span>
+        <div class="data-row">
+          <span class="data-row__id">${abbrev}</span>
+          <span class="data-row__label">${desc}</span>
+          <span class="data-row__value">${value}</span>
+          <span class="data-row__unit">${unit}</span>
+          <span class="data-row__meta">${percent}</span>
         </div>
       `;
 
-      // Helper for narrow rows (right column)
+      // Helper for narrow rows (right column, unified component)
       const rowNarrow = (abbrev, desc, value, unit = '') => `
-        <div class="kennzahlen-row-narrow">
-          <span class="kennzahlen-abbrev">${abbrev}</span>
-          <span class="kennzahlen-desc">${desc}</span>
-          <span class="kennzahlen-value">${value}</span>
-          <span class="kennzahlen-unit">${unit}</span>
+        <div class="data-row data-row--narrow">
+          <span class="data-row__id">${abbrev}</span>
+          <span class="data-row__label">${desc}</span>
+          <span class="data-row__value">${value}</span>
+          <span class="data-row__unit">${unit}</span>
         </div>
       `;
 
@@ -3195,14 +3159,14 @@
       const baseGF = gfl.gf;
 
       content.innerHTML = `
-        <div class="tab-main-header">Volumen und Flächen nach SIA 416</div>
-        <div class="kennzahlen-container">
+        <h2 class="tab-header">Volumen und Flächen nach SIA 416</h2>
+        <div class="tab-container tab-container--two-column">
           <!-- Left Column: Volumen und Flächen nach SIA 416 -->
-          <div class="kennzahlen-column">
+          <div class="tab-container">
             <!-- Gebäudevolumen -->
-            <div class="kennzahlen-section">
-              <div class="section-header">Gebäudevolumen</div>
-              <div class="kennzahlen-rows">
+            <div class="tab-section">
+              <div class="tab-section-header">Gebäudevolumen</div>
+              <div class="data-rows">
                 ${row('GV', 'Gebäudevolumen', formatNumber(gv.gv), 'm³', calcPercent(gv.gv, baseGV, 'GV'))}
                 ${row('GV OG', 'Gebäudevolumen Obergeschosse', formatNumber(gv.gvOg), 'm³', calcPercent(gv.gvOg, baseGV, 'GV'))}
                 ${row('GV UG', 'Gebäudevolumen Untergeschosse', formatNumber(gv.gvUg), 'm³', calcPercent(gv.gvUg, baseGV, 'GV'))}
@@ -3210,9 +3174,9 @@
             </div>
 
             <!-- Grundstücksflächen -->
-            <div class="kennzahlen-section">
-              <div class="section-header">Grundstücksflächen</div>
-              <div class="kennzahlen-rows">
+            <div class="tab-section">
+              <div class="tab-section-header">Grundstücksflächen</div>
+              <div class="data-rows">
                 ${row('GSF', 'Grundstücksfläche', formatNumber(gsf.gsf), 'm²', calcPercent(gsf.gsf, baseGSF, 'GSF'))}
                 ${row('GGF', 'Gebäudegrundfläche', formatNumber(gsf.ggf), 'm²', calcPercent(gsf.ggf, baseGSF, 'GSF'))}
                 ${row('UF', 'Umgebungsfläche', formatNumber(gsf.uf), 'm²', calcPercent(gsf.uf, baseGSF, 'GSF'))}
@@ -3220,9 +3184,9 @@
             </div>
 
             <!-- Gebäudeflächen -->
-            <div class="kennzahlen-section">
-              <div class="section-header">Gebäudeflächen</div>
-              <div class="kennzahlen-rows">
+            <div class="tab-section">
+              <div class="tab-section-header">Gebäudeflächen</div>
+              <div class="data-rows">
                 ${row('GF', 'Geschossfläche', formatNumber(gfl.gf), 'm²', calcPercent(gfl.gf, baseGF, 'GF'))}
                 ${row('GF OG', 'Geschossfläche Obergeschosse', formatNumber(gfl.gfOg), 'm²', calcPercent(gfl.gfOg, baseGF, 'GF'))}
                 ${row('GF UG', 'Geschossfläche Untergeschosse', formatNumber(gfl.gfUg), 'm²', calcPercent(gfl.gfUg, baseGF, 'GF'))}
@@ -3237,9 +3201,9 @@
             </div>
 
             <!-- Flächen DIN 277 -->
-            <div class="kennzahlen-section">
-              <div class="section-header">Flächen DIN 277</div>
-              <div class="kennzahlen-rows">
+            <div class="tab-section">
+              <div class="tab-section-header">Flächen DIN 277</div>
+              <div class="data-rows">
                 ${row('HNF 1', 'Wohnen und Aufenthalt', formatNumber(din.hnf1), 'm²', calcPercent(din.hnf1, baseGF, 'GF'))}
                 ${row('HNF 2', 'Büroarbeit', formatNumber(din.hnf2), 'm²', calcPercent(din.hnf2, baseGF, 'GF'))}
                 ${row('HNF 3', 'Produktion', formatNumber(din.hnf3), 'm²', calcPercent(din.hnf3, baseGF, 'GF'))}
@@ -3255,29 +3219,29 @@
           </div>
 
           <!-- Right Column: Kennzahlen -->
-          <div class="kennzahlen-column">
+          <div class="tab-container">
             <!-- Allgemeine Angaben -->
-            <div class="kennzahlen-section">
-              <div class="section-header">Allgemeine Angaben</div>
-              <div class="kennzahlen-rows">
+            <div class="tab-section">
+              <div class="tab-section-header">Allgemeine Angaben</div>
+              <div class="data-rows">
                 ${rowNarrow('', 'Anzahl Gebäude Stockwerke', formatNumber(allg.geschosse), '')}
                 ${rowNarrow('', 'Anzahl Gebäude Stockwerke UG', formatNumber(allg.geschosseUg), '')}
               </div>
             </div>
 
             <!-- Kennzahlen Wirtschaftlichkeit der Grundrisse -->
-            <div class="kennzahlen-section">
-              <div class="section-header">Kennzahlen Wirtschaftlichkeit der Grundrisse</div>
-              <div class="kennzahlen-rows">
+            <div class="tab-section">
+              <div class="tab-section-header">Kennzahlen Wirtschaftlichkeit der Grundrisse</div>
+              <div class="data-rows">
                 ${rowNarrow('HNF / GF', 'Hauptnutzfläche / Geschossfläche', formatPercent(kw.hnfGf), '')}
                 ${rowNarrow('VMF / GF', 'Vermietbare Fläche / Geschossfläche', formatPercent(kw.vmfGf), '')}
               </div>
             </div>
 
             <!-- Arbeitsplatzkennzahlen -->
-            <div class="kennzahlen-section">
-              <div class="section-header">Arbeitsplatzkennzahlen</div>
-              <div class="kennzahlen-rows">
+            <div class="tab-section">
+              <div class="tab-section-header">Arbeitsplatzkennzahlen</div>
+              <div class="data-rows">
                 ${rowNarrow('AP', 'Anzahl Arbeitsplätze', formatNumber(ap.ap), '')}
                 ${rowNarrow('GF / AP', 'Geschossfläche / Arbeitsplätze', formatNumber(ap.gfAp, 1), '')}
                 ${rowNarrow('HNF 2 / AP', 'Hauptnutzfläche 2 / Arbeitsplätze', formatNumber(ap.hnf2Ap, 1), '')}
@@ -3288,9 +3252,9 @@
             </div>
 
             <!-- Formquotienten nach eBKP-H -->
-            <div class="kennzahlen-section">
-              <div class="section-header">Formquotienten nach eBKP-H</div>
-              <div class="kennzahlen-rows">
+            <div class="tab-section">
+              <div class="tab-section-header">Formquotienten nach eBKP-H</div>
+              <div class="data-rows">
                 ${rowNarrow('AWF / GF', 'Aussenwandfläche / Geschossfläche', formatNumber(fq.awfGf, 2), '')}
                 ${rowNarrow('DAF / GF', 'Dachfläche / Geschossfläche', formatNumber(fq.dafGf, 2), '')}
               </div>
@@ -3313,37 +3277,37 @@
         sonstige: 'Sonstige'
       };
 
-      // Helper to create status dots (1=green, 2=orange, 3=red)
+      // Helper to create status dots (1=green, 2=orange, 3=red) - using unified components
       const renderStatusDots = (status) => {
         const levels = [
-          { class: 'low', title: 'Geringes Risiko' },
-          { class: 'medium', title: 'Mittleres Risiko' },
-          { class: 'high', title: 'Hohes Risiko' }
+          { class: 'status-dot--low', title: 'Geringes Risiko' },
+          { class: 'status-dot--medium', title: 'Mittleres Risiko' },
+          { class: 'status-dot--high', title: 'Hohes Risiko' }
         ];
         return levels.map((level, index) => {
           const isActive = status === (index + 1);
-          return `<div class="risiken-status-dot${isActive ? ` ${level.class}` : ''}" title="${level.title}"></div>`;
+          return `<div class="status-dot${isActive ? ` ${level.class}` : ''}" title="${level.title}"></div>`;
         }).join('');
       };
 
-      // Helper to create a risk row
+      // Helper to create a risk row (unified component)
       const riskRow = (risk) => `
-        <div class="risiken-row">
-          <span class="risiken-id">${risk.id || ''}</span>
-          <span class="risiken-name">${risk.name || ''}</span>
-          <div class="risiken-status">
+        <div class="data-row data-row--risk">
+          <span class="data-row__id">${risk.id || ''}</span>
+          <span class="data-row__label">${risk.name || ''}</span>
+          <div class="status-dots">
             ${renderStatusDots(risk.status)}
           </div>
         </div>
       `;
 
-      // Helper to create a section
+      // Helper to create a section (unified component)
       const renderSection = (categoryKey, risks) => {
         if (!risks || risks.length === 0) return '';
         return `
-          <div class="risiken-section">
-            <div class="section-header">${categoryLabels[categoryKey] || categoryKey}</div>
-            <div class="risiken-rows">
+          <div class="tab-section">
+            <div class="tab-section-header">${categoryLabels[categoryKey] || categoryKey}</div>
+            <div class="data-rows">
               ${risks.map(riskRow).join('')}
             </div>
           </div>
@@ -3351,8 +3315,8 @@
       };
 
       content.innerHTML = `
-        <div class="tab-main-header">Risiken</div>
-        <div class="risiken-container">
+        <h2 class="tab-header">Risiken</h2>
+        <div class="tab-container tab-container--constrained">
           ${renderSection('technisch', risiken.technisch)}
           ${renderSection('terminlich', risiken.terminlich)}
           ${renderSection('rechtlich', risiken.rechtlich)}
@@ -3367,11 +3331,12 @@
       const pz = project.projektziele || {};
       const meilensteine = pz.meilensteine || [];
 
-      // Helper to create a milestone table row
+      // Helper to create a milestone table row (unified components)
       const milestoneRow = (milestone, index) => {
         const isCompleted = milestone.status === 'completed';
-        const statusClass = isCompleted ? 'completed' : 'pending';
+        const statusClass = isCompleted ? 'table-status--completed' : 'table-status--pending';
         const statusLabel = isCompleted ? 'Erledigt' : 'Offen';
+        const buttonClass = isCompleted ? 'table-action-btn--completed' : '';
         const buttonIcon = isCompleted ? 'check_circle' : 'radio_button_unchecked';
 
         return `
@@ -3380,10 +3345,10 @@
             <td>${milestone.plannedDate || '-'}</td>
             <td>${milestone.actualDate || '-'}</td>
             <td>
-              <span class="meilensteine-status ${statusClass}">${statusLabel}</span>
+              <span class="table-status ${statusClass}">${statusLabel}</span>
             </td>
             <td>
-              <button class="meilensteine-btn ${statusClass}" onclick="toggleMilestoneStatus('${project.id}', ${index})" title="${isCompleted ? 'Als offen markieren' : 'Als erledigt markieren'}">
+              <button class="table-action-btn ${buttonClass}" onclick="toggleMilestoneStatus('${project.id}', ${index})" title="${isCompleted ? 'Als offen markieren' : 'Als erledigt markieren'}">
                 <span class="material-icons-outlined">${buttonIcon}</span>
               </button>
             </td>
@@ -3393,7 +3358,7 @@
 
       const milestoneTable = meilensteine.length > 0
         ? `
-          <table class="meilensteine-table">
+          <table class="data-table">
             <thead>
               <tr>
                 <th>Meilenstein</th>
@@ -3408,14 +3373,14 @@
             </tbody>
           </table>
         `
-        : '<div class="meilensteine-empty">Keine Meilensteine definiert</div>';
+        : '<div class="empty-state">Keine Meilensteine definiert</div>';
 
       content.innerHTML = `
-        <div class="tab-main-header">Projektziele</div>
-        <div class="projektziele-container">
+        <h2 class="tab-header">Projektziele</h2>
+        <div class="tab-container">
           <!-- Projektbeschrieb Section -->
-          <div class="detail-section">
-            <div class="section-header">Projektbeschrieb</div>
+          <div class="tab-section">
+            <div class="tab-section-header">Projektbeschrieb</div>
             <div class="detail-fields">
               <div class="detail-field">
                 <span class="detail-field-label">Ausgangslage</span>
@@ -3429,8 +3394,8 @@
           </div>
 
           <!-- Kosten (Geplant) Section -->
-          <div class="detail-section">
-            <div class="section-header">Kosten (Geplant)</div>
+          <div class="tab-section">
+            <div class="tab-section-header">Kosten (Geplant)</div>
             <div class="detail-fields">
               <div class="detail-field">
                 <span class="detail-field-label">Geplante Gesamtkosten</span>
@@ -3448,8 +3413,8 @@
           </div>
 
           <!-- Meilensteine Section -->
-          <div class="detail-section">
-            <div class="section-header">Meilensteine</div>
+          <div class="tab-section">
+            <div class="tab-section-header">Meilensteine</div>
             ${milestoneTable}
           </div>
         </div>
