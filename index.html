@@ -1635,9 +1635,9 @@
     }
     .kennzahlen-row {
       display: grid;
-      grid-template-columns: 70px 1fr 80px 50px 60px;
+      grid-template-columns: 80px 1fr 80px 50px 60px;
       gap: var(--space-2);
-      padding: var(--space-3) var(--space-2);  /* 12px vertical for better scanability */
+      padding: var(--space-2) var(--space-2);  /* 8px vertical for compact display */
       margin: 0 calc(-1 * var(--space-2));
       align-items: center;
       border-radius: var(--radius-sm);
@@ -1674,9 +1674,9 @@
     /* Narrower row variant for right column */
     .kennzahlen-row-narrow {
       display: grid;
-      grid-template-columns: 100px 1fr 80px 60px;
+      grid-template-columns: 110px 1fr 80px 60px;
       gap: var(--space-2);
-      padding: var(--space-3) var(--space-2);  /* 12px vertical for consistency */
+      padding: var(--space-2) var(--space-2);  /* 8px vertical for compact display */
       margin: 0 calc(-1 * var(--space-2));
       align-items: center;
       border-radius: var(--radius-sm);
@@ -1697,10 +1697,10 @@
       }
       /* Unified grid for vertical stacking - first 4 columns match */
       .kennzahlen-row {
-        grid-template-columns: 85px 1fr 70px 45px 55px;
+        grid-template-columns: 95px 1fr 70px 45px 55px;
       }
       .kennzahlen-row-narrow {
-        grid-template-columns: 85px 1fr 70px 45px;
+        grid-template-columns: 95px 1fr 70px 45px;
       }
       .kennzahlen-row-narrow .kennzahlen-abbrev {
         font-size: 13px;
@@ -1709,14 +1709,14 @@
     @media (max-width: 768px) {
       /* Unified 4-column grid for both row types */
       .kennzahlen-row {
-        grid-template-columns: 75px 1fr 65px 40px;
+        grid-template-columns: 85px 1fr 65px 40px;
         font-size: 12px;
       }
       .kennzahlen-percent {
         display: none;
       }
       .kennzahlen-row-narrow {
-        grid-template-columns: 75px 1fr 65px 40px;
+        grid-template-columns: 85px 1fr 65px 40px;
       }
     }
 
