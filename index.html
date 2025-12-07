@@ -1616,7 +1616,7 @@
       color: var(--accent-700);
       padding-bottom: var(--space-3);
       border-bottom: 2px solid var(--accent-600);
-      margin-bottom: var(--space-6);
+      margin-bottom: var(--space-8);
     }
     .kennzahlen-section {
       margin-bottom: var(--space-4);
@@ -1996,7 +1996,8 @@
         view: params.get('view'),
         id: params.get('id'),
         q: params.get('q'),
-        status: params.get('status')
+        status: params.get('status'),
+        tab: params.get('tab')
       };
     }
 
@@ -2006,6 +2007,9 @@
       // Add project ID if in detail view
       if (currentDetailProjectId) {
         params.set('id', currentDetailProjectId);
+        if (currentDetailTab && currentDetailTab !== 'uebersicht') {
+          params.set('tab', currentDetailTab);
+        }
       } else {
         if (currentView !== 'gallery') params.set('view', currentView);
         if (searchQuery) params.set('q', searchQuery);
@@ -2618,6 +2622,7 @@
     let detailMap = null;
     let detailMapLoaded = false;
     let currentDetailProjectId = null;
+    let currentDetailTab = 'uebersicht';
     let previousView = 'gallery';
 
     // Get SIA phase label (just the number like "32")
@@ -2657,28 +2662,37 @@
       currentDetailProjectId = projectId;
       previousView = currentView;
 
+      // Get tab from URL or use current tab
+      const urlParams = getUrlParams();
+      const tabToShow = urlParams.tab || currentDetailTab || 'uebersicht';
+
       // Render sidebar with all projects
       renderDetailSidebar();
-
-      // Render project details
-      renderDetailContent(project);
 
       // Show detail view
       document.getElementById('detailView').classList.add('active');
       document.querySelector('.search-section').style.display = 'none';
       document.getElementById('main').style.display = 'none';
 
+      // Render the appropriate tab content
+      switchDetailTab(tabToShow);
+
       // Update URL with pushState for browser navigation
       if (!skipHistory) {
         const params = new URLSearchParams();
         params.set('id', projectId);
-        window.history.pushState({ projectId }, '', `${window.location.pathname}?${params.toString()}`);
+        if (tabToShow !== 'uebersicht') {
+          params.set('tab', tabToShow);
+        }
+        window.history.pushState({ projectId, tab: tabToShow }, '', `${window.location.pathname}?${params.toString()}`);
       }
 
-      // Initialize or update detail map
-      setTimeout(() => {
-        initializeDetailMap(project);
-      }, 100);
+      // Initialize or update detail map if on uebersicht tab
+      if (tabToShow === 'uebersicht') {
+        setTimeout(() => {
+          initializeDetailMap(project);
+        }, 100);
+      }
     }
 
     // Close detail view
@@ -2983,8 +2997,8 @@
             <div class="kennzahlen-section">
               <div class="kennzahlen-section-header">Kennzahlen Wirtschaftlichkeit der Grundrisse</div>
               <div class="kennzahlen-rows">
-                ${rowNarrow('HNF SIA 416 / GF', 'Hauptnutzfläche / Geschossfläche', formatPercent(kw.hnfGf), '')}
-                ${rowNarrow('VMF SIA 165 / GF', 'Vermietbare Fläche / Geschossfläche', formatPercent(kw.vmfGf), '')}
+                ${rowNarrow('HNF / GF', 'Hauptnutzfläche / Geschossfläche', formatPercent(kw.hnfGf), '')}
+                ${rowNarrow('VMF / GF', 'Vermietbare Fläche / Geschossfläche', formatPercent(kw.vmfGf), '')}
               </div>
             </div>
 
@@ -3016,6 +3030,9 @@
 
     // Handle tab switching in detail view
     function switchDetailTab(tabName) {
+      // Track current tab
+      currentDetailTab = tabName;
+
       // Update active tab button
       document.querySelectorAll('.detail-tab').forEach(tab => {
         tab.classList.toggle('active', tab.dataset.tab === tabName);
@@ -3035,6 +3052,9 @@
           initializeDetailMap(project);
         }, 100);
       }
+
+      // Update URL with tab parameter
+      updateUrlParams();
     }
 
     // Set up detail tab click handlers
