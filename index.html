@@ -1610,12 +1610,11 @@
       flex-direction: column;
       gap: var(--space-6);
     }
-    .kennzahlen-main-header {
+    .tab-main-header {
       font-size: 15px;
       font-weight: 600;
       color: var(--accent-700);
       padding-bottom: var(--space-3);
-      border-bottom: 2px solid var(--accent-600);
       margin-bottom: var(--space-8);
     }
     .kennzahlen-section {
@@ -1725,14 +1724,7 @@
       display: flex;
       flex-direction: column;
       gap: var(--space-8);
-    }
-    .risiken-main-header {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--accent-700);
-      padding-bottom: var(--space-3);
-      border-bottom: 2px solid var(--accent-600);
-      margin-bottom: var(--space-4);
+      max-width: 700px;
     }
     .risiken-section {
       margin-bottom: var(--space-2);
@@ -1751,7 +1743,7 @@
     }
     .risiken-row {
       display: grid;
-      grid-template-columns: 75px 1fr 200px;
+      grid-template-columns: 75px 1fr 100px;
       gap: var(--space-3);
       padding: var(--space-2) 0;
       align-items: center;
@@ -1795,7 +1787,7 @@
     /* Responsive Risiken */
     @media (max-width: 768px) {
       .risiken-row {
-        grid-template-columns: 70px 1fr 150px;
+        grid-template-columns: 70px 1fr 80px;
       }
       .risiken-status {
         gap: var(--space-2);
@@ -3017,7 +3009,7 @@
       const baseGF = gfl.gf;
 
       content.innerHTML = `
-        <div class="kennzahlen-main-header">Volumen und Flächen nach SIA 416</div>
+        <div class="tab-main-header">Volumen und Flächen nach SIA 416</div>
         <div class="kennzahlen-container">
           <!-- Left Column: Volumen und Flächen nach SIA 416 -->
           <div class="kennzahlen-column">
@@ -3135,11 +3127,12 @@
         sonstige: 'Sonstige'
       };
 
-      // Helper to create status dots
-      const renderStatusDots = (statusArray) => {
-        return (statusArray || [null, null, null, null, null]).map(status => {
-          const statusClass = status ? ` ${status}` : '';
-          return `<div class="risiken-status-dot${statusClass}"></div>`;
+      // Helper to create status dots (1=green, 2=orange, 3=red)
+      const renderStatusDots = (status) => {
+        const levels = ['low', 'medium', 'high'];
+        return levels.map((level, index) => {
+          const isActive = status === (index + 1);
+          return `<div class="risiken-status-dot${isActive ? ` ${level}` : ''}"></div>`;
         }).join('');
       };
 
@@ -3168,7 +3161,7 @@
       };
 
       content.innerHTML = `
-        <div class="risiken-main-header">Risiken</div>
+        <div class="tab-main-header">Risiken</div>
         <div class="risiken-container">
           ${renderSection('technisch', risiken.technisch)}
           ${renderSection('terminlich', risiken.terminlich)}

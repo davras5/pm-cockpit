@@ -445,25 +445,25 @@
       },
       "risiken": {
         "technisch": [
-          { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": [null, null, null, null, "high"] },
-          { "id": "PE / T 02", "name": "Übernahme einer fehlerhaften oder unvollständigen Planung", "status": [null, null, "medium", null, null] }
+          { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": 3 },
+          { "id": "PE / T 02", "name": "Übernahme einer fehlerhaften oder unvollständigen Planung", "status": 2 }
         ],
         "terminlich": [
-          { "id": "PE / Z 02", "name": "Unrealistische Vorgangsdauern im Terminplan", "status": [null, null, null, "medium", null] },
-          { "id": "PE / Z 05", "name": "Verspätete Lieferung Lieferanten", "status": [null, null, "low", null, null] },
-          { "id": "PE / Z 07", "name": "Verzögerung Baugenehmigungsverfahren etc.", "status": [null, null, "low", null, null] },
-          { "id": "PE / Z 08", "name": "Verzögerung interne Genehmigungsverfahren", "status": [null, null, "medium", null, null] }
+          { "id": "PE / Z 02", "name": "Unrealistische Vorgangsdauern im Terminplan", "status": 2 },
+          { "id": "PE / Z 05", "name": "Verspätete Lieferung Lieferanten", "status": 1 },
+          { "id": "PE / Z 07", "name": "Verzögerung Baugenehmigungsverfahren etc.", "status": 1 },
+          { "id": "PE / Z 08", "name": "Verzögerung interne Genehmigungsverfahren", "status": 2 }
         ],
         "rechtlich": [
-          { "id": "PE / R 02", "name": "Konflikte mit Nachunternehmern, Auftraggebern o.ä", "status": [null, null, null, "medium", null] },
-          { "id": "PE / R 03", "name": "Konflikte mit Öffentlichkeit", "status": [null, null, null, "medium", null] },
-          { "id": "PE / R 07", "name": "Leistungsänderung durch den Auftraggeber", "status": [null, null, null, "medium", null] },
-          { "id": "PE / R 08", "name": "Fehlende Baugenehmigung", "status": [null, null, null, null, "high"] }
+          { "id": "PE / R 02", "name": "Konflikte mit Nachunternehmern, Auftraggebern o.ä", "status": 2 },
+          { "id": "PE / R 03", "name": "Konflikte mit Öffentlichkeit", "status": 2 },
+          { "id": "PE / R 07", "name": "Leistungsänderung durch den Auftraggeber", "status": 2 },
+          { "id": "PE / R 08", "name": "Fehlende Baugenehmigung", "status": 3 }
         ],
         "sonstige": [
-          { "id": "PE / S 01", "name": "Unzureichende Ressourcenplanung", "status": [null, null, "low", null, null] },
-          { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": [null, null, null, "medium", null] },
-          { "id": "PE / S 05", "name": "Personalmangel", "status": [null, null, null, "medium", null] }
+          { "id": "PE / S 01", "name": "Unzureichende Ressourcenplanung", "status": 1 },
+          { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": 2 },
+          { "id": "PE / S 05", "name": "Personalmangel", "status": 2 }
         ]
       }
     },
@@ -543,25 +543,25 @@
       },
       "risiken": {
         "technisch": [
-          { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": [null, null, "medium", null, null] },
-          { "id": "PE / T 02", "name": "Übernahme einer fehlerhaften oder unvollständigen Planung", "status": [null, null, null, "low", null] }
+          { "id": "PE / T 01", "name": "Fehler in den Planunterlagen", "status": 2 },
+          { "id": "PE / T 02", "name": "Übernahme einer fehlerhaften oder unvollständigen Planung", "status": 1 }
         ],
         "terminlich": [
-          { "id": "PE / Z 02", "name": "Unrealistische Vorgangsdauern im Terminplan", "status": [null, null, "medium", null, null] },
-          { "id": "PE / Z 05", "name": "Verspätete Lieferung Lieferanten", "status": [null, null, null, "medium", null] },
-          { "id": "PE / Z 07", "name": "Verzögerung Baugenehmigungsverfahren etc.", "status": [null, null, null, null, "low"] },
-          { "id": "PE / Z 08", "name": "Verzögerung interne Genehmigungsverfahren", "status": [null, null, "low", null, null] }
+          { "id": "PE / Z 02", "name": "Unrealistische Vorgangsdauern im Terminplan", "status": 2 },
+          { "id": "PE / Z 05", "name": "Verspätete Lieferung Lieferanten", "status": 2 },
+          { "id": "PE / Z 07", "name": "Verzögerung Baugenehmigungsverfahren etc.", "status": 1 },
+          { "id": "PE / Z 08", "name": "Verzögerung interne Genehmigungsverfahren", "status": 1 }
         ],
         "rechtlich": [
-          { "id": "PE / R 02", "name": "Konflikte mit Nachunternehmern, Auftraggebern o.ä", "status": [null, null, "low", null, null] },
-          { "id": "PE / R 03", "name": "Konflikte mit Öffentlichkeit", "status": [null, null, null, "high", null] },
-          { "id": "PE / R 07", "name": "Leistungsänderung durch den Auftraggeber", "status": [null, null, "medium", null, null] },
-          { "id": "PE / R 08", "name": "Fehlende Baugenehmigung", "status": [null, null, "low", null, null] }
+          { "id": "PE / R 02", "name": "Konflikte mit Nachunternehmern, Auftraggebern o.ä", "status": 1 },
+          { "id": "PE / R 03", "name": "Konflikte mit Öffentlichkeit", "status": 3 },
+          { "id": "PE / R 07", "name": "Leistungsänderung durch den Auftraggeber", "status": 2 },
+          { "id": "PE / R 08", "name": "Fehlende Baugenehmigung", "status": 1 }
         ],
         "sonstige": [
-          { "id": "PE / S 01", "name": "Unzureichende Ressourcenplanung", "status": [null, null, null, "medium", null] },
-          { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": [null, null, "medium", null, null] },
-          { "id": "PE / S 05", "name": "Personalmangel", "status": [null, null, null, null, "medium"] }
+          { "id": "PE / S 01", "name": "Unzureichende Ressourcenplanung", "status": 2 },
+          { "id": "PE / S 04", "name": "Aufwendige Entscheidungswege", "status": 2 },
+          { "id": "PE / S 05", "name": "Personalmangel", "status": 2 }
         ]
       }
     }
