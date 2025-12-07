@@ -287,6 +287,23 @@
       "city": "Zürich",
       "region": "Zürich",
       "country": "CH"
+    },
+    {
+      "id": "b1a2c3d4-1001-4000-8000-000000000002",
+      "buildingNumber": "GB-2024-002",
+      "plotNumber": "5678-90",
+      "designation": "Bundeshaus West",
+      "egid": "987654321",
+      "buildingStatus": "active",
+      "subPortfolio": "office",
+      "lat": 46.9465,
+      "lng": 7.4442,
+      "street": "Bundesplatz",
+      "streetNumber": "3",
+      "zip": "3003",
+      "city": "Bern",
+      "region": "Bern",
+      "country": "CH"
     }
   ],
   "projects": [
@@ -311,8 +328,8 @@
     },
     {
       "id": "p1a2c3d4-2001-4000-8000-000000000002",
-      "buildingId": "b1a2c3d4-1001-4000-8000-000000000001",
-      "projectName": "Haustechnik Erneuerung",
+      "buildingId": "b1a2c3d4-1001-4000-8000-000000000002",
+      "projectName": "Haustechnik Erneuerung Bundeshaus",
       "projectNumber": "PRJ-2024-0002",
       "siaPhase": "sia_41",
       "projectManager": "Anna Schmidt",
