@@ -2278,12 +2278,26 @@
       const idStr = String(id);
       const hash = idStr.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a; }, 0);
       const imageIndex = Math.abs(hash) % 5;
-      const images = ['https://images.unsplash.com/photo-1504307651254-35680f356dfd', 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5', 'https://images.unsplash.com/photo-1503387762-592deb58ef4e', 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece', 'https://images.unsplash.com/photo-1590644365607-1c5a1a5d0c3e'];
+      // BBL-passende Bilder: Bürogebäude, Verwaltung, Fassaden, Sanierung, technische Anlagen
+      const images = [
+        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab', // Modernes Bürogebäude Glasfassade
+        'https://images.unsplash.com/photo-1554469384-e58fac16e23a', // Verwaltungsgebäude Fassade
+        'https://images.unsplash.com/photo-1497366216548-37526070297c', // Büro Innenausbau modern
+        'https://images.unsplash.com/photo-1565538810643-b5bdb714032a', // Gebäudefassade Sanierung
+        'https://images.unsplash.com/photo-1497366754035-f200968a6e72'  // Bürogebäude Eingangsbereich
+      ];
       return images[imageIndex] + '?w=400&h=300&fit=crop';
     }
 
     function getProjectGalleryImages(id) {
-      const images = ['https://images.unsplash.com/photo-1504307651254-35680f356dfd', 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5', 'https://images.unsplash.com/photo-1503387762-592deb58ef4e', 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece', 'https://images.unsplash.com/photo-1590644365607-1c5a1a5d0c3e'];
+      // BBL-passende Bilder: Bürogebäude, Verwaltung, Fassaden, Sanierung, technische Anlagen
+      const images = [
+        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab', // Modernes Bürogebäude Glasfassade
+        'https://images.unsplash.com/photo-1554469384-e58fac16e23a', // Verwaltungsgebäude Fassade
+        'https://images.unsplash.com/photo-1497366216548-37526070297c', // Büro Innenausbau modern
+        'https://images.unsplash.com/photo-1565538810643-b5bdb714032a', // Gebäudefassade Sanierung
+        'https://images.unsplash.com/photo-1497366754035-f200968a6e72'  // Bürogebäude Eingangsbereich
+      ];
       // Rotate array based on project ID so each project starts with a different image
       const idStr = String(id);
       const hash = idStr.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a; }, 0);
@@ -2292,20 +2306,32 @@
       return rotated.map(img => img + '?w=400&h=300&fit=crop');
     }
 
-    // Extract unique filter options from data
+    // Extract unique filter options from data - only values that exist in projects
     function extractFilterOptions() {
       const statuses = new Set();
+      const teilportfolioValues = new Set();
+      const siaPhaseValues = new Set();
       const plbhValues = new Set();
 
       properties.forEach(prop => {
         if (prop.status) statuses.add(prop.status);
+        if (prop.subPortfolio) teilportfolioValues.add(prop.subPortfolio);
+        if (prop.siaPhase) siaPhaseValues.add(prop.siaPhase);
         if (prop.projectManager) plbhValues.add(prop.projectManager);
       });
 
-      filterOptions.status = Array.from(statuses).sort();
-      // For teilportfolio and siaPhase, we use references from data.json
-      filterOptions.teilportfolio = (dataReferences.subPortfolio || []).map(r => r.id);
-      filterOptions.siaPhase = (dataReferences.siaPhases || []).map(r => r.id);
+      // Sort status by reference order
+      const statusOrder = (dataReferences.projectStatus || []).map(r => r.id);
+      filterOptions.status = Array.from(statuses).sort((a, b) => statusOrder.indexOf(a) - statusOrder.indexOf(b));
+
+      // Sort teilportfolio by reference order, only include values that exist in projects
+      const teilportfolioOrder = (dataReferences.subPortfolio || []).map(r => r.id);
+      filterOptions.teilportfolio = Array.from(teilportfolioValues).sort((a, b) => teilportfolioOrder.indexOf(a) - teilportfolioOrder.indexOf(b));
+
+      // Sort siaPhase by reference order, only include values that exist in projects
+      const siaPhaseOrder = (dataReferences.siaPhases || []).map(r => r.id);
+      filterOptions.siaPhase = Array.from(siaPhaseValues).sort((a, b) => siaPhaseOrder.indexOf(a) - siaPhaseOrder.indexOf(b));
+
       // PLBH is extracted from actual data since there's no reference list
       filterOptions.plbh = Array.from(plbhValues).sort();
     }
@@ -2464,11 +2490,10 @@
         </div>
       `;
 
-      // Status filter - use reference values to show all options
+      // Status filter - only show values that exist in projects
       const statusContainer = document.getElementById('filterStatus');
       if (statusContainer) {
-        const statusOptions = (dataReferences.projectStatus || []).map(ref => ref.id);
-        statusContainer.innerHTML = statusOptions.map(s =>
+        statusContainer.innerHTML = filterOptions.status.map(s =>
           createOption(advancedFilters.status.has(s), 'status', s, getStatusLabel(s))
         ).join('');
       }
