@@ -403,11 +403,16 @@
     .status-sold { background-color: var(--priority-low-bg); color: var(--priority-low-text); }
     .status-unknown { background-color: var(--priority-null-bg); color: var(--priority-null-text); border: 1px solid var(--priority-null-border); }
 
-    /* Ampel Status Dot Classes */
+    /* Ampel Status Dot Classes (for gallery view) */
     .ampel-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-left: var(--space-2); vertical-align: middle; }
     .ampel-dot-auf-kurs { background-color: var(--priority-normal); }
     .ampel-dot-gefaehrdet { background-color: var(--warning); }
     .ampel-dot-kritisch { background-color: var(--priority-high); }
+
+    /* Ampel Status Tag Classes (for list view) */
+    .ampel-tag-auf-kurs { background-color: var(--priority-normal-bg); color: var(--priority-normal-text); }
+    .ampel-tag-gefaehrdet { background-color: var(--warning-bg); color: var(--warning-text); }
+    .ampel-tag-kritisch { background-color: var(--priority-high-bg); color: var(--priority-high-text); }
 
     /* Image Tags Container */
     .image-tags { position: absolute; top: var(--space-3); left: var(--space-3); display: flex; gap: var(--space-2); z-index: 2; }
@@ -1970,7 +1975,7 @@
       </div>
       <div class="list-table-container">
         <table class="list-table">
-          <thead><tr><th></th><th>Projektnummer</th><th>Projektbezeichnung</th><th>PLBH</th><th>Investition</th><th>Status</th></tr></thead>
+          <thead><tr><th></th><th>Projektnummer</th><th>Projektbezeichnung</th><th>PLBH</th><th>Investition</th><th>Projektziele</th><th>Risiken</th><th>Status</th></tr></thead>
           <tbody id="listTableBody"></tbody>
         </table>
       </div>
@@ -2416,6 +2421,15 @@
       };
       return classMap[status] || '';
     }
+    function getAmpelTagClass(status) {
+      if (!status) return '';
+      const classMap = {
+        'auf-kurs': 'ampel-tag-auf-kurs',
+        'gefaehrdet': 'ampel-tag-gefaehrdet',
+        'kritisch': 'ampel-tag-kritisch'
+      };
+      return classMap[status] || '';
+    }
 
     // Format full address from new fields
     function formatAddress(prop) {
@@ -2817,6 +2831,8 @@
           <td>${prop.projectName || '-'}</td>
           <td>${prop.projectManager || '-'}</td>
           <td>${formatCurrency(prop.plannedTotalCost)}</td>
+          <td>${prop.projektzielStatus ? `<span class="status-tag ${getAmpelTagClass(prop.projektzielStatus)}">${getAmpelStatusLabel(prop.projektzielStatus, dataReferences)}</span>` : '-'}</td>
+          <td>${prop.risikoStatus ? `<span class="status-tag ${getAmpelTagClass(prop.risikoStatus)}">${getAmpelStatusLabel(prop.risikoStatus, dataReferences)}</span>` : '-'}</td>
           <td><span class="status-tag ${getStatusClass(prop.status)}" data-filter="status" data-value="${prop.status}">${getStatusLabel(prop.status)}</span></td>
         </tr>`).join('');
     }
