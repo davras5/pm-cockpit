@@ -1228,15 +1228,9 @@
     /* --- Detail View Styles --- */
     .detail-view {
       display: none;
-      position: fixed;
-      top: 64px; /* Below header */
-      left: 0;
-      right: 0;
-      bottom: 36px; /* Above footer */
       background: var(--neutral-100);
-      z-index: 100;
-      overflow-y: auto;
       flex-direction: column;
+      flex: 1; /* Take remaining space in flex column */
     }
     .detail-view.active {
       display: flex;
