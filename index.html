@@ -441,6 +441,15 @@
     .cost-comparison-percent.over-budget { background: var(--warning-bg); color: var(--warning-text); }
     .cost-comparison-percent.critical { background: #FEE2E2; color: #B91C1C; }
 
+    /* --- Metric Comparison (compact) --- */
+    .metric-comparison-container { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--neutral-200); }
+    .metric-comparison-row { display: flex; justify-content: space-between; align-items: center; padding: var(--space-2) 0; }
+    .metric-label { font-size: 13px; color: var(--neutral-600); font-weight: 500; }
+    .metric-values { display: flex; align-items: center; gap: var(--space-2); }
+    .metric-soll { font-size: 13px; color: var(--neutral-500); }
+    .metric-separator { font-size: 12px; color: var(--neutral-400); }
+    .metric-ist { font-size: 14px; font-weight: 600; color: var(--neutral-900); }
+
     /* --- List View --- */
     .view-container { display: none; }
     .view-container.active { display: block; }
@@ -2267,6 +2276,22 @@
       return total;
     }
 
+    // Calculate BKP 2 / m² GF (IST)
+    function calculateBkp2PerGf(project) {
+      const bkp2 = project?.kostenBkp?.bkp2?.chfKosten;
+      const gf = project?.grundgroessen?.gebaeudeflaechen?.gf;
+      if (!bkp2 || !gf || gf === 0) return null;
+      return bkp2 / gf;
+    }
+
+    // Calculate BKP 2 / m³ GV (IST)
+    function calculateBkp2PerGv(project) {
+      const bkp2 = project?.kostenBkp?.bkp2?.chfKosten;
+      const gv = project?.grundgroessen?.gebaeudevolumen?.gv;
+      if (!bkp2 || !gv || gv === 0) return null;
+      return bkp2 / gv;
+    }
+
     // Render cost comparison visualization
     function renderCostComparison(sollValue, istValue) {
       if (!sollValue || sollValue === 0) {
@@ -2312,6 +2337,50 @@
             <div class="cost-comparison-bar-target" style="left: ${targetPosition}%"></div>
           </div>
           <div class="cost-comparison-footer">
+            <span class="cost-comparison-percent ${statusClass}">${percentSign}${displayPercent}%</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render compact metric comparison (for BKP 2 / m² GF and BKP 2 / m³ GV)
+    function renderMetricComparison(label, sollValue, istValue, unit) {
+      if (!sollValue || sollValue === 0 || !istValue) {
+        return `
+          <div class="metric-comparison-row">
+            <span class="metric-label">${label}</span>
+            <span class="metric-values">-</span>
+          </div>
+        `;
+      }
+
+      const percentDiff = ((istValue / sollValue) - 1) * 100;
+      const displayPercent = Math.abs(percentDiff).toFixed(1);
+
+      // Determine status class
+      let statusClass = 'on-budget';
+      let percentSign = '';
+      if (percentDiff < -0.5) {
+        statusClass = 'under-budget';
+        percentSign = '-';
+      } else if (percentDiff > 10) {
+        statusClass = 'critical';
+        percentSign = '+';
+      } else if (percentDiff > 0.5) {
+        statusClass = 'over-budget';
+        percentSign = '+';
+      }
+
+      const formattedSoll = new Intl.NumberFormat('de-CH').format(Math.round(sollValue));
+      const formattedIst = new Intl.NumberFormat('de-CH').format(Math.round(istValue));
+
+      return `
+        <div class="metric-comparison-row">
+          <span class="metric-label">${label}</span>
+          <div class="metric-values">
+            <span class="metric-soll">${formattedSoll}</span>
+            <span class="metric-separator">→</span>
+            <span class="metric-ist">${formattedIst} ${unit}</span>
             <span class="cost-comparison-percent ${statusClass}">${percentSign}${displayPercent}%</span>
           </div>
         </div>
@@ -3765,6 +3834,10 @@
           <div class="tab-section">
             <div class="tab-section-header">Kostenvergleich</div>
             ${renderCostComparison(project.plannedTotalCost, calculateBkpTotal(project.kostenBkp))}
+            <div class="metric-comparison-container">
+              ${renderMetricComparison('BKP 2 / m² GF', project.sollBkp2Gf, calculateBkp2PerGf(project), 'CHF/m²')}
+              ${renderMetricComparison('BKP 2 / m³ GV', project.sollBkp2Gv, calculateBkp2PerGv(project), 'CHF/m³')}
+            </div>
           </div>
 
           <!-- Meilensteine Section -->
