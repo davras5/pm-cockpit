@@ -422,7 +422,8 @@
     .milestone-text { font-size: 13px; color: var(--neutral-700); font-weight: 500; }
 
     /* --- Cost Comparison --- */
-    .cost-comparison { background: var(--neutral-50); border-radius: var(--radius-md); padding: var(--space-4); border: 1px solid var(--neutral-200); }
+    .cost-comparison-wrapper { background: var(--neutral-50); border-radius: var(--radius-md); padding: var(--space-4); border: 1px solid var(--neutral-200); max-width: 500px; }
+    .cost-comparison { }
     .cost-comparison-header { font-size: 14px; font-weight: 600; color: var(--neutral-900); margin-bottom: var(--space-3); }
     .cost-comparison-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2); }
     .cost-comparison-label { font-size: 13px; color: var(--neutral-600); font-weight: 500; min-width: 45px; }
@@ -3833,10 +3834,12 @@
           <!-- Kosten Soll/Ist Vergleich Section -->
           <div class="tab-section">
             <div class="tab-section-header">Kostenvergleich</div>
-            ${renderCostComparison(project.plannedTotalCost, calculateBkpTotal(project.kostenBkp))}
-            <div class="metric-comparison-container">
-              ${renderMetricComparison('BKP 2 / m² GF', project.sollBkp2Gf, calculateBkp2PerGf(project), 'CHF/m²')}
-              ${renderMetricComparison('BKP 2 / m³ GV', project.sollBkp2Gv, calculateBkp2PerGv(project), 'CHF/m³')}
+            <div class="cost-comparison-wrapper">
+              ${renderCostComparison(project.plannedTotalCost, calculateBkpTotal(project.kostenBkp))}
+              <div class="metric-comparison-container">
+                ${renderMetricComparison('BKP 2 / m² GF', project.sollBkp2Gf, calculateBkp2PerGf(project), 'CHF/m²')}
+                ${renderMetricComparison('BKP 2 / m³ GV', project.sollBkp2Gv, calculateBkp2PerGv(project), 'CHF/m³')}
+              </div>
             </div>
           </div>
 
