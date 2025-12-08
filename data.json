@@ -177,6 +177,20 @@
         "entity": "project"
       },
       {
+        "id": "sollBkp2Gf",
+        "alias": "SOLL BKP 2 / m² GF",
+        "format": "number",
+        "unit": "CHF/m²",
+        "entity": "project"
+      },
+      {
+        "id": "sollBkp2Gv",
+        "alias": "SOLL BKP 2 / m³ GV",
+        "format": "number",
+        "unit": "CHF/m³",
+        "entity": "project"
+      },
+      {
         "id": "relatedProjects",
         "alias": "Verwandte Projekte",
         "format": "array",
@@ -193,6 +207,20 @@
         "id": "lastModified",
         "alias": "Letzte Änderung",
         "format": "datetime",
+        "entity": "project"
+      },
+      {
+        "id": "projektzielStatus",
+        "alias": "Status Projektziele",
+        "format": "reference",
+        "reference": "ampelStatus",
+        "entity": "project"
+      },
+      {
+        "id": "risikoStatus",
+        "alias": "Status Risiken",
+        "format": "reference",
+        "reference": "ampelStatus",
         "entity": "project"
       },
       {
@@ -333,6 +361,11 @@
         { "id": "AT", "label": "Österreich" },
         { "id": "FR", "label": "Frankreich" },
         { "id": "IT", "label": "Italien" }
+      ],
+      "ampelStatus": [
+        { "id": "auf-kurs", "label": "Auf Kurs" },
+        { "id": "gefaehrdet", "label": "Gefährdet" },
+        { "id": "kritisch", "label": "Kritisch" }
       ]
     }
   },
@@ -437,10 +470,14 @@
       "bimProjectEnd": "30.06.2025",
       "bimLevel": "level_2",
       "constructionType": "renovation",
-      "plannedTotalCost": 8500000,
+      "plannedTotalCost": 65000000,
+      "sollBkp2Gf": 2500,
+      "sollBkp2Gv": 680,
       "relatedProjects": [],
       "subPortfolio": "office",
       "lastModified": "05.12.2024 15:36",
+      "projektzielStatus": "gefaehrdet",
+      "risikoStatus": "kritisch",
       "grundgroessen": {
         "gebaeudevolumen": {
           "gv": 85200,
@@ -558,10 +595,14 @@
       "bimProjectEnd": "31.12.2026",
       "bimLevel": "level_2",
       "constructionType": "renovation",
-      "plannedTotalCost": 12500000,
+      "plannedTotalCost": 90000000,
+      "sollBkp2Gf": 2200,
+      "sollBkp2Gv": 500,
       "relatedProjects": ["p1a2c3d4-2001-4000-8000-000000000001"],
       "subPortfolio": "office",
       "lastModified": "03.12.2024 11:48",
+      "projektzielStatus": "auf-kurs",
+      "risikoStatus": "gefaehrdet",
       "grundgroessen": {
         "gebaeudevolumen": {
           "gv": 145000,
@@ -681,9 +722,13 @@
       "bimLevel": "level_3",
       "constructionType": "new_construction",
       "plannedTotalCost": 85000000,
+      "sollBkp2Gf": 2100,
+      "sollBkp2Gv": 480,
       "relatedProjects": [],
       "subPortfolio": "office",
       "lastModified": "01.12.2024 09:15",
+      "projektzielStatus": "auf-kurs",
+      "risikoStatus": "auf-kurs",
       "grundgroessen": {
         "gebaeudevolumen": {
           "gv": 125000,
@@ -798,10 +843,14 @@
       "bimProjectEnd": "30.06.2025",
       "bimLevel": "level_2",
       "constructionType": "renovation",
-      "plannedTotalCost": 18500000,
+      "plannedTotalCost": 42000000,
+      "sollBkp2Gf": 2200,
+      "sollBkp2Gv": 620,
       "relatedProjects": [],
       "subPortfolio": "infrastructure",
       "lastModified": "06.12.2024 14:22",
+      "projektzielStatus": "kritisch",
+      "risikoStatus": "kritisch",
       "grundgroessen": {
         "gebaeudevolumen": {
           "gv": 52000,
@@ -916,10 +965,14 @@
       "bimProjectEnd": "31.03.2026",
       "bimLevel": "level_1",
       "constructionType": "conversion",
-      "plannedTotalCost": 6800000,
+      "plannedTotalCost": 44000000,
+      "sollBkp2Gf": 1900,
+      "sollBkp2Gv": 450,
       "relatedProjects": [],
       "subPortfolio": "cultural",
       "lastModified": "04.12.2024 16:45",
+      "projektzielStatus": "gefaehrdet",
+      "risikoStatus": "auf-kurs",
       "grundgroessen": {
         "gebaeudevolumen": {
           "gv": 78000,
