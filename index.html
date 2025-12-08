@@ -478,7 +478,7 @@
     .list-table td { padding: var(--space-4); font-size: 14px; color: var(--neutral-900); border-bottom: 1px solid var(--neutral-200); vertical-align: middle; }
     .list-table tbody tr:hover { background-color: var(--neutral-100); cursor: pointer; }
     .object-cell { display: flex; align-items: center; gap: var(--space-3); }
-    .object-icon { color: var(--neutral-500); font-size: 20px; }
+    .object-icon { color: var(--neutral-500); font-size: 20px; vertical-align: middle; display: inline-flex; align-items: center; justify-content: center; }
     .milestone-text-small { font-size: 12px; color: var(--neutral-500); }
 
     /* --- MAP VIEW & SIDEBAR FIXES --- */
@@ -1288,6 +1288,9 @@
     .detail-header-icon {
       color: var(--neutral-500);
       font-size: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .detail-header-title {
       flex: 1;
@@ -1389,6 +1392,9 @@
     .detail-sidebar-item .material-icons-outlined {
       color: var(--neutral-400);
       font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .detail-sidebar-item.active .material-icons-outlined {
       color: var(--accent-600);
@@ -1920,7 +1926,7 @@
 </head>
 <body>
   <header class="header">
-    <a href="/" class="header-left" style="text-decoration: none; color: inherit;">
+    <a href="index.html" class="header-left" style="text-decoration: none; color: inherit;" onclick="event.preventDefault(); resetToHome();">
       <div class="logo"><img src="images/ch.png" alt="Schweizer Wappen"></div>
       <div class="header-title">
         <span class="header-title-main">Bauprojekte</span>
@@ -2605,6 +2611,20 @@
       if (document.getElementById('filterModalOverlay').classList.contains('active')) {
         renderFilterModal();
       }
+    }
+
+    // Reset to home page (clear all filters, views, and URL params)
+    function resetToHome() {
+      // Close detail view if open
+      if (currentDetailProjectId) {
+        closeDetailView(true);
+      }
+      // Reset all filters
+      resetAllFilters();
+      // Reset to default gallery view
+      setView('gallery');
+      // Clear URL parameters
+      window.history.pushState({}, '', window.location.pathname);
     }
 
     // Apply all filters
