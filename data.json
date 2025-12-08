@@ -210,6 +210,20 @@
         "entity": "project"
       },
       {
+        "id": "projektzielStatus",
+        "alias": "Status Projektziele",
+        "format": "reference",
+        "reference": "ampelStatus",
+        "entity": "project"
+      },
+      {
+        "id": "risikoStatus",
+        "alias": "Status Risiken",
+        "format": "reference",
+        "reference": "ampelStatus",
+        "entity": "project"
+      },
+      {
         "id": "grundgroessen",
         "alias": "Grundgrössen und Kennzahlen",
         "format": "object",
@@ -347,6 +361,11 @@
         { "id": "AT", "label": "Österreich" },
         { "id": "FR", "label": "Frankreich" },
         { "id": "IT", "label": "Italien" }
+      ],
+      "ampelStatus": [
+        { "id": "auf-kurs", "label": "Auf Kurs" },
+        { "id": "gefaehrdet", "label": "Gefährdet" },
+        { "id": "kritisch", "label": "Kritisch" }
       ]
     }
   },
@@ -457,6 +476,8 @@
       "relatedProjects": [],
       "subPortfolio": "office",
       "lastModified": "05.12.2024 15:36",
+      "projektzielStatus": "gefaehrdet",
+      "risikoStatus": "kritisch",
       "grundgroessen": {
         "gebaeudevolumen": {
           "gv": 85200,
@@ -580,6 +601,8 @@
       "relatedProjects": ["p1a2c3d4-2001-4000-8000-000000000001"],
       "subPortfolio": "office",
       "lastModified": "03.12.2024 11:48",
+      "projektzielStatus": "auf-kurs",
+      "risikoStatus": "gefaehrdet",
       "grundgroessen": {
         "gebaeudevolumen": {
           "gv": 145000,
@@ -704,6 +727,8 @@
       "relatedProjects": [],
       "subPortfolio": "office",
       "lastModified": "01.12.2024 09:15",
+      "projektzielStatus": "auf-kurs",
+      "risikoStatus": "auf-kurs",
       "grundgroessen": {
         "gebaeudevolumen": {
           "gv": 125000,
@@ -824,6 +849,8 @@
       "relatedProjects": [],
       "subPortfolio": "infrastructure",
       "lastModified": "06.12.2024 14:22",
+      "projektzielStatus": "kritisch",
+      "risikoStatus": "kritisch",
       "grundgroessen": {
         "gebaeudevolumen": {
           "gv": 52000,
@@ -944,6 +971,8 @@
       "relatedProjects": [],
       "subPortfolio": "cultural",
       "lastModified": "04.12.2024 16:45",
+      "projektzielStatus": "gefaehrdet",
+      "risikoStatus": "auf-kurs",
       "grundgroessen": {
         "gebaeudevolumen": {
           "gv": 78000,
