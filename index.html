@@ -1920,7 +1920,7 @@
 </head>
 <body>
   <header class="header">
-    <a href="/" class="header-left" style="text-decoration: none; color: inherit;">
+    <a href="index.html" class="header-left" style="text-decoration: none; color: inherit;" onclick="event.preventDefault(); resetToHome();">
       <div class="logo"><img src="images/ch.png" alt="Schweizer Wappen"></div>
       <div class="header-title">
         <span class="header-title-main">Bauprojekte</span>
@@ -2605,6 +2605,20 @@
       if (document.getElementById('filterModalOverlay').classList.contains('active')) {
         renderFilterModal();
       }
+    }
+
+    // Reset to home page (clear all filters, views, and URL params)
+    function resetToHome() {
+      // Close detail view if open
+      if (currentDetailProjectId) {
+        closeDetailView(true);
+      }
+      // Reset all filters
+      resetAllFilters();
+      // Reset to default gallery view
+      setView('gallery');
+      // Clear URL parameters
+      window.history.pushState({}, '', window.location.pathname);
     }
 
     // Apply all filters
