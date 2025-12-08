@@ -2087,7 +2087,7 @@
     <!-- Sub-Header (full-width) -->
     <div class="detail-subheader">
       <div class="detail-subheader-inner">
-        <span class="material-icons-outlined detail-header-icon">apartment</span>
+        <span class="material-icons-outlined detail-header-icon">fullscreen</span>
         <h1 class="detail-header-title" id="detailHeaderTitle">-</h1>
         <button class="detail-edit-btn" onclick="alert('Bearbeiten-Funktion noch nicht verfügbar')">
           <span class="material-icons-outlined">lock</span>
@@ -3206,7 +3206,7 @@
 
       container.innerHTML = data.map(prop => `
         <div class="detail-sidebar-item ${prop.id === currentDetailProjectId ? 'active' : ''}" data-detail-id="${prop.id}">
-          <span class="material-icons-outlined">apartment</span>
+          <span class="material-icons-outlined">fullscreen</span>
           <span class="detail-sidebar-item-text">${prop.projectNumber || '-'}</span>
         </div>
       `).join('');
