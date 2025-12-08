@@ -478,7 +478,7 @@
     .list-table td { padding: var(--space-4); font-size: 14px; color: var(--neutral-900); border-bottom: 1px solid var(--neutral-200); vertical-align: middle; }
     .list-table tbody tr:hover { background-color: var(--neutral-100); cursor: pointer; }
     .object-cell { display: flex; align-items: center; gap: var(--space-3); }
-    .object-icon { color: var(--neutral-500); font-size: 20px; }
+    .object-icon { color: var(--neutral-500); font-size: 20px; vertical-align: middle; display: inline-flex; align-items: center; justify-content: center; }
     .milestone-text-small { font-size: 12px; color: var(--neutral-500); }
 
     /* --- MAP VIEW & SIDEBAR FIXES --- */
@@ -1288,6 +1288,9 @@
     .detail-header-icon {
       color: var(--neutral-500);
       font-size: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .detail-header-title {
       flex: 1;
@@ -1389,6 +1392,9 @@
     .detail-sidebar-item .material-icons-outlined {
       color: var(--neutral-400);
       font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .detail-sidebar-item.active .material-icons-outlined {
       color: var(--accent-600);
