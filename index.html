@@ -397,14 +397,14 @@
     .card-image { position: relative; height: 180px; background-color: var(--neutral-200); background-size: cover; background-position: center; }
     /* Tag Style Shared */
     .status-tag { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; box-shadow: var(--shadow-sm); }
-    .status-active { background-color: var(--priority-normal-bg); color: var(--priority-normal-text); }
-    .status-inactive { background-color: var(--priority-none-bg); color: var(--priority-none-text); }
-    .status-pending { background-color: var(--warning-bg); color: var(--warning-text); }
-    .status-sold { background-color: var(--priority-low-bg); color: var(--priority-low-text); }
-    .status-unknown { background-color: var(--priority-null-bg); color: var(--priority-null-text); border: 1px solid var(--priority-null-border); }
+    .status-active { background-color: var(--neutral-200); color: var(--neutral-700); }
+    .status-inactive { background-color: var(--neutral-200); color: var(--neutral-700); }
+    .status-pending { background-color: var(--neutral-200); color: var(--neutral-700); }
+    .status-sold { background-color: var(--neutral-200); color: var(--neutral-700); }
+    .status-unknown { background-color: var(--neutral-200); color: var(--neutral-700); }
 
     /* Ampel Status Dot Classes (for gallery view) */
-    .ampel-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-left: var(--space-2); vertical-align: middle; }
+    .ampel-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: var(--space-2); vertical-align: middle; }
     .ampel-dot-auf-kurs { background-color: var(--priority-normal); }
     .ampel-dot-gefaehrdet { background-color: var(--warning); }
     .ampel-dot-kritisch { background-color: var(--priority-high); }
@@ -420,6 +420,10 @@
     /* Clickable tag styles */
     .status-tag[data-filter] { cursor: pointer; transition: transform 0.15s, filter 0.15s; }
     .status-tag[data-filter]:hover { transform: scale(1.05); filter: brightness(0.95); }
+
+    /* Clickable ampel value styles (for gallery view) */
+    .ampel-value[data-filter] { cursor: pointer; transition: opacity 0.15s; display: inline-flex; align-items: center; }
+    .ampel-value[data-filter]:hover { opacity: 0.7; }
 
     .card-content { padding: var(--space-5); }  /* 20px for better breathing room */
     .card-label { font-size: 15px; font-weight: 600; color: var(--neutral-900); margin-bottom: var(--space-1); }
@@ -2010,10 +2014,18 @@
         </div>
       </div>
       <div class="filter-modal-body">
-        <div class="filter-columns" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="filter-columns" style="grid-template-columns: repeat(6, 1fr);">
           <div class="filter-column">
             <h3 class="filter-column-title">Status</h3>
             <div class="filter-options" id="filterStatus"></div>
+          </div>
+          <div class="filter-column">
+            <h3 class="filter-column-title">Projektziele</h3>
+            <div class="filter-options" id="filterProjektzielStatus"></div>
+          </div>
+          <div class="filter-column">
+            <h3 class="filter-column-title">Risiken</h3>
+            <div class="filter-options" id="filterRisikoStatus"></div>
           </div>
           <div class="filter-column">
             <h3 class="filter-column-title">Teilportfolio</h3>
@@ -2156,7 +2168,9 @@
       status: new Set(),          // Status filter
       teilportfolio: new Set(),   // Teilportfolio filter
       siaPhase: new Set(),        // SIA Phase filter
-      plbh: new Set()             // PLBH (Project Manager) filter
+      plbh: new Set(),            // PLBH (Project Manager) filter
+      projektzielStatus: new Set(),  // Projektziele filter
+      risikoStatus: new Set()     // Risiken filter
     };
 
     // Unique values from data (populated after load)
@@ -2164,7 +2178,9 @@
       status: [],
       teilportfolio: [],
       siaPhase: [],
-      plbh: []
+      plbh: [],
+      projektzielStatus: [],
+      risikoStatus: []
     };
 
     // Carousel state
@@ -2487,12 +2503,16 @@
       const teilportfolioValues = new Set();
       const siaPhaseValues = new Set();
       const plbhValues = new Set();
+      const projektzielStatusValues = new Set();
+      const risikoStatusValues = new Set();
 
       properties.forEach(prop => {
         if (prop.status) statuses.add(prop.status);
         if (prop.subPortfolio) teilportfolioValues.add(prop.subPortfolio);
         if (prop.siaPhase) siaPhaseValues.add(prop.siaPhase);
         if (prop.projectManager) plbhValues.add(prop.projectManager);
+        if (prop.projektzielStatus) projektzielStatusValues.add(prop.projektzielStatus);
+        if (prop.risikoStatus) risikoStatusValues.add(prop.risikoStatus);
       });
 
       // Sort status by reference order
@@ -2509,6 +2529,11 @@
 
       // PLBH is extracted from actual data since there's no reference list
       filterOptions.plbh = Array.from(plbhValues).sort();
+
+      // Sort projektzielStatus and risikoStatus by reference order
+      const ampelStatusOrder = (dataReferences.ampelStatus || []).map(r => r.id);
+      filterOptions.projektzielStatus = Array.from(projektzielStatusValues).sort((a, b) => ampelStatusOrder.indexOf(a) - ampelStatusOrder.indexOf(b));
+      filterOptions.risikoStatus = Array.from(risikoStatusValues).sort((a, b) => ampelStatusOrder.indexOf(a) - ampelStatusOrder.indexOf(b));
     }
 
     // Check if any filters are active
@@ -2517,6 +2542,8 @@
              advancedFilters.teilportfolio.size > 0 ||
              advancedFilters.siaPhase.size > 0 ||
              advancedFilters.plbh.size > 0 ||
+             advancedFilters.projektzielStatus.size > 0 ||
+             advancedFilters.risikoStatus.size > 0 ||
              searchQuery;
     }
 
@@ -2525,7 +2552,9 @@
       return advancedFilters.status.size +
              advancedFilters.teilportfolio.size +
              advancedFilters.siaPhase.size +
-             advancedFilters.plbh.size;
+             advancedFilters.plbh.size +
+             advancedFilters.projektzielStatus.size +
+             advancedFilters.risikoStatus.size;
     }
 
     // Get status counts from all properties
@@ -2657,6 +2686,16 @@
           return false;
         }
 
+        // Projektziele filter
+        if (advancedFilters.projektzielStatus.size > 0 && !advancedFilters.projektzielStatus.has(prop.projektzielStatus)) {
+          return false;
+        }
+
+        // Risiken filter
+        if (advancedFilters.risikoStatus.size > 0 && !advancedFilters.risikoStatus.has(prop.risikoStatus)) {
+          return false;
+        }
+
         return true;
       });
 
@@ -2684,6 +2723,22 @@
       if (statusContainer) {
         statusContainer.innerHTML = filterOptions.status.map(s =>
           createOption(advancedFilters.status.has(s), 'status', s, getStatusLabel(s))
+        ).join('');
+      }
+
+      // Projektziele filter
+      const projektzielStatusContainer = document.getElementById('filterProjektzielStatus');
+      if (projektzielStatusContainer) {
+        projektzielStatusContainer.innerHTML = filterOptions.projektzielStatus.map(s =>
+          createOption(advancedFilters.projektzielStatus.has(s), 'projektzielStatus', s, getAmpelStatusLabel(s, dataReferences))
+        ).join('');
+      }
+
+      // Risiken filter
+      const risikoStatusContainer = document.getElementById('filterRisikoStatus');
+      if (risikoStatusContainer) {
+        risikoStatusContainer.innerHTML = filterOptions.risikoStatus.map(s =>
+          createOption(advancedFilters.risikoStatus.has(s), 'risikoStatus', s, getAmpelStatusLabel(s, dataReferences))
         ).join('');
       }
 
@@ -2813,8 +2868,8 @@
             <div class="card-label">${prop.projectNumber || '-'}</div>
             <div class="card-location">${prop.projectName || '-'}</div>
             <div class="card-details">
-              <span class="card-detail-label">Projektziele:</span><span class="card-detail-value">${getAmpelStatusLabel(prop.projektzielStatus, dataReferences)}<span class="ampel-dot ${getAmpelStatusClass(prop.projektzielStatus)}"></span></span>
-              <span class="card-detail-label">Risiken:</span><span class="card-detail-value">${getAmpelStatusLabel(prop.risikoStatus, dataReferences)}<span class="ampel-dot ${getAmpelStatusClass(prop.risikoStatus)}"></span></span>
+              <span class="card-detail-label">Projektziele:</span><span class="card-detail-value ampel-value" data-filter="projektzielStatus" data-value="${prop.projektzielStatus || ''}"><span class="ampel-dot ${getAmpelStatusClass(prop.projektzielStatus)}"></span>${getAmpelStatusLabel(prop.projektzielStatus, dataReferences)}</span>
+              <span class="card-detail-label">Risiken:</span><span class="card-detail-value ampel-value" data-filter="risikoStatus" data-value="${prop.risikoStatus || ''}"><span class="ampel-dot ${getAmpelStatusClass(prop.risikoStatus)}"></span>${getAmpelStatusLabel(prop.risikoStatus, dataReferences)}</span>
             </div>
             <div class="card-details" style="border-top: 1px solid var(--neutral-200); padding-top: var(--space-3);">
               <span class="card-detail-label">Teilportfolio:</span><span class="card-detail-value">${getSubPortfolioLabel(prop.subPortfolio, dataReferences)}</span>
@@ -2851,8 +2906,8 @@
           <td>${prop.projectName || '-'}</td>
           <td>${prop.projectManager || '-'}</td>
           <td>${formatCurrency(prop.plannedTotalCost)}</td>
-          <td>${prop.projektzielStatus ? `<span class="status-tag ${getAmpelTagClass(prop.projektzielStatus)}">${getAmpelStatusLabel(prop.projektzielStatus, dataReferences)}</span>` : '-'}</td>
-          <td>${prop.risikoStatus ? `<span class="status-tag ${getAmpelTagClass(prop.risikoStatus)}">${getAmpelStatusLabel(prop.risikoStatus, dataReferences)}</span>` : '-'}</td>
+          <td>${prop.projektzielStatus ? `<span class="status-tag ${getAmpelTagClass(prop.projektzielStatus)}" data-filter="projektzielStatus" data-value="${prop.projektzielStatus}">${getAmpelStatusLabel(prop.projektzielStatus, dataReferences)}</span>` : '-'}</td>
+          <td>${prop.risikoStatus ? `<span class="status-tag ${getAmpelTagClass(prop.risikoStatus)}" data-filter="risikoStatus" data-value="${prop.risikoStatus}">${getAmpelStatusLabel(prop.risikoStatus, dataReferences)}</span>` : '-'}</td>
           <td><span class="status-tag ${getStatusClass(prop.status)}" data-filter="status" data-value="${prop.status}">${getStatusLabel(prop.status)}</span></td>
         </tr>`).join('');
     }
@@ -3982,8 +4037,8 @@
 
     // Unified click handler (event delegation for tags and sidebar items)
     function handleContentClick(event) {
-      // First, check if clicked on a filter tag (status-tag)
-      const tag = event.target.closest('.status-tag[data-filter]');
+      // First, check if clicked on a filter tag (status-tag or ampel-value)
+      const tag = event.target.closest('.status-tag[data-filter], .ampel-value[data-filter]');
       if (tag) {
         event.stopPropagation();
         event.preventDefault();
@@ -3991,14 +4046,16 @@
         const filterType = tag.dataset.filter;
         const filterValue = tag.dataset.value;
 
-        // Add the filter
-        advancedFilters[filterType].add(filterValue);
+        // Only add filter if there's a valid value
+        if (filterValue) {
+          advancedFilters[filterType].add(filterValue);
 
-        applyFilters();
+          applyFilters();
 
-        // Update filter modal if it's open
-        if (document.getElementById('filterModalOverlay').classList.contains('active')) {
-          renderFilterModal();
+          // Update filter modal if it's open
+          if (document.getElementById('filterModalOverlay').classList.contains('active')) {
+            renderFilterModal();
+          }
         }
         return;
       }
