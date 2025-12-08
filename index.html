@@ -520,10 +520,13 @@
           0 4px 16px rgba(0,0,0,0.3);
     }
 
-    .mapboxgl-popup-content { padding: 0; border-radius: 8px; overflow: hidden; min-width: 250px; }
+    .mapboxgl-popup-content { padding: 0; border-radius: 8px; overflow: hidden; min-width: 280px; }
     .popup-image { height: 120px; background-size: cover; background-position: center; }
     .popup-content { padding: var(--space-3); }
     .popup-title { font-weight: 600; margin-bottom: var(--space-1); }
+    .popup-info { display: flex; flex-direction: column; gap: var(--space-1); margin: var(--space-2) 0; padding: var(--space-2) 0; border-top: 1px solid var(--neutral-200); border-bottom: 1px solid var(--neutral-200); font-size: 0.85rem; }
+    .popup-info-row { display: flex; align-items: center; gap: var(--space-2); color: var(--neutral-700); }
+    .popup-info-row .material-icons-outlined { font-size: 16px; color: var(--primary-700); }
     .popup-link { display: block; text-align: center; padding: var(--space-2) var(--space-3); background: var(--primary-900); color: var(--neutral-50); text-decoration: none; border-radius: var(--radius-sm); margin-top: var(--space-2); cursor: pointer; }
 
     /* Responsive */
@@ -2732,11 +2735,18 @@
             flyToProperty(prop.id);
           });
 
-          const popup = new mapboxgl.Popup({ offset: 25, maxWidth: '280px' }).setHTML(`
+          const nextMs = getNextMilestone(prop.projektziele);
+          const popup = new mapboxgl.Popup({ offset: 25, maxWidth: '300px' }).setHTML(`
             <div class="popup-image" style="background-image: url('${getPlaceholderImage(prop.projectName, prop.id)}')"></div>
             <div class="popup-content">
               <div class="popup-title">${prop.projectNumber || '-'}</div>
               <div class="popup-location">${prop.projectName || '-'}</div>
+              <div class="popup-info">
+                <div class="popup-info-row"><span class="material-icons-outlined">flag</span>${getSiaPhaseShort(prop.siaPhase)}</div>
+                <div class="popup-info-row"><span class="material-icons-outlined">payments</span>${formatCurrency(prop.plannedTotalCost)}</div>
+                ${nextMs ? `<div class="popup-info-row"><span class="material-icons-outlined">event</span>${nextMs.name}: ${nextMs.date}</div>` : ''}
+                <div class="popup-info-row"><span class="material-icons-outlined">person</span>${prop.projectManager || '-'}</div>
+              </div>
               <div class="popup-status">${getStatusLabel(prop.status)}</div>
               <a class="popup-link" data-id="${prop.id}">Details anzeigen</a>
             </div>`);
@@ -2911,6 +2921,19 @@
       if (!siaPhase || !dataReferences?.siaPhases) return '-';
       const ref = dataReferences.siaPhases.find(r => r.id === siaPhase);
       return ref ? ref.label : '-';
+    }
+
+    // Get SIA phase short label (e.g., "SIA 32")
+    function getSiaPhaseShort(siaPhase) {
+      if (!siaPhase) return '-';
+      return siaPhase.replace('sia_', 'SIA ').toUpperCase();
+    }
+
+    // Get next pending milestone
+    function getNextMilestone(projektziele) {
+      if (!projektziele?.meilensteine) return null;
+      const pending = projektziele.meilensteine.find(m => m.status === 'pending');
+      return pending ? { name: pending.name, date: pending.plannedDate } : null;
     }
 
     // Get building status label
