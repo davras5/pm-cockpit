@@ -403,10 +403,11 @@
     .status-sold { background-color: var(--priority-low-bg); color: var(--priority-low-text); }
     .status-unknown { background-color: var(--priority-null-bg); color: var(--priority-null-text); border: 1px solid var(--priority-null-border); }
 
-    /* Ampel Status Classes */
-    .ampel-auf-kurs { background-color: var(--priority-normal-bg); color: var(--priority-normal-text); }
-    .ampel-gefaehrdet { background-color: var(--warning-bg); color: var(--warning-text); }
-    .ampel-kritisch { background-color: var(--priority-high-bg); color: var(--priority-high-text); }
+    /* Ampel Status Dot Classes */
+    .ampel-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-left: var(--space-2); vertical-align: middle; }
+    .ampel-dot-auf-kurs { background-color: var(--priority-normal); }
+    .ampel-dot-gefaehrdet { background-color: var(--warning); }
+    .ampel-dot-kritisch { background-color: var(--priority-high); }
 
     /* Image Tags Container */
     .image-tags { position: absolute; top: var(--space-3); left: var(--space-3); display: flex; gap: var(--space-2); z-index: 2; }
@@ -2409,9 +2410,9 @@
     function getAmpelStatusClass(status) {
       if (!status) return '';
       const classMap = {
-        'auf-kurs': 'ampel-auf-kurs',
-        'gefaehrdet': 'ampel-gefaehrdet',
-        'kritisch': 'ampel-kritisch'
+        'auf-kurs': 'ampel-dot-auf-kurs',
+        'gefaehrdet': 'ampel-dot-gefaehrdet',
+        'kritisch': 'ampel-dot-kritisch'
       };
       return classMap[status] || '';
     }
@@ -2778,8 +2779,8 @@
             <div class="card-label">${prop.projectNumber || '-'}</div>
             <div class="card-location">${prop.projectName || '-'}</div>
             <div class="card-details">
-              <span class="card-detail-label">Projektziele:</span><span class="card-detail-value"><span class="status-tag ${getAmpelStatusClass(prop.projektzielStatus)}">${getAmpelStatusLabel(prop.projektzielStatus, dataReferences)}</span></span>
-              <span class="card-detail-label">Risiken:</span><span class="card-detail-value"><span class="status-tag ${getAmpelStatusClass(prop.risikoStatus)}">${getAmpelStatusLabel(prop.risikoStatus, dataReferences)}</span></span>
+              <span class="card-detail-label">Projektziele:</span><span class="card-detail-value">${getAmpelStatusLabel(prop.projektzielStatus, dataReferences)}<span class="ampel-dot ${getAmpelStatusClass(prop.projektzielStatus)}"></span></span>
+              <span class="card-detail-label">Risiken:</span><span class="card-detail-value">${getAmpelStatusLabel(prop.risikoStatus, dataReferences)}<span class="ampel-dot ${getAmpelStatusClass(prop.risikoStatus)}"></span></span>
             </div>
             <div class="card-details" style="border-top: 1px solid var(--neutral-200); padding-top: var(--space-3);">
               <span class="card-detail-label">Teilportfolio:</span><span class="card-detail-value">${getSubPortfolioLabel(prop.subPortfolio, dataReferences)}</span>
