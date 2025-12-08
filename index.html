@@ -2951,16 +2951,16 @@
     }
 
     // Open detail view
-    function openDetailView(projectId, skipHistory = false) {
+    function openDetailView(projectId, skipHistory = false, initialTab = null) {
       const project = properties.find(p => p.id === projectId);
       if (!project) return;
 
       currentDetailProjectId = projectId;
       previousView = currentView;
 
-      // Get tab from URL or use current tab
+      // Get tab from: 1) initialTab parameter, 2) URL, 3) current tab, 4) default
       const urlParams = getUrlParams();
-      const tabToShow = urlParams.tab || currentDetailTab || 'uebersicht';
+      const tabToShow = initialTab || urlParams.tab || currentDetailTab || 'uebersicht';
 
       // Render sidebar with all projects
       renderDetailSidebar();
@@ -3875,6 +3875,9 @@
     loadFiltersFromUrl();
     setView(currentView);
 
+    // Save initial URL params BEFORE any operations that might modify the URL
+    const initialUrlParams = getUrlParams();
+
     fetch('data.json')
       .then(res => res.json())
       .then(data => {
@@ -3912,12 +3915,13 @@
         extractFilterOptions();
         applyFilters();
 
-        // Check if URL has project ID and open detail view
-        const params = getUrlParams();
-        if (params.id) {
-          const project = properties.find(p => p.id === params.id);
+        // Check if initial URL had project ID and open detail view
+        // Use saved params since applyFilters() may have modified the URL
+        if (initialUrlParams.id) {
+          const project = properties.find(p => p.id === initialUrlParams.id);
           if (project) {
-            openDetailView(params.id, true); // skipHistory = true for initial load
+            // Pass saved tab param since URL may have been modified by applyFilters()
+            openDetailView(initialUrlParams.id, true, initialUrlParams.tab);
           }
         }
       })
