@@ -421,6 +421,26 @@
     .milestone-progress { height: 100%; background: linear-gradient(90deg, var(--accent-600), var(--accent-500)); border-radius: 3px; transition: width 0.3s; }
     .milestone-text { font-size: 13px; color: var(--neutral-700); font-weight: 500; }
 
+    /* --- Cost Comparison --- */
+    .cost-comparison { background: var(--neutral-50); border-radius: var(--radius-md); padding: var(--space-4); border: 1px solid var(--neutral-200); }
+    .cost-comparison-header { font-size: 14px; font-weight: 600; color: var(--neutral-900); margin-bottom: var(--space-3); }
+    .cost-comparison-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2); }
+    .cost-comparison-label { font-size: 13px; color: var(--neutral-600); font-weight: 500; min-width: 45px; }
+    .cost-comparison-value { font-size: 14px; font-weight: 600; color: var(--neutral-900); }
+    .cost-comparison-bar { height: 8px; background: var(--neutral-200); border-radius: 4px; overflow: hidden; margin: var(--space-3) 0 var(--space-2) 0; position: relative; }
+    .cost-comparison-bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+    .cost-comparison-bar-fill.under-budget { background: linear-gradient(90deg, var(--success-600), var(--success-600)); }
+    .cost-comparison-bar-fill.on-budget { background: linear-gradient(90deg, var(--success-600), var(--success-600)); }
+    .cost-comparison-bar-fill.over-budget { background: linear-gradient(90deg, var(--warning), var(--warning)); }
+    .cost-comparison-bar-fill.critical { background: linear-gradient(90deg, #EF4444, #DC2626); }
+    .cost-comparison-bar-target { position: absolute; top: -4px; bottom: -4px; width: 3px; background: var(--neutral-700); border-radius: 2px; transform: translateX(-50%); }
+    .cost-comparison-footer { display: flex; justify-content: flex-end; align-items: center; gap: var(--space-2); }
+    .cost-comparison-percent { font-size: 13px; font-weight: 600; padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); }
+    .cost-comparison-percent.under-budget { background: var(--success-50); color: var(--success-700); }
+    .cost-comparison-percent.on-budget { background: var(--success-50); color: var(--success-700); }
+    .cost-comparison-percent.over-budget { background: var(--warning-bg); color: var(--warning-text); }
+    .cost-comparison-percent.critical { background: #FEE2E2; color: #B91C1C; }
+
     /* --- List View --- */
     .view-container { display: none; }
     .view-container.active { display: block; }
@@ -2234,6 +2254,70 @@
       return 'CHF ' + new Intl.NumberFormat('de-CH').format(value);
     }
 
+    // Calculate BKP 1-9 total costs (IST)
+    function calculateBkpTotal(kostenBkp) {
+      if (!kostenBkp) return 0;
+      let total = 0;
+      for (let i = 1; i <= 9; i++) {
+        const bkp = kostenBkp[`bkp${i}`];
+        if (bkp && bkp.chfKosten) {
+          total += bkp.chfKosten;
+        }
+      }
+      return total;
+    }
+
+    // Render cost comparison visualization
+    function renderCostComparison(sollValue, istValue) {
+      if (!sollValue || sollValue === 0) {
+        return '<div class="cost-comparison"><div class="cost-comparison-header">Kosten (BKP 1-9)</div><div style="color: var(--neutral-500); font-size: 13px;">Keine SOLL-Werte vorhanden</div></div>';
+      }
+
+      const difference = istValue - sollValue;
+      const percentDiff = ((istValue / sollValue) - 1) * 100;
+      const displayPercent = Math.abs(percentDiff).toFixed(1);
+
+      // Determine status class
+      let statusClass = 'on-budget';
+      let percentSign = '';
+      if (percentDiff < -0.5) {
+        statusClass = 'under-budget';
+        percentSign = '-';
+      } else if (percentDiff > 10) {
+        statusClass = 'critical';
+        percentSign = '+';
+      } else if (percentDiff > 0.5) {
+        statusClass = 'over-budget';
+        percentSign = '+';
+      }
+
+      // Calculate bar width (cap at 120% for display)
+      const barPercent = Math.min((istValue / sollValue) * 100, 120);
+      // Target marker position (100% of SOLL = where target line sits)
+      const targetPosition = Math.min(100 / (barPercent / 100), 100);
+
+      return `
+        <div class="cost-comparison">
+          <div class="cost-comparison-header">Kosten (BKP 1-9)</div>
+          <div class="cost-comparison-row">
+            <span class="cost-comparison-label">SOLL</span>
+            <span class="cost-comparison-value">${formatCurrency(sollValue)}</span>
+          </div>
+          <div class="cost-comparison-row">
+            <span class="cost-comparison-label">IST</span>
+            <span class="cost-comparison-value">${formatCurrency(istValue)}</span>
+          </div>
+          <div class="cost-comparison-bar">
+            <div class="cost-comparison-bar-fill ${statusClass}" style="width: ${barPercent}%"></div>
+            <div class="cost-comparison-bar-target" style="left: ${targetPosition}%"></div>
+          </div>
+          <div class="cost-comparison-footer">
+            <span class="cost-comparison-percent ${statusClass}">${percentSign}${displayPercent}%</span>
+          </div>
+        </div>
+      `;
+    }
+
     // SubPortfolio label helper
     function getSubPortfolioLabel(subPortfolio, references) {
       if (!subPortfolio || !references?.subPortfolio) return '-';
@@ -3677,23 +3761,10 @@
             </div>
           </div>
 
-          <!-- Kosten (Geplant) Section -->
+          <!-- Kosten Soll/Ist Vergleich Section -->
           <div class="tab-section">
-            <div class="tab-section-header">Kosten (Geplant)</div>
-            <div class="detail-fields">
-              <div class="detail-field">
-                <span class="detail-field-label">Geplante Gesamtkosten</span>
-                <span class="detail-field-value">${formatCurrency(project.plannedTotalCost)}</span>
-              </div>
-              <div class="detail-field">
-                <span class="detail-field-label">BKP 2 / m³ GV</span>
-                <span class="detail-field-value">-</span>
-              </div>
-              <div class="detail-field">
-                <span class="detail-field-label">BKP 2 / m² GF</span>
-                <span class="detail-field-value">-</span>
-              </div>
-            </div>
+            <div class="tab-section-header">Kostenvergleich</div>
+            ${renderCostComparison(project.plannedTotalCost, calculateBkpTotal(project.kostenBkp))}
           </div>
 
           <!-- Meilensteine Section -->
