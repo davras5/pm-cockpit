@@ -3868,15 +3868,16 @@
     });
 
     // --- INIT ---
+    // Save initial URL params BEFORE any operations that might modify the URL
+    // (setView calls updateUrlParams which would overwrite id/tab params)
+    const initialUrlParams = getUrlParams();
+
     setupFilterModal();
     setupSearch();
     setupViewToggle();
     setupDetailTabs();
     loadFiltersFromUrl();
     setView(currentView);
-
-    // Save initial URL params BEFORE any operations that might modify the URL
-    const initialUrlParams = getUrlParams();
 
     fetch('data.json')
       .then(res => res.json())
